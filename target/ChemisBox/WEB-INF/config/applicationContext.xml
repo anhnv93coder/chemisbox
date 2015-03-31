@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd        
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<bean id="jacksonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jacksonMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<bean id="myDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/chemisbox" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="packagesToScan" value="com.chemisbox.entity" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<bean id="chemicalDao" class="com.chemisbox.dao.impl.ChemicalDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<bean id="chemistryEquationDao" class="com.chemisbox.dao.impl.ChemistryEquationDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<bean id="equationDao" class="com.chemisbox.dao.impl.EquationDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+		<!-- <property name="ionDao" ref="ionEquationDAO" /> <property name="oxiDao" 
+			ref="oxiReduceEquation" /> -->
+	</bean>
+
+	<bean id="ionDao" class="com.chemisbox.dao.impl.IonEquationDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<bean id="oxiDao" class="com.chemisbox.dao.impl.OxiReduceEquationDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<bean id="addEquationBusiness" class="com.chemisbox.business.AddEquationBusiness">
+		<property name="chemicalDao" ref="chemicalDao" />
+		<property name="chemistryEquationDao" ref="chemistryEquationDao" />
+		<property name="equationDao" ref="equationDao" />
+		<property name="ionDao" ref="ionDao" />
+		<property name="oxiDao" ref="oxiDao" />
+	</bean>
+
+	<bean id="searchEquationBusiness" class="com.chemisbox.business.SearchEquationBusiness">
+		<property name="equationDao" ref="equationDao" />
+	</bean>
+
+</beans>
