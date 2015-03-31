@@ -9,5 +9,5 @@ public abstract class ChemisboxController<T, V> {
 	protected T business;
 	protected V model;
 
-	public abstract V execute() throws ChemisboxException;
+	public abstract V execute(V model) throws ChemisboxException;
 }

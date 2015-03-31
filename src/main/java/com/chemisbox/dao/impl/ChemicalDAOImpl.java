@@ -24,30 +24,46 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Chemical> list() throws ChemisboxException {
+	public List<Chemical> list(String formula) throws ChemisboxException {
+		if(ChemisboxUtilities.isNullOrEmpty(formula)){
+			return null;
+		}
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from Chemical").list();
+		return (List<Chemical>)session.createCriteria(Chemical.class)
+				.add(Restrictions.like("formula", formula)).list();
 	}
 
 	public Long add(Chemical c) throws ChemisboxException {
+		if(c == null){
+			return null;
+		}
 		Session session = sessionFactory.getCurrentSession();
 		session.save(c);
 		return c.getId();
 	}
 
 	public boolean delete(Chemical c) throws ChemisboxException {
+		if(c == null){
+			return false;
+		}
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(c);
 		return false;
 	}
 
 	public Long update(Chemical c) throws ChemisboxException {
+		if(c == null){
+			return null;
+		}
 		Session session = sessionFactory.getCurrentSession();
 		session.update(c);
 		return c.getId();
 	}
 
 	public Chemical get(Long id) throws ChemisboxException {
+		if(id == null){
+			return null;
+		}
 		Session session = sessionFactory.getCurrentSession();
 		Chemical chemical = (Chemical) session.get(Chemical.class, id);
 		return chemical;

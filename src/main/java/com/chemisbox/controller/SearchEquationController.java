@@ -21,27 +21,15 @@ public class SearchEquationController extends
 	private SearchEquationBusiness searchEquationBusiness;
 
 	@RequestMapping(value = "/equation/search/{keyword}")
-//	public @ResponseBody List<Equation> searchEquation(
 	public @ResponseBody SearchEquationModel searchEquation(
 			@PathVariable("keyword") String keyWord) throws ChemisboxException {
 		this.model = new SearchEquationModel();
 		this.model.setKeyWord(keyWord);
-		execute();
-		
-		/*List<Equation> list = new ArrayList<Equation>();
-		Equation e = new Equation();
-		e.setEquationId(new Long(1));
-		e.setCondition("No Things");
-		e.setDescription("No Things");
-		e.setEquation("No Things");
-		list.add(e);
-		
-		return list;*/
-		return this.model;
+		return execute(this.model);
 	}
 
 	@Override
-	public SearchEquationModel execute() throws ChemisboxException {
+	public SearchEquationModel execute(SearchEquationModel model) throws ChemisboxException {
 		if (ChemisboxUtilities.isNullOrEmpty(model.getKeyWord())) {
 			this.model.setErrorMessage("Key word is null");
 			return this.model;
@@ -52,9 +40,10 @@ public class SearchEquationController extends
 		SearchEquationOutputParam outParam = this.business.execute(inParam);
 		if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
 			this.model.setErrorMessage(outParam.getErrorMessage());
-			return this.model;
 		}
 		this.model.setEquationList(outParam.getEquationList());
+		this.model.setChemical(outParam.getChemical());
+		this.model.setElement(outParam.getElement());
 		return this.model;
 	}
 }

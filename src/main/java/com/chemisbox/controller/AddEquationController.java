@@ -18,35 +18,36 @@ public class AddEquationController extends ChemisboxController<AddEquationBusine
 
 	private AddEquationBusiness addEquationBusiness;
 	
-	@RequestMapping(ChemisboxConstant.ADD_EQUATION_API)
-	public @ResponseBody AddEquationModel addEquationAPI(@RequestBody AddEquationModel model) throws ChemisboxException{
-//	public AddEquationModel addEquationAPI() throws ChemisboxException{
-		this.model = model;
-//		Equation equation = new Equation();
-//		equation.setCondition("No Condition");
-//		equation.setDescription("No Desc");
-//		equation.setVideoLink("No Link");
-//		equation.setEquation("NaOH + CuCl2 = Cu(OH)2 + 2NaCl");
+	//@RequestMapping(ChemisboxConstant.ADD_EQUATION_API)
+//	public @ResponseBody AddEquationModel addEquationAPI() throws ChemisboxException{
+////	public AddEquationModel addEquationAPI() throws ChemisboxException{
+//		this.model = model;
+////		Equation equation = new Equation();
+////		equation.setCondition("No Condition");
+////		equation.setDescription("No Desc");
+////		equation.setVideoLink("No Link");
+////		equation.setEquation("NaOH + CuCl2 = Cu(OH)2 + 2NaCl");
+////		
+////		OxiReduceEquation oxiReduce = new OxiReduceEquation();
+////		oxiReduce.setMolOxi(1);
+////		oxiReduce.setMolReduce(1);
+////		oxiReduce.setOxiEquation("H− − 1e− = H");
+////		oxiReduce.setReduceEquation("Na+ + 1e− = Na");
+////		oxiReduce.setSummary("Na+ + H− = Na + H");
 //		
-//		OxiReduceEquation oxiReduce = new OxiReduceEquation();
-//		oxiReduce.setMolOxi(1);
-//		oxiReduce.setMolReduce(1);
-//		oxiReduce.setOxiEquation("H− − 1e− = H");
-//		oxiReduce.setReduceEquation("Na+ + 1e− = Na");
-//		oxiReduce.setSummary("Na+ + H− = Na + H");
-		
-//		model.setEquation(equation);
-//		model.setOxiReduce(oxiReduce);
-		try {
-			this.model = this.execute();
-		} catch (ChemisboxException e) {
-			throw e;
-		}
-		return this.model;
-	}
+////		model.setEquation(equation);
+////		model.setOxiReduce(oxiReduce);
+//		try {
+//			this.model = this.execute();
+//		} catch (ChemisboxException e) {
+//			throw e;
+//		}
+//		return this.model;
+//	}
 	
+	@RequestMapping(ChemisboxConstant.ADD_EQUATION_API)
 	@Override
-	public AddEquationModel execute() throws ChemisboxException {
+	public @ResponseBody AddEquationModel execute(@RequestBody AddEquationModel model) throws ChemisboxException {
 		//this.business = new AddEquationBusiness();
 		AddEquationInputParam inParam = new AddEquationInputParam();
 		

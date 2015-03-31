@@ -2,25 +2,63 @@ package com.chemisbox.entity;
 
 import java.io.Serializable;
 
-public class Element  implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "element")
+public class Element implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name = "notation", nullable = false, unique = true)
 	private String notation;
+
+	@Column(name = "name")
 	private String name;
+
+	@Column(name = "number_of_atomic")
 	private float numberOfAtomic;
-	private String atomicValue;
+
+	@Column(name = "atomic_volume")
+	private String atomicVolume;
+
+	@Column(name = "classify")
 	private String classify;
+
+	@Column(name = "`group`")
 	private String group;
+
+	@Column(name = "cycle")
 	private String cycle;
+
+	@Column(name = "electron_configuration")
 	private String electronConfiguration;
+
+	@Column(name = "layers")
 	private String layers;
+
+	@Column(name = "description")
 	private String description;
+
+	@Column(name = "color")
 	private String color;
+
+	@Column(name = "`condition`")
 	private String condition;
+
+	@Column(name = "melting_temperature")
 	private String meltingTemperature;
+
+	@Column(name = "boiling_temperature")
 	private String boilingTemperature;
+
+	@Column(name = "img")
 	private String img;
 
 	public String getNotation() {
@@ -47,12 +85,12 @@ public class Element  implements Serializable{
 		this.numberOfAtomic = numberOfAtomic;
 	}
 
-	public String getAtomicValue() {
-		return atomicValue;
+	public String getAtomicVolume() {
+		return atomicVolume;
 	}
 
-	public void setAtomicValue(String atomicValue) {
-		this.atomicValue = atomicValue;
+	public void setAtomicVolume(String atomicVolume) {
+		this.atomicVolume = atomicVolume;
 	}
 
 	public String getClassify() {

@@ -58,6 +58,10 @@
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
 
+	<bean id="elementDao" class="com.chemisbox.dao.impl.ElementDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
 	<bean id="addEquationBusiness" class="com.chemisbox.business.AddEquationBusiness">
 		<property name="chemicalDao" ref="chemicalDao" />
 		<property name="chemistryEquationDao" ref="chemistryEquationDao" />
@@ -68,6 +72,8 @@
 
 	<bean id="searchEquationBusiness" class="com.chemisbox.business.SearchEquationBusiness">
 		<property name="equationDao" ref="equationDao" />
+		<property name="chemicalDao" ref="chemicalDao" />
+		<property name="elementDao" ref="elementDao" />
 	</bean>
 
 </beans>
