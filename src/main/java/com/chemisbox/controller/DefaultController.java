@@ -1,24 +1,18 @@
 package com.chemisbox.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.chemisbox.dao.ChemicalDAO;
-import com.chemisbox.dao.EquationDAO;
+import com.chemisbox.model.SearchEquationModel;
 
 @Controller
 public class DefaultController {
-	
-	@Autowired
-	private EquationDAO equationDao;
-	
-	@Autowired
-	private ChemicalDAO chemicalDao;
-	
-	@RequestMapping("/")
-	public String getIndex(){
 		
+	@RequestMapping("/")
+	public String getIndex(ModelMap map){
+		SearchEquationModel searchModel = new SearchEquationModel();
+		map.put("searchModel", searchModel);
 		return "index";
 	}
 }

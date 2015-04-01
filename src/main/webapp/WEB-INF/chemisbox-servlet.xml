@@ -16,7 +16,7 @@
 	<context:component-scan base-package="com.chemisbox" />
 	<context:annotation-config />
 	<tx:annotation-driven proxy-target-class="true" />
-	<mvc:resources location="/WEB-INF/assets/" mapping="/assets/**" />
+	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 

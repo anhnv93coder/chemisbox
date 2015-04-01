@@ -7,16 +7,18 @@ import com.chemisbox.entity.Chemical;
 import com.chemisbox.entity.Element;
 import com.chemisbox.entity.Equation;
 
+@SuppressWarnings("serial")
 public class SearchEquationModel extends ChemisboxModel implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2326544438988900072L;
+	
 	private Element element;
 	private Chemical chemical;
 	private List<Equation> equationList;
 	private String keyWord;
 
+	public SearchEquationModel() {
+		
+	}
+	
 	public List<Equation> getEquationList() {
 		return equationList;
 	}

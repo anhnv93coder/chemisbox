@@ -99,7 +99,17 @@ function mergeChemicalToEquation(chemicals) {
 	var outputChemical = "";
 	$.each(chemicals, function(i, inParam) {
 		var chemicalStr = "";
-		if (inParam.numberOfAtomic == '0') {
+		var res = inParam.formula.match(/[A-Za-z()]+[0-9]+/g);
+		if(res != null && res.length > 0){
+			var temp = "";
+			for(var i = 0; i < res.length; i++){
+				var number = res[i].match(/[0-9]+/g);
+				temp += res[i].replace(number, '<sub>' + number + '</sub>');
+			}
+			inParam.formula = temp;
+		}
+		
+		if (inParam.numberOfAtomic == '0' || inParam.numberOfAtomic == '1') {
 			chemicalStr = inParam.formula + inParam.condition;
 		} else {
 			chemicalStr = inParam.numberOfAtomic + inParam.formula
@@ -120,13 +130,13 @@ function mergeChemicalToEquation(chemicals) {
 }
 
 function getEquation() {
-	var keyWord = $("#key-word").val().trim();
+	var keyWord = $("#keyWord").val().trim();
 	$("#chemicalImg").removeAttr("src");
 	$("#chemicalImg").css("display", "none");
 	$("#equation-list").empty();
 	$("#chemical-info").empty();
 	$.ajax({
-		url : '/ChemisBox/equation/search/' + keyWord,
+		url : '/ChemisBox/search/' + keyWord,
 		dataType : "json",
 		contentType : "application/json",
 		type : 'GET',
@@ -206,14 +216,14 @@ function getCycleEquation(leftKeyWord, rightKeyWord) {
 
 $(document).ready(function() {
 
-	$("#key-word").keyup(function(e) {
+	$("#keyWord").keyup(function(e) {
 		var code = e.keyCode || e.which;
 		if(code == 13){
 			getEquation();
 		}
 	});
 	
-	$("#btn-search").click(function(e) {
+	$("#btnSearch").click(function(e) {
 		e.preventDefault();
 		getEquation();
 	});

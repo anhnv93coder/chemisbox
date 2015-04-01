@@ -6,7 +6,6 @@ public abstract class ChemisboxModel implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7938978307749617767L;
 	private String errorMessage;
 
 	public ChemisboxModel() {

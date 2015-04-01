@@ -2,8 +2,11 @@ package com.chemisbox.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chemisbox.business.SearchEquationBusiness;
@@ -20,16 +23,26 @@ public class SearchEquationController extends
 	@Autowired
 	private SearchEquationBusiness searchEquationBusiness;
 
-	@RequestMapping(value = "/equation/search/{keyword}")
-	public @ResponseBody SearchEquationModel searchEquation(
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String searchEquationBySubmit(@ModelAttribute("searchModel") SearchEquationModel model,
+            ModelMap map) throws ChemisboxException {
+		this.model = new SearchEquationModel();
+		this.model.setKeyWord(model.getKeyWord());
+		this.model = execute(this.model);
+		map.put("searchModel", this.model);
+		return "search";
+	}
+	
+	@RequestMapping(value = "/search/{keyword}")
+	public @ResponseBody SearchEquationModel searchEquationByAjax(
 			@PathVariable("keyword") String keyWord) throws ChemisboxException {
 		this.model = new SearchEquationModel();
 		this.model.setKeyWord(keyWord);
 		return execute(this.model);
 	}
-
+	
 	@Override
-	public SearchEquationModel execute(SearchEquationModel model) throws ChemisboxException {
+	public  SearchEquationModel execute(SearchEquationModel model) throws ChemisboxException {
 		if (ChemisboxUtilities.isNullOrEmpty(model.getKeyWord())) {
 			this.model.setErrorMessage("Key word is null");
 			return this.model;
