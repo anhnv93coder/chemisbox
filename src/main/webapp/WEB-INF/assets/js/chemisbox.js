@@ -129,6 +129,39 @@ function mergeChemicalToEquation(chemicals) {
 	return master;
 }
 
+function fillResult(data){
+	$("#result-block").css("display", "block");
+	
+	//
+	if (data.element != null) {
+		fillElement(data.element);
+	} else if (data.chemical != null) {
+		fillChemical(data.chemical);
+	}else{
+		$("#chemicalImg").css("display", "none");
+		$("#chemical-info").html("<h2>Ko tim thay cong thuc: </h2>" + data.keyWord);
+	}
+	
+	//
+	if(data.equationList != null && data.equationList.length > 0){
+		$.each(data.equationList, function(key, value) {
+			var equation = JSON.parse(value.equation);
+			$.each(equation, function(index,chemicals) {
+				$("#equation-list").append("<blockquote><p class='equation'>"
+					+ mergeChemicalToEquation(chemicals)
+					+ "</p><footer>"
+					+ value.condition
+					+ "</footer></blockquote><hr/>");
+			});
+		});
+	}else{
+		$("#equation-list").html(
+				"<div class='alert alert-warning' id='error-msg' role='alert'><i class='fa fa-frown-o'></i> <strong>Xin lỗi!</strong> Không tìm thấy phản ứng nào của <strong>"
+				+ data.keyWord + "</strong></div>");
+	}
+	scrollToElement("#result-block", 2000);
+}
+
 function getEquation() {
 	var keyWord = $("#keyWord").val().trim();
 	$("#chemicalImg").removeAttr("src");
@@ -147,39 +180,8 @@ function getEquation() {
 					$("#result-block").css("display", "none");
 					alert("Khong tim thay");
 					return;
-				}
-				
-				$("#result-block").css("display", "block");
-				
-				//
-				if (data.element != null) {
-					fillElement(data.element);
-				} else if (data.chemical != null) {
-					fillChemical(data.chemical);
-				}else{
-					$("#chemicalImg").css("display", "none");
-					$("#chemical-info").html("<h2>Ko tim thay cong thuc: </h2>" + data.keyWord);
-				}
-				
-				//
-				if(data.equationList != null){
-					$.each(data.equationList, function(key, value) {
-						var equation = JSON.parse(value.equation);
-						$.each(equation, function(index,chemicals) {
-							$("#equation-list").append("<blockquote><p class='equation'>"
-								+ mergeChemicalToEquation(chemicals)
-								+ "</p><footer>"
-								+ value.condition
-								+ "</footer></blockquote><hr/>");
-						});
-					});
-				}else{
-					$("#equation-list").html(
-							"<div class='alert alert-warning' id='error-msg' role='alert'><i class='fa fa-frown-o'></i> <strong>Xin lỗi!</strong> Không tìm thấy phản ứng nào của <strong>"
-							+ keyWord + "</strong></div>");
-				}
-				scrollToElement("#result-block", 2000);
-				
+				}				
+				fillResult(data);				
 			}
 		},
 		error : function(data) {
