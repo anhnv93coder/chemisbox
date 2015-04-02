@@ -44,25 +44,27 @@
 			<div class="row mar-bot40">
 				<div class="col-md-offset-3 col-md-6">
 					<div class="section-header">
-						<h2 class="section-heading animated" data-animation="bounceInUp">Kết
-							quả</h2>
+						<h2 class="section-heading animated" data-animation="bounceInUp"><a>Kết
+							quả</a></h2>
 					</div>
 				</div>
 			</div>
 
 			<div class="row mar-bot40">
 				<div class="col-md-7">
-					<div class="panel panel-danger">
+					<div class="panel panel-info">
 						<div class="panel-heading">
-							<i class="fa fa-list-ol fa-3x"></i> Phản ứng
+							<i class="fa fa-list-ol fa-2x"></i> <span style="font-size: 30px;">Phản ứng</span>
 						</div>
-						<div class="panel-body" id="equation-list"></div>
+						<div class="panel-body" id="equation-list">
+							
+						</div>
 					</div>
 				</div>
 				<div class="col-md-5">
-					<div class="panel panel-danger">
+					<div class="panel panel-info" id="chemicalAndElementBlock">
 						<div class="panel-heading">
-							<i class="fa fa-info fa-3x"></i>
+							<i class="fa fa-info fa-2x"></i> <span style="font-size: 30px;" id="chemicalName"></span>
 						</div>
 						<img src="" alt="..." class="img-rounded center-block"
 							id="chemicalImg" style="display: none; margin-top: 10px" />
@@ -81,10 +83,8 @@
 
 	<!-- section footer -->
 	<jsp:include page="base/footer.jsp"></jsp:include>
-	<script src="assets/js/chemisbox.js"></script>
-	<script type="text/javascript">
-	 
 	
+	<script type="text/javascript">
 	var listResult = [];
 	<c:forEach var="myData" items="${searchModel.equationList}" >
 		var ion = {ionId: '${myData.ionEquation.ionId}', ionEquation : '${myData.ionEquation.ionEquation}', shortcutIonEquation : '${myData.ionEquation.shortcutIonEquation}'};
@@ -104,7 +104,7 @@
 	if(tempElement != ''){
 		elementVar = {notation : '${searchModel.element.notation}', name : '${searchModel.element.name}', numberOfAtomic : '${searchModel.element.numberOfAtomic}'
 				, atomicVolume : '${searchModel.element.atomicVolume}', classify : '${searchModel.element.classify}', group  : '${searchModel.element.group}'
-				, cycle  : '${searchModel.element}', electronConfiguration : '${searchModel.element}', layers : '${searchModel.element}'
+				, cycle  : '${searchModel.element.cycle}', electronConfiguration : '${searchModel.element.electronConfiguration}', layers : '${searchModel.element.layers}'
 				, description : '${searchModel.element.description}', color : '${searchModel.element.color}', condition : '${searchModel.element.condition}'
 				, meltingTemperature : '${searchModel.element.meltingTemperature}', boilingTemperature : '${searchModel.element.boilingTemperature}'
 				, img : '${searchModel.element.img}'};

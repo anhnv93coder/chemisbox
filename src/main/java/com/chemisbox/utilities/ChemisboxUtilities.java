@@ -1,11 +1,25 @@
 package com.chemisbox.utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChemisboxUtilities {
 
+	// valid array is split
+	public static List<String> validArrayIsSplit(String source, String patternForSplit){
+		List<String> dataList = new ArrayList<String>();
+		String[] splitArr = source.split(patternForSplit);
+		for (int i = 0; i < splitArr.length; i++) {
+			String value = splitArr[i].trim();
+			if(value.length() > 0){
+				dataList.add(value);
+			}
+		}
+		return dataList;
+	}
+	
 	public static String validFormat(String source){
 		String[] arrString = source.split(" ");
 		String elementString = null;

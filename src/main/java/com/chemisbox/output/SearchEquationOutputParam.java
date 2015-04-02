@@ -11,6 +11,15 @@ public class SearchEquationOutputParam extends ChemisboxOutputParam {
 	private Element element;
 	private Chemical chemical;
 	private List<Equation> equationList;
+	private List<Integer> indexList;
+
+	public List<Integer> getIndexList() {
+		return indexList;
+	}
+
+	public void setIndexList(List<Integer> indexList) {
+		this.indexList = indexList;
+	}
 
 	public Element getElement() {
 		return element;

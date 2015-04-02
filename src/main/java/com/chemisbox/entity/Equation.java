@@ -15,7 +15,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 
-@NamedNativeQueries({ @NamedNativeQuery(name = "callGetEquations", query = "CALL getEquation(:chemical, :typeOf)", resultClass = Equation.class) })
+@NamedNativeQueries({
+		@NamedNativeQuery(name = "callGetEquationByChemical", query = "CALL getEquationByChemical(:chemical, :typeOf)", resultClass = Equation.class),
+
+		@NamedNativeQuery(name = "callGetEquationsByEquationString", query = "CALL getEquationByEquationString(:chemical1, :chemical2, :typeOf)", resultClass = Equation.class),
+
+		@NamedNativeQuery(name = "callGetEquationsByLeftRight", query = "CALL getEquationByLeftAndRightChemical(:leftChemical, :rightChemical)", resultClass = Equation.class) })
 @Embeddable
 @Entity
 @Table(name = "equation", catalog = "chemisbox")
@@ -50,11 +55,11 @@ public class Equation implements Serializable {
 	@JoinColumn(name = "oxi_id")
 	private OxiReduceEquation oxiReduceEquation;
 
-	public long getEquationId() {
+	public Long getEquationId() {
 		return equationId;
 	}
 
-	public void setEquationId(long equationId) {
+	public void setEquationId(Long equationId) {
 		this.equationId = equationId;
 	}
 
@@ -90,7 +95,6 @@ public class Equation implements Serializable {
 		this.videoLink = videoLink;
 	}
 
-	
 	public IonEquation getIonEquation() {
 		return ionEquation;
 	}
@@ -99,7 +103,6 @@ public class Equation implements Serializable {
 		this.ionEquation = ionEquation;
 	}
 
-	
 	public OxiReduceEquation getOxiReduceEquation() {
 		return oxiReduceEquation;
 	}

@@ -26,9 +26,7 @@ public class SearchEquationController extends
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String searchEquationBySubmit(@ModelAttribute("searchModel") SearchEquationModel model,
             ModelMap map) throws ChemisboxException {
-		this.model = new SearchEquationModel();
-		this.model.setKeyWord(model.getKeyWord());
-		this.model = execute(this.model);
+		this.model = execute(model);
 		map.put("searchModel", this.model);
 		return "search";
 	}
@@ -36,27 +34,28 @@ public class SearchEquationController extends
 	@RequestMapping(value = "/search/{keyword}")
 	public @ResponseBody SearchEquationModel searchEquationByAjax(
 			@PathVariable("keyword") String keyWord) throws ChemisboxException {
-		this.model = new SearchEquationModel();
-		this.model.setKeyWord(keyWord);
-		return execute(this.model);
+		SearchEquationModel searchEquationModel = new SearchEquationModel();
+		searchEquationModel.setKeyWord(keyWord.trim());
+		return execute(searchEquationModel);
 	}
 	
 	@Override
 	public  SearchEquationModel execute(SearchEquationModel model) throws ChemisboxException {
+		//SearchEquationModel searchEquationModel 
 		if (ChemisboxUtilities.isNullOrEmpty(model.getKeyWord())) {
-			this.model.setErrorMessage("Key word is null");
-			return this.model;
+			model.setErrorMessage("Key word is null");
+			return model;
 		}
 		this.business = this.searchEquationBusiness;
 		SearchEquationInputParam inParam = new SearchEquationInputParam();
 		inParam.setKeyWord(ChemisboxUtilities.trimFullSize(model.getKeyWord()));
 		SearchEquationOutputParam outParam = this.business.execute(inParam);
 		if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
-			this.model.setErrorMessage(outParam.getErrorMessage());
+			model.setErrorMessage(outParam.getErrorMessage());
 		}
-		this.model.setEquationList(outParam.getEquationList());
-		this.model.setChemical(outParam.getChemical());
-		this.model.setElement(outParam.getElement());
-		return this.model;
+		model.setEquationList(outParam.getEquationList());
+		model.setChemical(outParam.getChemical());
+		model.setElement(outParam.getElement());
+		return model;
 	}
 }

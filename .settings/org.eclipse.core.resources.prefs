@@ -4,6 +4,7 @@ encoding//src/main/java/com/chemisbox/controller/AddEquationController.java=UTF-
 encoding//src/main/java/com/chemisbox/utilities/ChemisboxUtilities.java=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/base/about.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/base/contact.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/pages/base/head.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/base/menu.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/base/periodic-table.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/index.jsp=UTF-8

@@ -2,13 +2,50 @@
  * 
  */
 
-var RESULT_CHARACTER = " = ";
+var RESULT_CHARACTER = "&nbsp;&nbsp;&nbsp;<a><i class='fa fa-long-arrow-right'></i></a>&nbsp;&nbsp;&nbsp;";
+
+document.addEventListener('DOMContentLoaded', function() {
+	
+	$('#equation-block-list').ready(function () {
+		$(this).find(".show-oxi").click(function(){
+			alert("Ok");
+			var flag = $(this).attr("id");
+			if(flag === '1' || flag === 1){
+				$(this).children().removeClass("fa-caret-down");
+				$(this).children().addClass("fa-caret-up");
+				$(this).parent().find("#oxiEquation").show(1000);
+				$(this).attr("id", 0);
+			}else{
+				$(this).children().removeClass("fa-caret-up");
+				$(this).children().addClass("fa-caret-down");
+				$(this).parent().find("#oxiEquation").hide(1000);
+				$(this).attr("id", 1);
+			}
+		});
+    });
+	
+	$("#keyWord").keyup(function(e) {
+		var code = e.keyCode || e.which;
+		if(code == 13){
+			getEquation();
+		}
+	});
+	
+	$("#btnSearch").click(function(e) {
+		e.preventDefault();
+		getEquation();
+	});
+	
+	
+});
+
 
 function fillChemical(chemical) {
 	if(!stringIsNullOrEmpty(chemical.img)){
 		$("#chemicalImg").css("display", "block");
 		$("#chemicalImg").attr("src", chemical.img);
 	}
+	$("#chemicalName").append(chemical.name);
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Tên chính</dt><dd>" + chemical.name
 					+ "</dd></dl>");
@@ -42,14 +79,15 @@ function fillChemical(chemical) {
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Mùi</dt><dd>" + chemical.flavour
 					+ "</dd></dl>");
-
 }
+
 
 function fillElement(element) {
 	if(!stringIsNullOrEmpty(element.img)){
 		$("#chemicalImg").css("display", "block");
 		$("#chemicalImg").attr("src", element.img);
 	}
+	$("#chemicalName").append(element.name);
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Ký hiệu</dt><dd>" + element.notation
 					+ "</dd></dl>");
@@ -94,12 +132,13 @@ function fillElement(element) {
 					+ element.boilingTemperature + "</dd></dl>");
 }
 
+
 function mergeChemicalToEquation(chemicals) {
 	var inputChemical = "";
 	var outputChemical = "";
 	$.each(chemicals, function(i, inParam) {
 		var chemicalStr = "";
-		var res = inParam.formula.match(/[A-Za-z()]+[0-9]+/g);
+		var res = inParam.formula.match(/[A-Za-z()]+[0-9]*/g);
 		if(res != null && res.length > 0){
 			var temp = "";
 			for(var i = 0; i < res.length; i++){
@@ -109,27 +148,57 @@ function mergeChemicalToEquation(chemicals) {
 			inParam.formula = temp;
 		}
 		
-		if (inParam.numberOfAtomic == '0' || inParam.numberOfAtomic == '1') {
+		if (inParam.numberOfAtomic == '1') {
 			chemicalStr = inParam.formula + inParam.condition;
 		} else {
 			chemicalStr = inParam.numberOfAtomic + inParam.formula
 					+ inParam.condition;
 		}
 		if (inParam.typeOf === 1) {
-			inputChemical += chemicalStr + " + ";
+			inputChemical += chemicalStr + "&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;";
 		} else {
-			outputChemical += chemicalStr + " + ";
+			outputChemical += chemicalStr + "&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;";
 		}
 	});
 	inputChemical = $
-			.trim(inputChemical.substring(0, inputChemical.length - 2));
+			.trim(inputChemical.substring(0, inputChemical.length - 37));
 	outputChemical = $.trim(outputChemical.substring(0,
-			outputChemical.length - 2));
+			outputChemical.length - 37));
 	var master = inputChemical + RESULT_CHARACTER + outputChemical
+	master = master.replace("+", "<a><i class='fa fa-plus'></i></a>");
 	return master;
 }
 
+function formatOxiReduceForDisplay(source){
+	var res = source.match(/(d)*(\w)+(\d)*[+−]?/g);
+	if(res != null && res.length > 0){
+		var temp = "";
+		for(var i = 0; i < res.length; i++){
+		     var number = res[i].match(/[n]?(\d)?[+−]{1}/g);
+		         temp = res[i].replace(number, '<sup>' + number + '</sup>');
+		         source = source.replace(res[i], temp);
+		 }
+	}
+//	source = source.replace('/+/g', " <a><i class='fa fa-plus'></i></a> ");
+	source = source.replace(/ /g, '&nbsp;&nbsp;&nbsp;');
+	source = source.replace(/=/g, "<a><i class='fa fa-long-arrow-right'></i></a>");
+
+	return source;
+}
+
+
+function mergeOxiReduceEquation(data) {
+	var oxiEquation = "<a id='1' class='show-oxi'><i class='fa fa-caret-down'> Phản ứng oxi hóa - khử</i></a>"
+		+ "<blockquote id='oxiEquation' style='display: none;'>" 
+		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.reduceEquation) + "</p>"
+		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.oxiEquation) + "</p>"
+		+ "</blockquote>";
+	return oxiEquation;
+}
+
+
 function fillResult(data){
+	var i = 0;
 	$("#result-block").css("display", "block");
 	
 	//
@@ -138,20 +207,21 @@ function fillResult(data){
 	} else if (data.chemical != null) {
 		fillChemical(data.chemical);
 	}else{
-		$("#chemicalImg").css("display", "none");
-		$("#chemical-info").html("<h2>Ko tim thay cong thuc: </h2>" + data.keyWord);
+		//$("#chemicalImg").css("display", "none");
+		$("#chemicalAndElementBlock").css("display", "none");
 	}
 	
 	//
 	if(data.equationList != null && data.equationList.length > 0){
+		$("#equation-list").append("<p class='bg-danger'>&nbsp;<i class='fa fa-search'></i>&nbsp;&nbsp;Bạn đang tìm phản ứng liên quan đến: " + data.keyWord + "</p>");
 		$.each(data.equationList, function(key, value) {
 			var equation = JSON.parse(value.equation);
 			$.each(equation, function(index,chemicals) {
-				$("#equation-list").append("<blockquote><p class='equation'>"
+				var oxiEquation = mergeOxiReduceEquation(value.oxiReduceEquation);
+				$("#equation-list").append(
+					"<blockquote id='#equation-block-list'><p class='equation'><span class='badge'>" + (++i) + "</span>&nbsp;"
 					+ mergeChemicalToEquation(chemicals)
-					+ "</p><footer>"
-					+ value.condition
-					+ "</footer></blockquote><hr/>");
+					+ "</p><footer style='padding-bottom:15px;'>"+ value.condition+ "</footer>"  + oxiEquation + "</blockquote><hr/>");
 			});
 		});
 	}else{
@@ -168,6 +238,7 @@ function getEquation() {
 	$("#chemicalImg").css("display", "none");
 	$("#equation-list").empty();
 	$("#chemical-info").empty();
+	$("#chemicalName").empty();
 	$.ajax({
 		url : '/ChemisBox/search/' + keyWord,
 		dataType : "json",
@@ -215,23 +286,6 @@ function getCycleEquation(leftKeyWord, rightKeyWord) {
 		}
 	});
 }
-
-$(document).ready(function() {
-
-	$("#keyWord").keyup(function(e) {
-		var code = e.keyCode || e.which;
-		if(code == 13){
-			getEquation();
-		}
-	});
-	
-	$("#btnSearch").click(function(e) {
-		e.preventDefault();
-		getEquation();
-	});
-});
-
-
 
 var scrollToElement = function(el, ms) {
 	var speed = (ms) ? ms : 600;
