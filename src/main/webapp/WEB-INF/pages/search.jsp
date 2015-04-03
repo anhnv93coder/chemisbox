@@ -54,7 +54,7 @@
 				<div class="col-md-7">
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							<i class="fa fa-list-ol fa-2x"></i> <span style="font-size: 30px;">Phản ứng</span>
+							<i class="fa fa-list-alt fa-2x"></i> <span style="font-size: 30px;">Phản ứng</span>
 						</div>
 						<div class="panel-body" id="equation-list">
 							

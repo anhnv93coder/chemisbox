@@ -6,24 +6,6 @@ var RESULT_CHARACTER = "&nbsp;&nbsp;&nbsp;<a><i class='fa fa-long-arrow-right'><
 
 document.addEventListener('DOMContentLoaded', function() {
 	
-	$('#equation-block-list').ready(function () {
-		$(this).find(".show-oxi").click(function(){
-			alert("Ok");
-			var flag = $(this).attr("id");
-			if(flag === '1' || flag === 1){
-				$(this).children().removeClass("fa-caret-down");
-				$(this).children().addClass("fa-caret-up");
-				$(this).parent().find("#oxiEquation").show(1000);
-				$(this).attr("id", 0);
-			}else{
-				$(this).children().removeClass("fa-caret-up");
-				$(this).children().addClass("fa-caret-down");
-				$(this).parent().find("#oxiEquation").hide(1000);
-				$(this).attr("id", 1);
-			}
-		});
-    });
-	
 	$("#keyWord").keyup(function(e) {
 		var code = e.keyCode || e.which;
 		if(code == 13){
@@ -39,6 +21,17 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 });
 
+function showOxi(id, equationBlock) {
+	if(false == $(id).parent().find(equationBlock).is(':visible')){
+		$(id).children().removeClass("fa-caret-down");
+		$(id).children().addClass("fa-caret-up");
+		$(id).parent().find(equationBlock).show(250);
+	}else{
+		$(id).children().removeClass("fa-caret-up");
+		$(id).children().addClass("fa-caret-down");
+		$(id).parent().find(equationBlock).hide(250);
+	}
+}
 
 function fillChemical(chemical) {
 	if(!stringIsNullOrEmpty(chemical.img)){
@@ -188,7 +181,7 @@ function formatOxiReduceForDisplay(source){
 
 
 function mergeOxiReduceEquation(data) {
-	var oxiEquation = "<a id='1' class='show-oxi'><i class='fa fa-caret-down'> Phản ứng oxi hóa - khử</i></a>"
+	var oxiEquation = "<a class='show-oxi' onclick='showOxi(this, \"#oxiEquation\")'><i class='fa fa-caret-down'> Phương trình oxi hóa - khử</i></a>"
 		+ "<blockquote id='oxiEquation' style='display: none;'>" 
 		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.reduceEquation) + "</p>"
 		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.oxiEquation) + "</p>"
@@ -196,6 +189,14 @@ function mergeOxiReduceEquation(data) {
 	return oxiEquation;
 }
 
+function mergeIonEquation(data) {
+	var ionEquation = "<br/><a class='show-ion' onclick='showOxi(this, \"#ionEquation\")'><i class='fa fa-caret-down'> Phương trình ion</i></a>"
+		+ "<blockquote id='ionEquation' style='display: none;'>" 
+		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.ionEquation) + "</p>"
+		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.shortcutIonEquation) + "</p>"
+		+ "</blockquote>";
+	return ionEquation;
+}
 
 function fillResult(data){
 	var i = 0;
@@ -217,11 +218,20 @@ function fillResult(data){
 		$.each(data.equationList, function(key, value) {
 			var equation = JSON.parse(value.equation);
 			$.each(equation, function(index,chemicals) {
-				var oxiEquation = mergeOxiReduceEquation(value.oxiReduceEquation);
+				var oxiEquation = "";
+				if(!stringIsNullOrEmpty(value.oxiReduceEquation.oxiReduceId)){
+					 oxiEquation = mergeOxiReduceEquation(value.oxiReduceEquation);
+				}
+				
+				var ionEquation = "";
+				if(value.ionEquation != null && !stringIsNullOrEmpty(value.ionEquation.ionId)){
+					ionEquation = mergeIonEquation(value.ionEquation);
+				}
+				
 				$("#equation-list").append(
 					"<blockquote id='#equation-block-list'><p class='equation'><span class='badge'>" + (++i) + "</span>&nbsp;"
 					+ mergeChemicalToEquation(chemicals)
-					+ "</p><footer style='padding-bottom:15px;'>"+ value.condition+ "</footer>"  + oxiEquation + "</blockquote><hr/>");
+					+ "</p><footer style='padding-bottom:15px;'>"+ value.condition+ "</footer>"  + oxiEquation + ionEquation + "</blockquote><hr/>");
 			});
 		});
 	}else{
@@ -229,7 +239,7 @@ function fillResult(data){
 				"<div class='alert alert-warning' id='error-msg' role='alert'><i class='fa fa-frown-o'></i> <strong>Xin lỗi!</strong> Không tìm thấy phản ứng nào của <strong>"
 				+ data.keyWord + "</strong></div>");
 	}
-	scrollToElement("#result-block", 2000);
+	scrollToElement("#result-block", 800);
 }
 
 function getEquation() {
@@ -261,32 +271,6 @@ function getEquation() {
 	});
 }
 
-function getCycleEquation(leftKeyWord, rightKeyWord) {
-	$.ajax({
-		url : '/ChemisBox/equation/search/' + leftKeyWord + '/'+ rightKeyWord,
-		type : 'GET',
-		dataType : 'json',
-		contentType : 'application/json',
-		mimeType : 'application/json',
-		success : function(data) {
-			if (data.length == 0) {
-				$("#equation-list").html("<div class='alert alert-warning' id='error-msg' role='alert'><i class='fa fa-frown-o'></i> <strong>Xin lỗi!</strong> Không tìm thấy phản ứng nào của <strong>"
-						+ chemical + "</strong></div>");
-			} else {
-				$.each(data, function(key, value) {
-					$("#equation-list").append("<blockquote><p class='equation'>"
-						+ value.equation + "</p><footer>"
-						+ value.condition
-						+ "</footer></blockquote><hr/>");
-				});
-			}
-		},
-		error : function(msg) {
-			alert(msg.message);
-		}
-	});
-}
-
 var scrollToElement = function(el, ms) {
 	var speed = (ms) ? ms : 600;
 	$('html,body').animate({
@@ -295,5 +279,5 @@ var scrollToElement = function(el, ms) {
 }
 
 function stringIsNullOrEmpty(source){
-	return (!source || source == undefined);
+	return (source == '' || !source || source == undefined);
 }
