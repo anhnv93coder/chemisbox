@@ -22,14 +22,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showOxi(id, equationBlock) {
-	if(false == $(id).parent().find(equationBlock).is(':visible')){
+	
+	if(false == $(id).parent().parent().find(equationBlock).is(':visible')){
 		$(id).children().removeClass("fa-caret-down");
 		$(id).children().addClass("fa-caret-up");
-		$(id).parent().find(equationBlock).show(250);
+		$(id).parent().parent().find(equationBlock).show(250);
 	}else{
 		$(id).children().removeClass("fa-caret-up");
 		$(id).children().addClass("fa-caret-down");
-		$(id).parent().find(equationBlock).hide(250);
+		$(id).parent().parent().find(equationBlock).hide(250);
 	}
 }
 
@@ -179,21 +180,48 @@ function formatOxiReduceForDisplay(source){
 	return source;
 }
 
+function formatIonForDisplay(source){
+	var res = source.match(/(d)*(\w)+(\d)*[+−]?/g);
+	if(res != null && res.length > 0){
+		var temp = "";
+		for(var i = 0; i < res.length; i++){
+		     var number = res[i].match(/[n]?(\d)?[+−]{1}/g);
+		         temp = res[i].replace(number, '<sup>' + number + '</sup>');
+		         source = source.replace(res[i], temp);
+		 }
+	}
+
+	 res = source.match(/(\w)+(\d)+ <sup>/g);
+    if(res != null && res.length > 0){
+         for(var i = 0; i < res.length ; i++){
+              var temp = res[i].replace(' ', '');
+              source = source.replace(res[i], temp);
+         }
+    }
+	
+//	source = source.replace('/+/g', " <a><i class='fa fa-plus'></i></a> ");
+	source = source.replace(/ /g, '&nbsp;&nbsp;&nbsp;');
+	source = source.replace(/=/g, "<a><i class='fa fa-long-arrow-right'></i></a>");
+
+	return source;
+}
+
 
 function mergeOxiReduceEquation(data) {
-	var oxiEquation = "<a class='show-oxi' onclick='showOxi(this, \"#oxiEquation\")'><i class='fa fa-caret-down'> Phương trình oxi hóa - khử</i></a>"
+	var oxiEquation = "<p><a class='show-oxi' onclick='showOxi(this, \"#oxiEquation\")'><i class='fa fa-caret-down'> Phương trình oxi hóa - khử</i></a></p>"
 		+ "<blockquote id='oxiEquation' style='display: none;'>" 
-		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.reduceEquation) + "</p>"
-		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.oxiEquation) + "</p>"
+		+ "<p class='equation'>Quá trình khử:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + formatOxiReduceForDisplay(data.reduceEquation) + "</p>"
+		+ "<p class='equation' style='border-bottom: 1px solid;'>Quá trình oxi hóa:&nbsp;" + formatOxiReduceForDisplay(data.oxiEquation) + "</p>"
+		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.summary) + "</p>"
 		+ "</blockquote>";
 	return oxiEquation;
 }
 
 function mergeIonEquation(data) {
-	var ionEquation = "<br/><a class='show-ion' onclick='showOxi(this, \"#ionEquation\")'><i class='fa fa-caret-down'> Phương trình ion</i></a>"
+	var ionEquation = "<p><a class='show-ion' onclick='showOxi(this, \"#ionEquation\")'><i class='fa fa-caret-down'> Phương trình ion</i></a></p>"
 		+ "<blockquote id='ionEquation' style='display: none;'>" 
-		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.ionEquation) + "</p>"
-		+ "<p class='equation'>" + formatOxiReduceForDisplay(data.shortcutIonEquation) + "</p>"
+		+ "<p class='equation'>" + formatIonForDisplay(data.ionEquation) + "</p>"
+		+ "<p class='equation'>" + formatIonForDisplay(data.shortcutIonEquation) + "</p>"
 		+ "</blockquote>";
 	return ionEquation;
 }
@@ -201,7 +229,7 @@ function mergeIonEquation(data) {
 function fillResult(data){
 	var i = 0;
 	$("#result-block").css("display", "block");
-	
+	$("#chemicalAndElementBlock").css("display", "block");
 	//
 	if (data.element != null) {
 		fillElement(data.element);

@@ -8,6 +8,8 @@ import com.chemisbox.exception.ChemisboxException;
 public interface EquationDAO {
 	public List<Equation> selectByChemical(String chemical, int typeOf) throws ChemisboxException;
 	public List<Equation> selectByChemicals(String leftChemical, String rightChemical) throws ChemisboxException;
+	public List<Equation> selectByChemicals(String chemical1, String chemical2, int typeOf) throws ChemisboxException;
+	public List<Equation> selectByChemicals(String chemical1, String chemical2, String chemical3, int typeOf) throws ChemisboxException;
 	public Long add(Equation e) throws ChemisboxException;
 	public Long delete(Equation e) throws ChemisboxException;
 	public Long update(Equation e) throws ChemisboxException;

@@ -42,7 +42,7 @@
 		<div class="row mar-bot40">
 			<div class="col-lg-4">
 				<div class="align-center">
-					<i class="fa fa-refresh fa-spin fa-5x mar-bot20"></i>
+					<a><i class="fa fa-refresh fa-spin fa-5x mar-bot20"></i></a>
 					<h4>Cập nhật thường xuyên</h4>
 					<p>Thường xuyên cập nhật các công thức, phương trình hóa học</p>
 				</div>
@@ -50,7 +50,7 @@
 
 			<div class="col-lg-4">
 				<div class="align-center">
-					<i class="fa fa-terminal fa-5x mar-bot20"></i>
+					<a><i class="fa fa-terminal fa-5x mar-bot20"></i></a>
 					<h4>Dễ dàng tìm kiếm</h4>
 					<p>Giao diện thân thiện, dễ dàng sử dụng</p>
 				</div>
@@ -58,7 +58,7 @@
 
 			<div class="col-lg-4">
 				<div class="align-center">
-					<i class="fa fa-bolt fa-5x mar-bot20"></i>
+					<a><i class="fa fa-bolt fa-5x mar-bot20"></i></a>
 					<h4>Tương tác với người dùng</h4>
 					<p>Luôn ghi nhận những đóng góp của người dùng để ứng dụng ngày
 						một hoàn thiện hơn.</p>
@@ -78,8 +78,8 @@
 			<div class="col-lg-12">
 				<div class="align-center">
 					<div class="testimonial pad-top40 pad-bot40 clearfix">
-						<i class="fa fa-cloud fa-5x"
-							style="color: #777; font-size: 120px;"></i>
+						<a><i class="fa fa-cloud fa-5x"
+							style="color: #70B9B0; font-size: 120px;"></i></a>
 						<h3>ChemisBox là một website có một lượng lớn dữ liệu về hóa
 							học để cung cấp tối đa nhu cầu của người sử dụng, đặc biệt là học
 							sinh, sinh viên.</h3>

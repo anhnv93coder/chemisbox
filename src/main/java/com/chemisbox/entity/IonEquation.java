@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.chemisbox.utilities.ChemisboxUtilities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -69,8 +68,7 @@ public class IonEquation implements Serializable {
 	}
 
 	public String getIonEquation() {
-		return ChemisboxUtilities.displayOnBrowser(ChemisboxUtilities
-				.displayOxiReduceIonEquation(ionEquation));
+		return ionEquation;
 	}
 
 	public void setIonEquation(String ionEquation) {
@@ -78,8 +76,7 @@ public class IonEquation implements Serializable {
 	}
 
 	public String getShortcutIonEquation() {
-		return ChemisboxUtilities.displayOnBrowser(ChemisboxUtilities
-				.displayOxiReduceIonEquation(shortcutIonEquation));
+		return shortcutIonEquation;
 	}
 
 	public void setShortcutIonEquation(String shortcutIonEquation) {

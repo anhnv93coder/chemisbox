@@ -37,25 +37,29 @@ public class SearchEquationBusiness extends
 		this.out = new SearchEquationOutputParam();
 		String keyWord = inParam.getKeyWord();
 		List<Equation> equationList = null;
+		Element element = null;
+		Chemical chemical = null;
+		List<String> keyWordList = null;
 		try {
+			// has contains '>'
 			if (keyWord.contains(">")) {
-				List<String> keyWordList = ChemisboxUtilities
+				keyWordList = ChemisboxUtilities
 						.validArrayIsSplit(keyWord, ">");
 				equationList = new ArrayList<Equation>();
 
-				//if size keyWordList < 2 after split then invalid 
+				// if size keyWordList < 2 after split then invalid
 				if (keyWordList.size() < 2) {
 					this.out.setErrorMessage("Key word is invalid");
 					return this.out;
 				}
 
-				//if size keyWordList have 2 element only
+				// if size keyWordList have 2 element only
 				if (keyWordList.size() == 2) {
 					List<Equation> equations = equationDao.selectByChemicals(
 							keyWordList.get(0), keyWordList.get(1));
 					equationList.addAll(equations);
-					
-				//if size keyWordList greater than 2 element
+
+					// if size keyWordList greater than 2 element
 				} else {
 					for (int i = 0; i < keyWordList.size() - 1; i++) {
 						List<Equation> equations = equationDao
@@ -64,41 +68,89 @@ public class SearchEquationBusiness extends
 						equationList.addAll(equations);
 					}
 				}
-			} else {
-				// Find equation
-				// Ex: keyWord is "= Na"
-				if (Character.toString(keyWord.charAt(0)).equalsIgnoreCase("=")) {
-					keyWord = keyWord.substring(1, keyWord.length()).trim();
-					equationList = equationDao.selectByChemical(keyWord,
-							ChemisboxConstant.OUTPUT);
-				} else {
-					// Ex: keyWord is "Na"
-					equationList = equationDao.selectByChemical(keyWord,
-							ChemisboxConstant.INPUT);
+				this.out.setEquationList(equationList);
+				return this.out;
+			}
+			
+			// has contains '+' 
+			if (keyWord.contains("+")) {
+				keyWordList = ChemisboxUtilities
+						.validArrayIsSplit(keyWord, "\\+");
+				if(ChemisboxUtilities.isNullOrEmpty(keyWordList)){
+					this.out.setErrorMessage("Key word is invalid");
+					return this.out;
 				}
-
-				// Find element
-				Element element = elementDao.get(keyWord);
-				if (element != null) {
-					this.out.setElement(element);
-				} else {// Find chemical
-					List<Chemical> chemicals = chemicalDao.list(keyWord);
-					if (!ChemisboxUtilities.isNullOrEmpty(chemicals)) {
-						this.out.setChemical(chemicals.get(0));
+				
+				if(keyWordList.size() > 3){
+					this.out.setErrorMessage("This function will be develop in feature!");
+					return this.out;
+				}
+				
+				if(keyWordList.size() == 2){
+					if(Character.toString(keyWord.charAt(0)).equalsIgnoreCase("=")){
+						equationList = equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), ChemisboxConstant.OUTPUT);
+					}else{
+						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), ChemisboxConstant.INPUT);
 					}
+					this.out.setEquationList(equationList);
+					return this.out;
+				}
+				
+				if(keyWordList.size() == 3){
+					if(Character.toString(keyWord.charAt(0)).equalsIgnoreCase("=")){
+						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), keyWordList.get(2), ChemisboxConstant.OUTPUT);
+					}else{
+						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), keyWordList.get(2), ChemisboxConstant.INPUT);
+					}
+					this.out.setEquationList(equationList);
+					return this.out;
+				}
+			}
+			
+			//Not contains '+' or '>'
+			if (Character.toString(keyWord.charAt(0)).equalsIgnoreCase("=")) {
+				keyWord = keyWord.substring(1, keyWord.length()).trim();
+				equationList = equationDao.selectByChemical(keyWord,
+						ChemisboxConstant.OUTPUT);
+			} else {
+				equationList = equationDao.selectByChemical(keyWord,
+						ChemisboxConstant.INPUT);
+			}
+
+			// Find element
+			element = elementDao.get(keyWord);
+			if (element != null) {
+				this.out.setElement(element);
+			} else {// Find chemical
+				List<Chemical> chemicals = chemicalDao.list(keyWord);
+				if (!ChemisboxUtilities.isNullOrEmpty(chemicals)) {
+					chemical = chemicals.get(0);
+					this.out.setChemical(chemical);
 				}
 			}
 
-			if (ChemisboxUtilities.isNullOrEmpty(equationList)) {
-				this.out.setErrorMessage("Not found any equation with key word: "
+			if (ChemisboxUtilities.isNullOrEmpty(equationList) && element == null && chemical == null) {
+				this.out.setErrorMessage("Not found any information with key word: "
 						+ keyWord);
 				return this.out;
 			}
+			
 			this.out.setEquationList(equationList);
 		} catch (Exception e) {
 			this.out.setErrorMessage(e.getMessage());
 		}
 		return this.out;
+	}
+	
+	public Integer getTypeOfKeyWord(String keyWord){
+		if(keyWord.contains("=")){
+			String[] keyWordArr = keyWord.split("=");
+			if(keyWordArr.length <= 1 || keyWordArr.length > 2){
+				return null;
+			}
+			
+		}
+		return null;
 	}
 
 	public void setEquationDao(EquationDAO equationDao) {
