@@ -7,26 +7,53 @@ import java.util.regex.Pattern;
 
 public class ChemisboxUtilities {
 
+	public static Long getLongInString(String source) {
+		Long value = null;
+		try {
+			if(isNullOrEmpty(source)){
+				return value;
+			}
+			value = Long.parseLong(source);
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+		}
+		return value;
+	}
+	
+	public static Integer getIntegerInString(String source) {
+		Integer value = null;
+		try {
+			if(isNullOrEmpty(source)){
+				return value;
+			}
+			value = Integer.parseInt(source);
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+		}
+		return value;
+	}
+
 	// valid array is split
-	public static List<String> validArrayIsSplit(String source, String patternForSplit){
+	public static List<String> validArrayIsSplit(String source,
+			String patternForSplit) {
 		List<String> dataList = new ArrayList<String>();
 		String[] splitArr = source.split(patternForSplit);
 		for (int i = 0; i < splitArr.length; i++) {
 			String value = splitArr[i].trim();
-			if(value.length() > 0){
+			if (value.length() > 0) {
 				dataList.add(value);
 			}
 		}
 		return dataList;
 	}
-	
-	public static String validFormat(String source){
+
+	public static String validFormat(String source) {
 		String[] arrString = source.split(" ");
 		String elementString = null;
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < arrString.length; i++) {
 			elementString = arrString[i].trim();
-			if(elementString.length() > 0){
+			if (elementString.length() > 0) {
 				buffer.append(elementString);
 				buffer.append(" ");
 			}
@@ -34,16 +61,18 @@ public class ChemisboxUtilities {
 		buffer.deleteCharAt(buffer.length() - 1);
 		return buffer.toString();
 	}
-	
-	public static String trimFullSize(String data){
+
+	public static String trimFullSize(String data) {
 		return data.trim();
 	}
-	
+
 	/*
 	 * Validate List<?> is null or empty
+	 * 
 	 * @param list
-	 * @output true if list is null or empty
-	 * false if list not null and not empty
+	 * 
+	 * @output true if list is null or empty false if list not null and not
+	 * empty
 	 */
 	public static boolean isNullOrEmpty(List<?> list) {
 		if (list == null) {
@@ -58,11 +87,13 @@ public class ChemisboxUtilities {
 
 	/*
 	 * Validate String is null or empty
+	 * 
 	 * @param stringData
-	 * @output true if stringData is null or empty
-	 * false if stringData not null and not empty
+	 * 
+	 * @output true if stringData is null or empty false if stringData not null
+	 * and not empty
 	 */
-	
+
 	public static boolean isNullOrEmpty(String stringData) {
 		if (stringData == null) {
 			return true;
@@ -75,15 +106,14 @@ public class ChemisboxUtilities {
 		return false;
 	}
 
-	
-
 	/*
-	 * Convert string data to equation format 
-	 * @param rawData
-	 * @output equation format
+	 * Convert string data to equation format
 	 * 
+	 * @param rawData
+	 * 
+	 * @output equation format
 	 */
-	
+
 	public static String convertStringToEquationFormat(String rawData) {
 		String[] arr = rawData.split(",");
 		StringBuffer inBuffer = new StringBuffer();
@@ -116,11 +146,12 @@ public class ChemisboxUtilities {
 
 	/*
 	 * Format string data to oxi_reduce ion equation
-	 * @param source
-	 * @output oxi_reduce ion format
 	 * 
+	 * @param source
+	 * 
+	 * @output oxi_reduce ion format
 	 */
-	
+
 	public static String displayOxiReduceIonEquation(String source) {
 		Pattern pattern = Pattern.compile("(\\d)*(\\w)+[+−]?");
 		Matcher matcher = pattern.matcher(source);
@@ -140,11 +171,12 @@ public class ChemisboxUtilities {
 
 	/*
 	 * Format string data to equation to display on browser for user
-	 * @param source
-	 * @output equation format ion format
 	 * 
+	 * @param source
+	 * 
+	 * @output equation format ion format
 	 */
-	
+
 	public static String displayOnBrowser(String source) {
 		String patternStr = "[a-zA-Z()]\\d+";
 

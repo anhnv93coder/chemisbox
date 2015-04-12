@@ -41,7 +41,7 @@ public class SearchEquationController extends
 	
 	@Override
 	public  SearchEquationModel execute(SearchEquationModel model) throws ChemisboxException {
-		//SearchEquationModel searchEquationModel 
+		
 		if (ChemisboxUtilities.isNullOrEmpty(model.getKeyWord())) {
 			model.setErrorMessage("Key word is null");
 			return model;

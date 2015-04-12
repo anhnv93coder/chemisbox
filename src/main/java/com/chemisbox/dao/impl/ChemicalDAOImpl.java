@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +49,7 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 		}
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(c);
-		return false;
+		return true;
 	}
 
 	public Long update(Chemical c) throws ChemisboxException {
@@ -82,6 +83,18 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 			return obj.getId();
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Chemical> list(int startIndex, int pageSize)
+			throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<Chemical>)session.createCriteria(Chemical.class).setFirstResult(startIndex).setMaxResults(pageSize).list();
+	}
+
+	public Long getCount() throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session.createCriteria(Chemical.class).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }

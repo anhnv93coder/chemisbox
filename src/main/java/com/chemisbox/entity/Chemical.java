@@ -36,7 +36,7 @@ public class Chemical implements Serializable {
 	private String formula;
 
 	@Column(name = "quantity", nullable = false, columnDefinition = "int default 100")
-	private int quantity;
+	private float quantity;
 
 	@Column(name = "description")
 	private String description;
@@ -87,19 +87,18 @@ public class Chemical implements Serializable {
 	}
 
 	public String getFormula() {
-		return ChemisboxUtilities.displayOnBrowser(ChemisboxUtilities
-				.displayOxiReduceIonEquation(formula));
+		return formula;
 	}
 
 	public void setFormula(String formula) {
 		this.formula = formula;
 	}
 
-	public int getQuantity() {
+	public float getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 

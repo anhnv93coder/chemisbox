@@ -75,5 +75,10 @@
 		<property name="chemicalDao" ref="chemicalDao" />
 		<property name="elementDao" ref="elementDao" />
 	</bean>
+	
+	<bean id="chemicalManagementBusiness" class="com.chemisbox.business.ChemicalManagementBusiness">
+		<property name="chemicalDao" ref="chemicalDao" />
+	</bean>
+	
 
 </beans>

@@ -50,7 +50,7 @@
 
 			<div class="col-lg-4">
 				<div class="align-center">
-					<a><i class="fa fa-terminal fa-5x mar-bot20"></i></a>
+					<a><i class="fa fa-star fa-5x mar-bot20"></i></a>
 					<h4>Dễ dàng tìm kiếm</h4>
 					<p>Giao diện thân thiện, dễ dàng sử dụng</p>
 				</div>
@@ -58,7 +58,7 @@
 
 			<div class="col-lg-4">
 				<div class="align-center">
-					<a><i class="fa fa-bolt fa-5x mar-bot20"></i></a>
+					<a><i class="fa fa-exchange fa-5x mar-bot20"></i></a>
 					<h4>Tương tác với người dùng</h4>
 					<p>Luôn ghi nhận những đóng góp của người dùng để ứng dụng ngày
 						một hoàn thiện hơn.</p>

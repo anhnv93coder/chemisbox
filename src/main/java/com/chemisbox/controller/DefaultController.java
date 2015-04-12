@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.chemisbox.model.SearchEquationModel;
 
 @Controller
-public class DefaultController {
+public class DefaultController{
 		
 	@RequestMapping("/")
 	public String getIndex(ModelMap map){
@@ -15,4 +15,5 @@ public class DefaultController {
 		map.put("searchModel", searchModel);
 		return "index";
 	}
+	
 }

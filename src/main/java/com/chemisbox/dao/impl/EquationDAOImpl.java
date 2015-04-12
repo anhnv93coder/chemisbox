@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class EquationDAOImpl implements EquationDAO {
 				.setParameter("rightChemical", rightChemical);
 		return query.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Equation> selectByChemicals(String chemical1, String chemical2,
 			int typeOf) throws ChemisboxException {
@@ -71,13 +72,21 @@ public class EquationDAOImpl implements EquationDAO {
 		return e.getEquationId();
 	}
 
-	public Long delete(Equation e) throws ChemisboxException {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean delete(Equation e) throws ChemisboxException {
+		if (e == null) {
+			return false;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(e);
+		return true; 
 	}
 
 	public Long update(Equation e) throws ChemisboxException {
-		// TODO Auto-generated method stub
+		if(e == null){
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		session.update(e);
 		return e.getEquationId();
 	}
 
@@ -87,6 +96,16 @@ public class EquationDAOImpl implements EquationDAO {
 		return equation;
 	}
 
-	
+	@SuppressWarnings("unchecked")
+	public List<Equation> list(int startIndex, int pageSize)
+			throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<Equation>)session.createCriteria(Equation.class).setFirstResult(startIndex).setMaxResults(pageSize).list();
+	}
+
+	public Long getCount() {
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session.createCriteria(Equation.class).setProjection(Projections.rowCount()).uniqueResult();
+	}
 
 }

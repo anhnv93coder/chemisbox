@@ -10,5 +10,9 @@ public class ChemisboxException extends Exception{
 	public ChemisboxException(Exception e) {
 		super(e);
 	}
+	
+	public ChemisboxException(String msg) {
+		super(msg);
+	}
 
 }

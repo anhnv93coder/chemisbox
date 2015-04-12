@@ -5,9 +5,19 @@ public class ChemisboxConstant {
 	public static final int INPUT = 1;
 	public static final int OUTPUT = 2;
 	
+	public static final int TOTAL_CHEMICAL_RECORDS_IN_A_PAGE = 20;
+	public static final int TOTAL_EQUATION_RECORDS_IN_A_PAGE = 5;
+	
 	//
 	public static final int SUCCESS = 0;
 	public static final int ERROR = 1;
+	
+	//
+	public static final int BUSINESS_FOR_LIST = 1;
+	public static final int BUSINESS_FOR_ADD = 2;
+	public static final int BUSINESS_FOR_UPDATE = 3;
+	public static final int BUSINESS_FOR_DELETE = 4;
+	public static final int BUSINESS_FOR_LOAD_DETAILS = 5;
 	
 	//Api name
 	public static final String ADD_EQUATION_API = "/addEquation";
