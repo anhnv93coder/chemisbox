@@ -142,6 +142,14 @@ function mergeChemicalToEquation(chemicals) {
 			inParam.formula = temp;
 		}
 		
+		
+		var conditionRes = inParam.condition.match(/\({1}[a-zA-Z0-9]+\){1}/g);
+		if(conditionRes != null && conditionRes.length > 0){
+			for(var i = 0; i < conditionRes.length; i++){
+				inParam.condition = inParam.condition.replace(conditionRes[i], "<sub>" + conditionRes[i] + "</sub>") 
+			}
+		}
+		
 		if (inParam.numberOfAtomic == '1') {
 			chemicalStr = inParam.formula + inParam.condition;
 		} else {

@@ -17,12 +17,14 @@ public class ChemistryEquation implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	public ChemistryEquation() {
+		numberOfAtomic = 1;
+	}
 	@Id
 	@Column(name = "equation_id")
 	private long equationId;
 
-	@Column(name = "number_of_atomic")
+	@Column(name = "number_of_atomic", columnDefinition = "int default 100")
 	private int numberOfAtomic;
 
 	@Id

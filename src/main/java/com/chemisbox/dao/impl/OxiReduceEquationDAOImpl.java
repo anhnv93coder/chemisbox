@@ -43,6 +43,9 @@ public class OxiReduceEquationDAOImpl implements OxiReduceEquationDAO {
 		OxiReduceEquation oxi = null;
 		Session session = sessionFactory.getCurrentSession();
 		try {
+			if(id == null){
+				return oxi;
+			}
 			oxi = (OxiReduceEquation) session.get(OxiReduceEquation.class, id);
 		} catch (Exception e) {
 		}

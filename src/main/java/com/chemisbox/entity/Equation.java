@@ -42,7 +42,7 @@ public class Equation implements Serializable {
 	@Column(name = "`desc`")
 	private String description;
 
-	@Column(name = "equation", insertable = false, updatable = false)
+	@Column(name = "equation")
 	private String equation;
 
 	@Column(name = "`condition`")

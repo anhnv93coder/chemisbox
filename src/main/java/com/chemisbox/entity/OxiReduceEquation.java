@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.chemisbox.utilities.ChemisboxUtilities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -47,7 +46,7 @@ public class OxiReduceEquation implements Serializable {
 	private String summary;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "oxiReduceEquation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "oxiReduceEquation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Equation> equations = new ArrayList<Equation>();
 
 	
@@ -104,8 +103,7 @@ public class OxiReduceEquation implements Serializable {
 	}
 
 	public void setSummary(String summary) {
-		this.summary = ChemisboxUtilities.displayOnBrowser(ChemisboxUtilities
-				.displayOxiReduceIonEquation(summary));
+		this.summary = summary;
 		;
 	}
 

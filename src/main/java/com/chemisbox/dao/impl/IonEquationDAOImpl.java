@@ -22,6 +22,9 @@ public class IonEquationDAOImpl implements IonEquationDAO {
 	public Long add(IonEquation ion) throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		try {
+			if(ion == null){
+				return null;
+			}
 			session.save(ion);
 			return ion.getIonId();
 		} catch (Exception e) {
@@ -32,9 +35,13 @@ public class IonEquationDAOImpl implements IonEquationDAO {
 	public Long update(IonEquation ion) throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		try {
+			if(ion == null){
+				return null;
+			}
 			session.update(ion);
 			return ion.getIonId();
 		} catch (Exception e) {
+			
 		}
 		return null;
 	}
@@ -43,8 +50,12 @@ public class IonEquationDAOImpl implements IonEquationDAO {
 		Session session = sessionFactory.getCurrentSession();
 		IonEquation ion = null;
 		try {
+			if(id == null){
+				return ion;
+			}
 			ion = (IonEquation) session.get(IonEquation.class, id);
 		} catch (Exception e) {
+			
 		}
 		return ion;
 	}
@@ -52,9 +63,13 @@ public class IonEquationDAOImpl implements IonEquationDAO {
 	public Long delete(IonEquation ion) throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		try {
+			if(ion == null){
+				return null;
+			}
 			session.delete(ion);
 			return ion.getIonId();
 		} catch (Exception e) {
+			
 		}
 		return null;
 	}

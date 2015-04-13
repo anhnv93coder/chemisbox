@@ -200,6 +200,13 @@ public class ChemisboxUtilities {
 
 			}
 		}
+		
+		Pattern patterCondition = Pattern.compile("\\({1}[a-zA-Z0-9]+\\){1}");
+		Matcher matcherCondition = patterCondition.matcher(source);
+		while(matcherCondition.find()){
+			source = source.replace(matcherCondition.group(), "<sub>" + matcherCondition.group() + "<sub>");
+		}
+		
 		return source;
 	}
 }

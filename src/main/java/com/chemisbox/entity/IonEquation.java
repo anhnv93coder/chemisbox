@@ -37,7 +37,7 @@ public class IonEquation implements Serializable {
 	private String shortcutIonEquation;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "ionEquation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ionEquation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Equation> equations = new ArrayList<Equation>();
 
 	public IonEquation() {
