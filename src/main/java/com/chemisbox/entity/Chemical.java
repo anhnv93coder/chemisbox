@@ -1,6 +1,7 @@
 package com.chemisbox.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -9,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Entity
 @Embeddable
@@ -61,6 +60,50 @@ public class Chemical implements Serializable {
 
 	@Column(name = "img")
 	private String img;
+
+	@Column(name = "chemical_typeof")
+	private int chemicalTypeof;
+
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Column(name = "edited_date")
+	private Date editedDate;
+
+	@Column(name = "last_user_modify")
+	private String lastUserModify;
+
+	public String getLastUserModify() {
+		return lastUserModify;
+	}
+
+	public void setLastUserModify(String lastUserModify) {
+		this.lastUserModify = lastUserModify;
+	}
+
+	public int getChemicalTypeof() {
+		return chemicalTypeof;
+	}
+
+	public void setChemicalTypeof(int chemicalTypeof) {
+		this.chemicalTypeof = chemicalTypeof;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getEditedDate() {
+		return editedDate;
+	}
+
+	public void setEditedDate(Date editedDate) {
+		this.editedDate = editedDate;
+	}
 
 	public long getId() {
 		return id;

@@ -1,6 +1,7 @@
 package com.chemisbox.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,6 +61,39 @@ public class Element implements Serializable {
 
 	@Column(name = "img")
 	private String img;
+
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Column(name = "edited_date")
+	private Date editedDate;
+
+	@Column(name = "last_user_modify")
+	private String lastUserModify;
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getEditedDate() {
+		return editedDate;
+	}
+
+	public void setEditedDate(Date editedDate) {
+		this.editedDate = editedDate;
+	}
+
+	public String getLastUserModify() {
+		return lastUserModify;
+	}
+
+	public void setLastUserModify(String lastUserModify) {
+		this.lastUserModify = lastUserModify;
+	}
 
 	public String getNotation() {
 		return notation;

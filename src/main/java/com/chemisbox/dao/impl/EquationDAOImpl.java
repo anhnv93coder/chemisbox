@@ -108,4 +108,13 @@ public class EquationDAOImpl implements EquationDAO {
 		return (Long) session.createCriteria(Equation.class).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Equation> selectByChemical(String chemical)
+			throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.getNamedQuery("callGetEquation")
+				.setParameter("chemical", chemical);
+		return query.list();
+	}
+
 }

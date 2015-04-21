@@ -30,6 +30,16 @@ public class SearchEquationController extends
 		map.put("searchModel", this.model);
 		return "search";
 	}
+
+	@RequestMapping(value = "/detail/{keyword}", method = RequestMethod.GET)
+	public String getDetails(@PathVariable("keyword") String keyWord,
+            ModelMap map) throws ChemisboxException {
+		SearchEquationModel searchEquationModel = new  SearchEquationModel();
+		searchEquationModel.setKeyWord(keyWord.trim());
+		this.model = execute(searchEquationModel);
+		map.put("searchModel", this.model);
+		return "search";
+	}
 	
 	@RequestMapping(value = "/search/{keyword}")
 	public @ResponseBody SearchEquationModel searchEquationByAjax(

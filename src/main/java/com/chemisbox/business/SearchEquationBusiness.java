@@ -112,9 +112,11 @@ public class SearchEquationBusiness extends
 				keyWord = keyWord.substring(1, keyWord.length()).trim();
 				equationList = equationDao.selectByChemical(keyWord,
 						ChemisboxConstant.OUTPUT);
-			} else {
+			} else if (Character.toString(keyWord.charAt(keyWord.length() - 1)).equalsIgnoreCase("=")) {
 				equationList = equationDao.selectByChemical(keyWord,
 						ChemisboxConstant.INPUT);
+			}else{
+				equationList = equationDao.selectByChemical(keyWord);
 			}
 
 			// Find element
@@ -148,7 +150,6 @@ public class SearchEquationBusiness extends
 			if(keyWordArr.length <= 1 || keyWordArr.length > 2){
 				return null;
 			}
-			
 		}
 		return null;
 	}

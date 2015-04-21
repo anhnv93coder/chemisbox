@@ -1,6 +1,7 @@
 package com.chemisbox.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -16,13 +17,15 @@ import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 
 @NamedNativeQueries({
-	@NamedNativeQuery(name = "callGetEquationByChemical", query = "CALL getEquationByChemical(:chemical, :typeOf)", resultClass = Equation.class),
-
-	@NamedNativeQuery(name = "callGetEquationsByLeftRight", query = "CALL getEquationByLeftAndRightChemical(:leftChemical, :rightChemical)", resultClass = Equation.class),
-		
-	@NamedNativeQuery(name = "callGetEquationBy2Chemical", query = "CALL getEquationBy2Chemical(:chemical1, :chemical2, :typeOf)", resultClass = Equation.class),
+		@NamedNativeQuery(name = "callGetEquation", query = "CALL getEquation(:chemical)", resultClass = Equation.class),
 	
-	@NamedNativeQuery(name = "callGetEquationBy3Chemical", query = "CALL getEquationBy3Chemical(:chemical1, :chemical2, :chemical3, :typeOf)", resultClass = Equation.class)
+		@NamedNativeQuery(name = "callGetEquationByChemical", query = "CALL getEquationByChemical(:chemical, :typeOf)", resultClass = Equation.class),
+
+		@NamedNativeQuery(name = "callGetEquationsByLeftRight", query = "CALL getEquationByLeftAndRightChemical(:leftChemical, :rightChemical)", resultClass = Equation.class),
+
+		@NamedNativeQuery(name = "callGetEquationBy2Chemical", query = "CALL getEquationBy2Chemical(:chemical1, :chemical2, :typeOf)", resultClass = Equation.class),
+
+		@NamedNativeQuery(name = "callGetEquationBy3Chemical", query = "CALL getEquationBy3Chemical(:chemical1, :chemical2, :chemical3, :typeOf)", resultClass = Equation.class)
 
 })
 @Embeddable
@@ -58,6 +61,50 @@ public class Equation implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "oxi_id")
 	private OxiReduceEquation oxiReduceEquation;
+
+	@Column(name = "active")
+	private int active;
+	
+	@Column(name = "created_date")
+	private Date createdDate;
+	
+	@Column(name = "edited_date")
+	private Date editedDate;
+	
+	@Column(name = "last_user_modify")
+	private String lastUserModify;
+
+	public int getActive() {
+		return active;
+	}
+
+	public void setActive(int active) {
+		this.active = active;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getEditedDate() {
+		return editedDate;
+	}
+
+	public void setEditedDate(Date editedDate) {
+		this.editedDate = editedDate;
+	}
+
+	public String getLastUserModify() {
+		return lastUserModify;
+	}
+
+	public void setLastUserModify(String lastUserModify) {
+		this.lastUserModify = lastUserModify;
+	}
 
 	public Long getEquationId() {
 		return equationId;

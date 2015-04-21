@@ -4,7 +4,9 @@
 
 var RESULT_CHARACTER = "&nbsp;&nbsp;&nbsp;<a><i class='fa fa-long-arrow-right'></i></a>&nbsp;&nbsp;&nbsp;";
 
-document.addEventListener('DOMContentLoaded', function() {
+$(function() {
+	
+	$('.feedback').tooltip();
 	
 	$("#keyWord").keyup(function(e) {
 		var code = e.keyCode || e.which;
@@ -18,8 +20,46 @@ document.addEventListener('DOMContentLoaded', function() {
 		getEquation();
 	});
 	
-	
+	$('.feedback').click(function(e) {
+		$("#feedbackForm").css("display", "block");
+		$("#successMessage").css("display", "none");
+		$("#btnSendFeedBack").css("display", "block");
+	});
+		
+	$("#btnSendFeedBack").click(function(e) {
+		$("#feedbackForm").css("display", "none");
+		$("#btnSendFeedBack").css("display", "none");
+		
+		var email = $.trim($("#email").val());
+		var content = $.trim($("#content").val());
+		
+		var d = new Date();
+		
+		var feedback = {"email" : email, "description" : content};
+		var model = {"feedback" : feedback};
+		
+		$.ajax({
+			url : 'feedback',
+			dataType : "json",
+			contentType : "application/json",
+			type : 'POST',
+			data : JSON.stringify(model),
+			success : function(data) {
+				if(!stringIsNullOrEmpty(data.errorMessage)){
+					alert(data.errorMessage);
+				}else{
+					$("#successMessage").css("display", "block");
+				}
+			},
+			error : function(data) {
+				alert(JSON.stringify(data));
+			}
+		});
+		
+	});
 });
+
+
 
 function showOxi(id, equationBlock) {
 	
@@ -30,6 +70,15 @@ function showOxi(id, equationBlock) {
 	}else{
 		$(id).children().removeClass("fa-caret-up");
 		$(id).children().addClass("fa-caret-down");
+		$(id).parent().parent().find(equationBlock).hide(250);
+	}
+}
+
+function showVideo(id, equationBlock) {
+	
+	if(false == $(id).parent().parent().find(equationBlock).is(':visible')){
+		$(id).parent().parent().find(equationBlock).show(250);
+	}else{
 		$(id).parent().parent().find(equationBlock).hide(250);
 	}
 }
@@ -130,8 +179,12 @@ function fillElement(element) {
 function mergeChemicalToEquation(chemicals) {
 	var inputChemical = "";
 	var outputChemical = "";
+	var baseURLDetail = baseURL + "/detail"; 
 	$.each(chemicals, function(i, inParam) {
 		var chemicalStr = "";
+		var formulaTemp = "";
+		
+		// replace number by <sub>number</sub>
 		var res = inParam.formula.match(/[A-Za-z()]+[0-9]*/g);
 		if(res != null && res.length > 0){
 			var temp = "";
@@ -139,10 +192,10 @@ function mergeChemicalToEquation(chemicals) {
 				var number = res[i].match(/[0-9]+/g);
 				temp += res[i].replace(number, '<sub>' + number + '</sub>');
 			}
-			inParam.formula = temp;
+			formulaTemp = temp;
 		}
 		
-		
+		// replace (condition) by <sub>(condition)</sub>
 		var conditionRes = inParam.condition.match(/\({1}[a-zA-Z0-9]+\){1}/g);
 		if(conditionRes != null && conditionRes.length > 0){
 			for(var i = 0; i < conditionRes.length; i++){
@@ -151,11 +204,13 @@ function mergeChemicalToEquation(chemicals) {
 		}
 		
 		if (inParam.numberOfAtomic == '1') {
-			chemicalStr = inParam.formula + inParam.condition;
+			chemicalStr = formulaTemp + inParam.condition;
 		} else {
-			chemicalStr = inParam.numberOfAtomic + inParam.formula
+			chemicalStr = inParam.numberOfAtomic + formulaTemp
 					+ inParam.condition;
 		}
+		
+		chemicalStr = "<a href='" + baseURLDetail + "/" + inParam.formula + "'>" + chemicalStr + "</a>";
 		if (inParam.typeOf === 1) {
 			inputChemical += chemicalStr + "&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;";
 		} else {
@@ -167,7 +222,7 @@ function mergeChemicalToEquation(chemicals) {
 	outputChemical = $.trim(outputChemical.substring(0,
 			outputChemical.length - 37));
 	var master = inputChemical + RESULT_CHARACTER + outputChemical
-	master = master.replace("+", "<a><i class='fa fa-plus'></i></a>");
+	master = master.replace(/[+]/g, "<a><i class='fa fa-plus'></i></a>");
 	return master;
 }
 
@@ -216,7 +271,7 @@ function formatIonForDisplay(source){
 
 
 function mergeOxiReduceEquation(data) {
-	var oxiEquation = "<p><a class='show-oxi' onclick='showOxi(this, \"#oxiEquation\")'><i class='fa fa-caret-down'> Phương trình oxi hóa - khử</i></a></p>"
+	var oxiEquation = "<p class='equation-title'><a class='show-oxi' onclick='showOxi(this, \"#oxiEquation\")'><i class='fa fa-caret-down' href='#'> Phương trình oxi hóa - khử</i></a></p>"
 		+ "<blockquote id='oxiEquation' style='display: none;'>" 
 		+ "<p class='equation'>Quá trình khử:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + formatOxiReduceForDisplay(data.reduceEquation) + "</p>"
 		+ "<p class='equation' style='border-bottom: 1px solid;'>Quá trình oxi hóa:&nbsp;" + formatOxiReduceForDisplay(data.oxiEquation) + "</p>"
@@ -226,7 +281,7 @@ function mergeOxiReduceEquation(data) {
 }
 
 function mergeIonEquation(data) {
-	var ionEquation = "<p><a class='show-ion' onclick='showOxi(this, \"#ionEquation\")'><i class='fa fa-caret-down'> Phương trình ion</i></a></p>"
+	var ionEquation = "<p  class='equation-title'><a class='show-ion' onclick='showOxi(this, \"#ionEquation\")'><i class='fa fa-caret-down'  href='#'> Phương trình ion</i></a></p>"
 		+ "<blockquote id='ionEquation' style='display: none;'>" 
 		+ "<p class='equation'>" + formatIonForDisplay(data.ionEquation) + "</p>"
 		+ "<p class='equation'>" + formatIonForDisplay(data.shortcutIonEquation) + "</p>"
@@ -264,10 +319,18 @@ function fillResult(data){
 					ionEquation = mergeIonEquation(value.ionEquation);
 				}
 				
+				var videoBlock = "";
+				if(!stringIsNullOrEmpty(value.videoLink)){
+					videoBlock = "<p class='show-video'><a class='show-video' onclick='showVideo(this, \"#videoBlock\")'><i class='fa fa-video-camera'></i> Xem video</a></p>"
+								+"<div id='videoBlock' class='embed-responsive embed-responsive-4by3' style='display: none;'>"
+								+"<iframe class='embed-responsive-item' src='" + value.videoLink + "'></iframe></div>";
+				}
+				
 				$("#equation-list").append(
 					"<blockquote id='#equation-block-list'><p class='equation'><span class='badge'>" + (++i) + "</span>&nbsp;"
 					+ mergeChemicalToEquation(chemicals)
-					+ "</p><footer style='padding-bottom:15px;'>"+ value.condition+ "</footer>"  + oxiEquation + ionEquation + "</blockquote><hr/>");
+					+ "<a href='#' class='feedback pull-right' data-toggle='modal' data-target='#exampleModal' data-toggle='tooltip' data-placement='right' title='Phản hồi'>" 
+					+ "<i class='fa fa-comment'></i></a></p><footer style='padding-bottom:15px;'>"+ value.condition+ "</footer>"  + oxiEquation + ionEquation + videoBlock +"</blockquote><hr/>");
 			});
 		});
 	}else{
