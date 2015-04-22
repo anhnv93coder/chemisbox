@@ -22,4 +22,6 @@ public interface ChemicalDAO {
 	public Long get(String formula) throws ChemisboxException;
 
 	public Long getCount() throws ChemisboxException;
+	
+	public List<String> selectFormulaAndNameList() throws ChemisboxException;
 }

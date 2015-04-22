@@ -1,7 +1,12 @@
 package com.chemisbox.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+
+
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -95,6 +100,19 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 	public Long getCount() throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		return (Long) session.createCriteria(Chemical.class).setProjection(Projections.rowCount()).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<String> selectFormulaAndNameList() throws ChemisboxException {
+		List<String> masterList = new ArrayList<String>();
+		Query query = sessionFactory.getCurrentSession().createSQLQuery("Select formula From chemical");
+		List<String> formulaList = null;
+		Object tempList = query.list();
+		if(tempList instanceof List<?>){
+			formulaList = (List<String>)tempList;
+		}
+		masterList.addAll(formulaList);
+		return masterList;
 	}
 
 }

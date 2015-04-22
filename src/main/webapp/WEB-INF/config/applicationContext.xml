@@ -87,4 +87,9 @@
 	<bean id="addNewFeedbackBusiness" class="com.chemisbox.business.AddNewFeedbackBusiness">
 		<property name="feedbackDao" ref="feedbackDao" />
 	</bean>
+	
+	<bean id="defaultBusiness" class="com.chemisbox.business.DefaultBusiness">
+		<property name="chemicalDao" ref="chemicalDao" />
+		<property name="elementDao" ref="elementDao" />
+	</bean>
 </beans>
