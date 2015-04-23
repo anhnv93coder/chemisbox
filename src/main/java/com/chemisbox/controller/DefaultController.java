@@ -24,26 +24,28 @@ public class DefaultController extends ChemisboxController<DefaultBusiness, Defa
 	private DefaultBusiness defaultBusiness;
 	private List<String> suggestDataList;
 	
-	public DefaultController() {
-		suggestDataList = new ArrayList<String>();
-		suggestDataList.add("Na2");
-		suggestDataList.add("Na2S");
-		suggestDataList.add("Na2P");
-		suggestDataList.add("Na2Q");
-		suggestDataList.add("Na2D");
-	}
+//	public DefaultController() {
+//		suggestDataList = new ArrayList<String>();
+//		suggestDataList.add("Na2S");
+//		suggestDataList.add("Na2P");
+//		suggestDataList.add("Na2Q");
+//		suggestDataList.add("Na2D");
+//		suggestDataList.add("VietAnh abc 123");
+//		suggestDataList.add("VietAnh123");
+//		suggestDataList.add("VietAnh 123");
+//	}
 	
 	@RequestMapping("/")
 	public String getIndex(ModelMap map) throws ChemisboxException{
 		SearchEquationModel searchModel = new SearchEquationModel();
-//		if(ChemisboxUtilities.isNullOrEmpty(suggestDataList)){
-//			this.business = defaultBusiness;
-//			DefaultOutputParam outParam = this.business.execute(null);
-//			if(!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())){
-//				throw new ChemisboxException("Can not initial data");
-//			}
-//			suggestDataList = outParam.getSuggestList();
-//		}
+		if(ChemisboxUtilities.isNullOrEmpty(suggestDataList)){
+			this.business = defaultBusiness;
+			DefaultOutputParam outParam = this.business.execute(null);
+			if(!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())){
+				throw new ChemisboxException("Can not initial data");
+			}
+			suggestDataList = outParam.getSuggestList();
+		}
 		map.put("searchModel", searchModel);
 		return "index";
 	}
@@ -80,9 +82,8 @@ public class DefaultController extends ChemisboxController<DefaultBusiness, Defa
 	
 	private List<String> simulateSearchResult(String keyWord, List<String> dataList){
 		List<String> keyWordList = new  ArrayList<String>();
-		System.out.println(keyWord);
 		for (String auto : dataList) {
-			if(auto.toLowerCase().contains(keyWord.toLowerCase())){
+			if(auto.toUpperCase().indexOf(keyWord.toUpperCase()) != -1){
 				keyWordList.add(auto);
 			}
 		}
