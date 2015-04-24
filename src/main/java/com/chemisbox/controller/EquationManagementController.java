@@ -49,6 +49,7 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		}
 		map.put("equationMap", this.model);
 		map.put("equationObj", new Chemical());
+		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.EQUATION_MENU);
 		return "adminIndex";
 	}
 	

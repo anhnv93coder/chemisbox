@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
-<section id="main-content">
 	<section class="wrapper site-min-height">
 		<h3>
-			<i class="fa fa-angle-right"></i> Equation Management
+			<i class="fa fa-angle-right"></i> Quản lý phương trình phản ứng hóa học
 		</h3>
 		<div class="row mt">
 			<div class="col-lg-10 col-lg-offset-1" style="display: block;" id="equationTable">
@@ -86,7 +85,6 @@
 				</div>
 				</c:if>
 			</div>
-			
 			
 			<div class="modal fade" id="updateEquationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
@@ -269,4 +267,3 @@
 			</div>
 		</div>
 	</section>
-</section>

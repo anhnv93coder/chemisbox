@@ -5,6 +5,13 @@ public class ChemisboxConstant {
 	public static final int INPUT = 1;
 	public static final int OUTPUT = 2;
 	
+	// Menu constant
+	public static final String MENU_CONSTANT = "page";
+	public static final int DASHBOARD_MENU = 0;
+	public static final int EQUATION_MENU = 1;
+	public static final int CHEMICAL_MENU = 2;
+	public static final int ELEMENT_MENU = 3;
+	
 	// Element constant
 	// Element group
 	public static final int ALKADI_METALS = 0;			// KLKiem

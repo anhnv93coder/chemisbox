@@ -1,31 +1,6 @@
-$("#btnBackUpdateChemical, #btnBackAddChemical").click(function() {
-	setFormVisible("#insertForm", false);
-	setFormVisible("#chemicalTable", true);
-	setFormVisible("#updateForm", false);
-});
 
-$("#btnBackUpdateEquation, #btnBackAddEquation").click(function() {
-	setFormVisible("#insertForm", false);
-	setFormVisible("#equationTable", true);
-	setFormVisible("#updateForm", false);
-});
-
-$("#btnShowAddBlockChemical").click(function() {
-	setFormVisible("#insertForm", true);
-	setFormVisible("#chemicalTable", false);
-	setFormVisible("#updateForm", false);
-});
-
-$("#btnShowAddBlockEquation").click(function() {
-	//setFormVisible("#insertForm", true);
-	//setFormVisible("#equationTable", false);
-	//setFormVisible("#updateForm", false);
-});
 
 function loadDetailsForEquation(id) {
-	//setFormVisible("#insertForm", false);
-	//setFormVisible("#equationTable", false);
-	//setFormVisible("#updateForm", true);
 	var model = {
 		"equationId" : id
 	};
@@ -71,9 +46,6 @@ function loadDetailsForEquation(id) {
 }
 
 function loadDetailsForChemical(id) {
-	//setFormVisible("#insertForm", false);
-	//setFormVisible("#chemicalTable", false);
-	//setFormVisible("#updateForm", true);
 	var model = {
 		"chemicalId" : id
 	};

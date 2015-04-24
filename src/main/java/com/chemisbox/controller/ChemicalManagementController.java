@@ -51,6 +51,7 @@ public class ChemicalManagementController
 		}
 		map.put("chemicalMap", this.model);
 		map.put("chemicalObj", new Chemical());
+		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.CHEMICAL_MENU);
 		return "adminIndex";
 	}
 
