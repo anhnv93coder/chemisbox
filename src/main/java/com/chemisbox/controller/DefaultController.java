@@ -3,7 +3,6 @@ package com.chemisbox.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,26 +19,12 @@ import com.chemisbox.utilities.ChemisboxUtilities;
 @Controller
 public class DefaultController extends ChemisboxController<DefaultBusiness, DefaultModel> {
 	
-	@Autowired
-	private DefaultBusiness defaultBusiness;
 	private List<String> suggestDataList;
-	
-//	public DefaultController() {
-//		suggestDataList = new ArrayList<String>();
-//		suggestDataList.add("Na2S");
-//		suggestDataList.add("Na2P");
-//		suggestDataList.add("Na2Q");
-//		suggestDataList.add("Na2D");
-//		suggestDataList.add("VietAnh abc 123");
-//		suggestDataList.add("VietAnh123");
-//		suggestDataList.add("VietAnh 123");
-//	}
-	
+		
 	@RequestMapping("/")
 	public String getIndex(ModelMap map) throws ChemisboxException{
 		SearchEquationModel searchModel = new SearchEquationModel();
 		if(ChemisboxUtilities.isNullOrEmpty(suggestDataList)){
-			this.business = defaultBusiness;
 			DefaultOutputParam outParam = this.business.execute(null);
 			if(!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())){
 				throw new ChemisboxException("Can not initial data");

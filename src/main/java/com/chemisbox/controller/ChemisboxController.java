@@ -10,4 +10,13 @@ public abstract class ChemisboxController<T, V> {
 	protected V model;
 
 	public abstract V execute(V model) throws ChemisboxException;
+
+	public void setBusiness(T business) {
+		this.business = business;
+	}
+
+	public T getBusiness() {
+		return business;
+	}
+
 }

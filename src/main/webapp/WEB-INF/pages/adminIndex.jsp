@@ -9,7 +9,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="Dashboard">
+
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
+
+<c:if test="${empty adminObject}">
+	<c:redirect url="/admin"></c:redirect>
+</c:if>
+
 <c:set var="menuConstant" value="ChemisboxConstant.MENU_CONSTANT" />
 <c:set var="equationConstant" value="1" />
 <c:set var="chemicalConstant" value="2" />
@@ -34,7 +40,7 @@
 		<!--logo end-->
 		<div class="top-menu">
 			<ul class="nav pull-right top-menu">
-				<li><a class="logout" href="login.html">Logout</a></li>
+				<li><a class="logout" href="${baseURL}/admin/logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 		</div>
 		</header>

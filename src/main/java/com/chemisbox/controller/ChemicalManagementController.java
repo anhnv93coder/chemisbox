@@ -1,6 +1,5 @@
 package com.chemisbox.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,15 +19,11 @@ import com.chemisbox.output.ChemicalManagementOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
-@RequestMapping("/admin/chemical")
 public class ChemicalManagementController
 		extends
 		ChemisboxController<ChemicalManagementBusiness, ChemicalManagementModel> {
 
-	@Autowired
-	private ChemicalManagementBusiness chemicalManagementBusiness;
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/chemical", "/admin/chemical/"}, method = RequestMethod.GET)
 	public String defaultAPI(ModelMap map) {
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
@@ -36,7 +31,6 @@ public class ChemicalManagementController
 			inParam.setStartIndex(0);
 			inParam.setPageSize(ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE);
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_LIST);
-			this.business = chemicalManagementBusiness;
 			ChemicalManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -55,7 +49,7 @@ public class ChemicalManagementController
 		return "adminIndex";
 	}
 
-	@RequestMapping(value = "/{index}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/chemical/{index}", method = RequestMethod.GET)
 	public String getChemicals(@PathVariable("index") String index, ModelMap map) {
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
@@ -75,7 +69,6 @@ public class ChemicalManagementController
 
 				inParam.setPageSize(ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE);
 				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_LIST);
-				this.business = chemicalManagementBusiness;
 				ChemicalManagementOutputParam outParam = this.business
 						.execute(inParam);
 				if (!ChemisboxUtilities.isNullOrEmpty(outParam
@@ -94,7 +87,7 @@ public class ChemicalManagementController
 		return "adminIndex";
 	}
 
-	@RequestMapping(value = "/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/admin/chemical/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChemicalManagementModel loadDataForUpdate(
 			@RequestBody ChemicalManagementModel model) {
 
@@ -108,7 +101,6 @@ public class ChemicalManagementController
 		try {
 			inParam.setChemicalId(model.getChemicalId());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_LOAD_DETAILS);
-			this.business = chemicalManagementBusiness;
 			ChemicalManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -121,7 +113,7 @@ public class ChemicalManagementController
 		return this.model;
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/admin/chemical/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChemicalManagementModel addChemical(
 			@RequestBody ChemicalManagementModel model) {
 
@@ -135,7 +127,6 @@ public class ChemicalManagementController
 		try {
 			inParam.setChemical(model.getChemical());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_ADD);
-			this.business = chemicalManagementBusiness;
 			ChemicalManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -147,7 +138,7 @@ public class ChemicalManagementController
 		return this.model;
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/admin/chemical/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChemicalManagementModel updateChemical(
 			@RequestBody ChemicalManagementModel model) {
 
@@ -161,7 +152,6 @@ public class ChemicalManagementController
 		try {
 			inParam.setChemical(model.getChemical());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_UPDATE);
-			this.business = chemicalManagementBusiness;
 			ChemicalManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -173,7 +163,7 @@ public class ChemicalManagementController
 		return this.model;
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/chemical/delete/{id}", method = RequestMethod.GET)
 	public String deleteChemical(@PathVariable("id") String id, ModelMap map) {
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
@@ -185,7 +175,6 @@ public class ChemicalManagementController
 			} else {
 				inParam.setChemicalId(chemicalId);
 				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_DELETE);
-				this.business = chemicalManagementBusiness;
 				ChemicalManagementOutputParam outParam = this.business
 						.execute(inParam);
 				if (!ChemisboxUtilities.isNullOrEmpty(outParam

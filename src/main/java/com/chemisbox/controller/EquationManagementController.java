@@ -1,6 +1,5 @@
 package com.chemisbox.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,13 +19,9 @@ import com.chemisbox.output.EquationManagementOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
-@RequestMapping("/admin/equation")
 public class EquationManagementController extends ChemisboxController<EquationManagementBusiness, EquationManagementModel> {
-
-	@Autowired
-	private EquationManagementBusiness equationManagementBusiness;
 	
-	@RequestMapping("/")
+	@RequestMapping(value = {"/admin/equation/", "/admin/equation"})
 	public String defaultAPI(ModelMap map){
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
@@ -34,7 +29,6 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 			inParam.setStartIndex(0);
 			inParam.setPageSize(ChemisboxConstant.TOTAL_EQUATION_RECORDS_IN_A_PAGE);
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_LIST);
-			this.business = equationManagementBusiness;
 			EquationManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -53,7 +47,7 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		return "adminIndex";
 	}
 	
-	@RequestMapping("/{index}")
+	@RequestMapping("/admin/equation/{index}")
 	public String getEquation(@PathVariable("index") String index, ModelMap map){
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
@@ -73,7 +67,6 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 
 				inParam.setPageSize(ChemisboxConstant.TOTAL_EQUATION_RECORDS_IN_A_PAGE);
 				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_LIST);
-				this.business = equationManagementBusiness;
 				EquationManagementOutputParam outParam = this.business
 						.execute(inParam);
 				if (!ChemisboxUtilities.isNullOrEmpty(outParam
@@ -89,10 +82,11 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		}
 		map.put("equationMap", this.model);
 		map.put("equationObj", new Chemical());
+		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.EQUATION_MENU);
 		return "adminIndex";
 	}
 	
-	@RequestMapping(value = "/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/admin/equation/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel loadDataForUpdate(
 			@RequestBody EquationManagementModel model) {
 
@@ -106,7 +100,6 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		try {
 			inParam.setEquationId(model.getEquationId());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_LOAD_DETAILS);
-			this.business = equationManagementBusiness;
 			EquationManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -119,7 +112,7 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		return this.model;
 	}
 	
-	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/admin/equation/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel addEquation(
 			@RequestBody EquationManagementModel model) {
 
@@ -133,7 +126,6 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		try {
 			inParam.setEquation(model.getEquation());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_ADD);
-			this.business = equationManagementBusiness;
 			EquationManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -145,7 +137,7 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		return this.model;
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/admin/equation/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel updateEquation(
 			@RequestBody EquationManagementModel model) {
 
@@ -159,7 +151,6 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		try {
 			inParam.setEquation(model.getEquation());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_UPDATE);
-			this.business = equationManagementBusiness;
 			EquationManagementOutputParam outParam = this.business
 					.execute(inParam);
 			if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -171,7 +162,7 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		return this.model;
 	}
 	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/equation/delete/{id}", method = RequestMethod.GET)
 	public String deleteEquation(@PathVariable("id") String id, ModelMap map) {
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
@@ -183,7 +174,6 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 			} else {
 				inParam.setEquationId(equationId);
 				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_DELETE);
-				this.business = equationManagementBusiness;
 				EquationManagementOutputParam outParam = this.business
 						.execute(inParam);
 				if (!ChemisboxUtilities.isNullOrEmpty(outParam

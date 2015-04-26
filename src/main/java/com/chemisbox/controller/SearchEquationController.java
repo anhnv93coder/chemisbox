@@ -1,6 +1,5 @@
 package com.chemisbox.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,9 +18,6 @@ import com.chemisbox.utilities.ChemisboxUtilities;
 @Controller
 public class SearchEquationController extends
 		ChemisboxController<SearchEquationBusiness, SearchEquationModel> {
-
-	@Autowired
-	private SearchEquationBusiness searchEquationBusiness;
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String searchEquationBySubmit(@ModelAttribute("searchModel") SearchEquationModel model,
@@ -56,7 +52,6 @@ public class SearchEquationController extends
 			model.setErrorMessage("Key word is null");
 			return model;
 		}
-		this.business = this.searchEquationBusiness;
 		SearchEquationInputParam inParam = new SearchEquationInputParam();
 		inParam.setKeyWord(ChemisboxUtilities.trimFullSize(model.getKeyWord()));
 		SearchEquationOutputParam outParam = this.business.execute(inParam);

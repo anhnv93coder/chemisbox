@@ -357,5 +357,8 @@ function isNumeric(n) {
 }
 
 function stringIsNullOrEmpty(source) {
-	return (source == '' || !source || source == undefined);
+	if(typeof(source) == 'undefined' || source == null|| source == "" || source == ''){
+		return true;
+	}
+	return false;
 }

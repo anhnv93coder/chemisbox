@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
@@ -65,6 +66,10 @@
 	<bean id="feedbackDao" class="com.chemisbox.dao.impl.FeedbackDAOImpl">
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
+	
+	<bean id="adminDao" class="com.chemisbox.dao.impl.AdminDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
 
 	<bean id="equationManagementBusiness" class="com.chemisbox.business.EquationManagementBusiness">
 		<property name="chemicalDao" ref="chemicalDao" />
@@ -84,7 +89,7 @@
 		<property name="chemicalDao" ref="chemicalDao" />
 	</bean>
 	
-	<bean id="addNewFeedbackBusiness" class="com.chemisbox.business.AddNewFeedbackBusiness">
+		<bean id="addNewFeedbackBusiness" class="com.chemisbox.business.AddNewFeedbackBusiness">
 		<property name="feedbackDao" ref="feedbackDao" />
 	</bean>
 	
@@ -92,4 +97,33 @@
 		<property name="chemicalDao" ref="chemicalDao" />
 		<property name="elementDao" ref="elementDao" />
 	</bean>
+	
+	<bean id="loginAdminBusiness" class="com.chemisbox.business.LoginAdminBusiness">
+		<property name="adminDao" ref="adminDao" />
+	</bean>
+	
+	<bean id="equationManagementController" class="com.chemisbox.controller.EquationManagementController">
+		<property name="business" ref="equationManagementBusiness"></property>
+	</bean>
+	
+	<bean id="addNewFeedbackController" class="com.chemisbox.controller.AddNewFeedbackController">
+		<property name="business" ref="addNewFeedbackBusiness"></property>
+	</bean>
+	
+	<bean id="chemicalManagementController" class="com.chemisbox.controller.ChemicalManagementController">
+		<property name="business" ref="chemicalManagementBusiness"></property>
+	</bean>
+	
+	<bean id="defaultController" class="com.chemisbox.controller.DefaultController">
+		<property name="business" ref="defaultBusiness"></property>
+	</bean>
+	
+	<bean id="searchEquationController" class="com.chemisbox.controller.SearchEquationController">
+		<property name="business" ref="searchEquationBusiness"></property>
+	</bean>
+	
+	<bean id="loginAdminController" class="com.chemisbox.controller.LoginAdminController">
+		<property name="business" ref="loginAdminBusiness"></property>
+	</bean>
+	
 </beans>
