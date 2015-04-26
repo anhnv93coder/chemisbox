@@ -37,8 +37,9 @@ public class ChemisboxConstant {
 	public static final int LIQUID_STATE = 16;			// Trang thai long
 	public static final int GAS_STATE = 17;				// Trang thai khi
 	
-	public static final int TOTAL_CHEMICAL_RECORDS_IN_A_PAGE = 20;
+	public static final int TOTAL_CHEMICAL_RECORDS_IN_A_PAGE = 15;
 	public static final int TOTAL_EQUATION_RECORDS_IN_A_PAGE = 5;
+	public static final int TOTAL_ELEMENT_RECORDS_IN_A_PAGE = 15;
 	
 	// Result
 	public static final int SUCCESS = 0;
