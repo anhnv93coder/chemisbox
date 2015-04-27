@@ -9,8 +9,21 @@
 		</h3>
 		<div class="row mt">
 			<div class="col-lg-10 col-lg-offset-1" style="display: block;" id="equationTable">
-			<div class="clearfix"><button class="btn btn-default pull-right"
-					style="margin-bottom: 10px;" data-toggle="modal" data-target="#addEquationModal">Thêm mới</button></div>
+				<div class="clearfix">
+					<div class="col-md-6">
+						<form class="form-inline">
+						  <div class="form-group has-success has-feedback">
+						    <input type="text" class="form-control" id="inputSuccess4" aria-describedby="inputSuccess4Status"  placeholder="Nhập từ khóa" />
+						    <span class="fa fa-search fa-lg form-control-feedback" aria-hidden="true"></span>
+						    <span id="inputSuccess4Status" class="sr-only">(success)</span>
+						  </div>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<button class="btn btn-default pull-right"
+								style="margin-bottom: 10px;" data-toggle="modal" data-target="#addEquationModal"><span class="fa fa-plus"></span>&nbsp;Thêm mới</button>
+					</div>
+				</div>
 				<c:if test="${!empty equationMap.equationList}">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
@@ -52,7 +65,7 @@
 							<li>
 								<c:choose>
 									<c:when test="${equationMap.currentPage > 1}">
-										<a href="${equationMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+										<a href="${baseURL}/admin/equation/${equationMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
 									</c:when>
 									<c:otherwise>
 										<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
@@ -62,17 +75,17 @@
 							<c:forEach var="index" begin="1" end="${equationMap.totalPage}">
 								<c:choose>
 									<c:when test="${index == equationMap.currentPage}">
-										<li class="active"><a href="${index}"><c:out value="${index}"/></a></li>
+										<li class="active"><a href="${baseURL}/admin/equation/${index}"><c:out value="${index}"/></a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="${index}"><c:out value="${index}"/></a></li>
+										<li><a href="${baseURL}/admin/equation/${index}"><c:out value="${index}"/></a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							<li>
 								<c:choose>
 									<c:when test="${equationMap.currentPage < equationMap.totalPage}">
-										<a href="${equationMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
+										<a href="${baseURL}/admin/equation/${equationMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
 									</c:when>
 									<c:otherwise>
 										<a aria-label="Next"><span aria-hidden="true">&raquo;</span></a>

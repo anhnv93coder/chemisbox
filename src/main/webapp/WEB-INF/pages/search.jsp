@@ -40,7 +40,7 @@
 
 	<jsp:include page="base/header.jsp"></jsp:include>
 	<!-- about -->
-	<section class="section appear clearfix section-contact-bg"
+	<section class="section appear clearfix bg-white"
 		id="result-block" style="display: none">
 		<div class="container">
 		

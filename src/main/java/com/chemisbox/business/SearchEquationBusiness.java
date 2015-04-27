@@ -120,9 +120,9 @@ public class SearchEquationBusiness extends
 			}
 
 			// Find element
-			element = elementDao.get(keyWord);
-			if (element != null) {
-				this.out.setElement(element);
+			List<Element> elementList = elementDao.getByKeyWord(keyWord);
+			if (!ChemisboxUtilities.isNullOrEmpty(elementList)) {
+				this.out.setElement(elementList.get(0));
 			} else {// Find chemical
 				List<Chemical> chemicals = chemicalDao.list(keyWord);
 				if (!ChemisboxUtilities.isNullOrEmpty(chemicals)) {

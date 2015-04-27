@@ -20,14 +20,14 @@
 				<div class="align-center">
 					<i class="fa fa-flask fa-5x mar-bot20"></i>
 					<h2 class="slogan">ChemisBox</h2>
-					<p>Write something</p>
+					<p>Công cụ hỗ trợ học hóa học</p>
 				</div>
 				<div class="col-md-12"
 					style="margin: 30px auto 0; float: none; margin: 0 auto;">
 					<form:form class="form-inline" action="search" modelAttribute="searchModel">
-						<form:input id="key-word" class="form-control" placeholder="Place"
-							style="width: 85%;" path="keyWord" />
-						<button type="submit" class="btn btn-default">Search</button>
+						<form:input id="key-word" class="form-control" placeholder="Nhập từ khóa"
+							style="width: 83%;" path="keyWord" />
+						<button type="submit" class="btn btn-default">Tìm kiếm</button>
 					</form:form>
 
 				</div>
@@ -58,8 +58,8 @@
 
 			<div class="col-lg-4">
 				<div class="align-center">
-					<a><i class="fa fa-exchange fa-5x mar-bot20"></i></a>
-					<h4>Tương tác với người dùng</h4>
+					<a><i class="fa fa-check fa-5x mar-bot20"></i></a>
+					<h4>LO</h4>
 					<p>Luôn ghi nhận những đóng góp của người dùng để ứng dụng ngày
 						một hoàn thiện hơn.</p>
 				</div>
@@ -70,32 +70,30 @@
 	</div>
 	</section>
 
-	<!-- spacer section:testimonial -->
-	<section id="testimonials" class="section"
-		data-stellar-background-ratio="0.5">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="align-center">
-					<div class="testimonial pad-top40 pad-bot40 clearfix">
-						<a><i class="fa fa-cloud fa-5x"
-							style="color: #70B9B0; font-size: 120px;"></i></a>
-						<h3>ChemisBox là một website có một lượng lớn dữ liệu về hóa
-							học để cung cấp tối đa nhu cầu của người sử dụng, đặc biệt là học
-							sinh, sinh viên.</h3>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	</section>
-
 	<!-- section periodic -->
 
 	<jsp:include page="base/periodic-table.jsp"></jsp:include>
 
-	<!-- section works -->
+	<!-- spacer section:testimonial -->
+	<section id="testimonials" class="section"
+		data-stellar-background-ratio="0.5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="align-center">
+						<div class="testimonial pad-top40 pad-bot40 clearfix">
+							<a><i class="fa fa-cloud fa-5x"
+								style="color: #70B9B0; font-size: 120px;"></i></a>
+							<h3>ChemisBox là một website có một lượng lớn dữ liệu về hóa
+								học để cung cấp tối đa nhu cầu của người sử dụng, đặc biệt là học
+								sinh, sinh viên.</h3>
+						</div>
+	
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<!-- about -->
 
@@ -105,13 +103,13 @@
 
 	<!-- contact -->
 
-	<jsp:include page="base/contact.jsp"></jsp:include>
+	<%-- <jsp:include page="base/contact.jsp"></jsp:include> --%>
 
 	<!-- contact -->
 
 	<!-- map -->
 	<section id="section-map" class="clearfix">
-	<div id="map"></div>
+	<!-- <div id="map"></div> -->
 	</section>
 
 	<!-- footer -->

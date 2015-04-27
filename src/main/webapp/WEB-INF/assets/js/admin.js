@@ -1,4 +1,36 @@
 
+function loadDetailsForElement(notation) {
+	var model = {
+		"notation" : notation
+	};
+	$.ajax({
+		url : "loadDetails",
+		type : "POST",
+		data : JSON.stringify(model),
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data) {
+			$("#notationUpdate").val(data.element.notation);
+			$("#nameUpdate").val(data.element.name);
+			$("#numberOfAtomicUpdate").val(data.element.numberOfAtomic);
+			$("#atomicVolumeUpdate").val(data.element.atomicVolume);
+			$("#classifyUpdate").val(data.element.classify);
+			$("#groupUpdate").val(data.element.groupUpdate);
+			$("#cycleUpdate").val(data.element.cycle);
+			$("#electronConfigurationUpdate").val(data.element.electronConfiguration);
+			$("#layersUpdate").val(data.element.layers);
+			$("#descriptionUpdate").val(data.element.description);
+			$("#colorUpdate").val(data.element.color);
+			$("#conditionUpdate").val(data.element.condition);
+			$("#meltingTemperatureUpdate").val(data.element.meltingTemperature);
+			$("#boilingTemperatureUpdate").val(data.element.boilingTemperature);
+			$("#imgUpdate").val(data.element.img);
+		},
+		error : function(msg) {
+			alert("error");
+		}
+	});
+}
 
 function loadDetailsForEquation(id) {
 	var model = {
@@ -77,6 +109,63 @@ function loadDetailsForChemical(id) {
 		}
 	});
 }
+
+$("#btnUpdateElement").click(function() {
+	var notation = $.trim($("#notationUpdate").val());
+	var name = $.trim($("#nameUpdate").val());
+	var numberOfAtomic = $.trim($("#numberOfAtomicUpdate").val());
+	var atomicVolume = $.trim($("#atomicVolumeUpdate").val());
+	var classify = $.trim($("#classifyUpdate").val());
+	var group = $.trim($("#groupUpdate").val());
+	var cycle = $.trim($("#cycleUpdate").val());
+	var electronConfiguration = $.trim($("#electronConfigurationUpdate").val());
+	var layers = $.trim($("#layersUpdate").val());
+	var description = $.trim($("#descriptionUpdate").val());
+	var color = $.trim($("#colorUpdate").val());
+	var condition = $.trim($("#conditionUpdate").val());
+	var meltingTemperature = $.trim($("#meltingTemperatureUpdate").val());
+	var boilingTemperature = $.trim($("#boilingTemperatureUpdate").val());
+	var img = $.trim($("#imgUpdate").val());
+
+	if (stringIsNullOrEmpty(notation)) {
+		return;
+	}
+
+	var jsonData = {
+		"notation" : notation,
+		"name" : name,
+		"numberOfAtomic" : numberOfAtomic,
+		"atomicVolume" : atomicVolume,
+		"classify" : classify,
+		"group" : group,
+		"cycle" : cycle,
+		"electronConfiguration" : electronConfiguration,
+		"layers" : layers,
+		"description" : description,
+		"color" : color,
+		"condition" : condition,
+		"meltingTemperature" : meltingTemperature,
+		"boilingTemperature" : boilingTemperature,
+		"img" : img
+	};
+
+	var model = {
+		"element" : jsonData
+	};
+	$.ajax({
+		url : "add",
+		type : "POST",
+		data : JSON.stringify(model),
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data) {
+			alert("success");
+		},
+		error : function(msg) {
+			alert("error");
+		}
+	});
+});
 
 $("#btnUpdateChemical").click(function() {
 	var chemicalId = $.trim($("#chemicalId").val());
@@ -182,6 +271,63 @@ $("#btnAddChemical").click(function() {
 
 	var model = {
 		"chemical" : jsonData
+	};
+	$.ajax({
+		url : "add",
+		type : "POST",
+		data : JSON.stringify(model),
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data) {
+			alert("success");
+		},
+		error : function(msg) {
+			alert("error");
+		}
+	});
+});
+
+$("#btnAddElement").click(function() {
+	var notation = $.trim($("#notation").val());
+	var name = $.trim($("#name").val());
+	var numberOfAtomic = $.trim($("#numberOfAtomic").val());
+	var atomicVolume = $.trim($("#atomicVolume").val());
+	var classify = $.trim($("#classify").val());
+	var group = $.trim($("#group").val());
+	var cycle = $.trim($("#cycle").val());
+	var electronConfiguration = $.trim($("#electronConfiguration").val());
+	var layers = $.trim($("#layers").val());
+	var description = $.trim($("#description").val());
+	var color = $.trim($("#color").val());
+	var condition = $.trim($("#condition").val());
+	var meltingTemperature = $.trim($("#meltingTemperature").val());
+	var boilingTemperature = $.trim($("#boilingTemperature").val());
+	var img = $.trim($("#img").val());
+
+	if (stringIsNullOrEmpty(notation)) {
+		return;
+	}
+
+	var jsonData = {
+		"notation" : chemicalName,
+		"name" : differenceName,
+		"numberOfAtomic" : formula,
+		"atomicVolume" : quantity,
+		"classify" : description,
+		"group" : density,
+		"cycle" : meltingTemperature,
+		"electronConfiguration" : boilingTemperature,
+		"layers" : solubilityInWater,
+		"description" : ignitionPoint,
+		"color" : flavour,
+		"condition" : condition,
+		"meltingTemperature" : meltingTemperature,
+		"boilingTemperature" : boilingTemperature,
+		"img" : img
+	};
+
+	var model = {
+		"element" : jsonData
 	};
 	$.ajax({
 		url : "add",
