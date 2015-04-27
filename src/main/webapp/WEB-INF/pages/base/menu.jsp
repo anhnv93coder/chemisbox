@@ -22,7 +22,7 @@
 				<li class="active"><a href="${baseURL}">Trang chủ</a></li>
 				<li><a href="#section-works">Bảng tuần hoàn</a></li>
 				<li><a href="#section-about">Thông tin</a></li>
-				<li><a href="#section-contact">Liên hệ</a></li>
+				<!-- <li><a href="#section-contact">Liên hệ</a></li> -->
 			</ul>
 		</div>
 	</div>

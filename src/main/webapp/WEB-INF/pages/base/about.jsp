@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <section id="section-about"
-	class="section appear clearfix section-contact-bg">
+	class="section appear clearfix bg-white">
 	<div class="container">
 
 		<div class="row mar-bot40">

@@ -19,5 +19,8 @@ public interface ElementDAO {
 	
 	public Element get(String notation) throws ChemisboxException ;
 	
-	public Integer getCount() throws ChemisboxException;
+	public Long getCount() throws ChemisboxException;
+	
+	public List<Element> getByKeyWord(String keyWord)
+			throws ChemisboxException; 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +45,7 @@ public class ElementDAOImpl implements ElementDAO {
 	public String update(Element c)
 			throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
-		session.delete(c);
+		session.delete(c);	
 		return c.getNotation();
 	}
 
@@ -55,15 +56,23 @@ public class ElementDAOImpl implements ElementDAO {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<Element> getByKeyWord(String keyWord)
+			throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Element.class).add(
+				Restrictions.or(Restrictions.eq("notation", keyWord), Restrictions.eq("name", keyWord))).list();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<Element> list(int startIndex, int pageSize)
 			throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		return (List<Element>)session.createCriteria(Element.class).setFirstResult(startIndex).setMaxResults(pageSize).list();
 	}
 
-	public Integer getCount() throws ChemisboxException {
+	public Long getCount() throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
-		return (Integer) session.createCriteria(Element.class).setProjection(Projections.rowCount()).uniqueResult();
+		return (Long) session.createCriteria(Element.class).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }

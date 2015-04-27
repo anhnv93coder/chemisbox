@@ -15,10 +15,12 @@
 <c:if test="${empty adminObject}">
 	<c:redirect url="/admin"></c:redirect>
 </c:if>
-
-<c:set var="menuConstant" value="ChemisboxConstant.MENU_CONSTANT" />
-<c:set var="equationConstant" value="1" />
-<c:set var="chemicalConstant" value="2" />
+<%@ page import="com.chemisbox.constant.ChemisboxConstant" %>
+<c:set var="menuConstant" value="<%= ChemisboxConstant.MENU_CONSTANT %>" />
+<c:set var="equationConstant" value="<%= ChemisboxConstant.EQUATION_MENU %>" />
+<c:set var="chemicalConstant" value="<%= ChemisboxConstant.CHEMICAL_MENU %>" />
+<c:set var="elementConstant" value="<%= ChemisboxConstant.ELEMENT_MENU %>" />
+<c:set var="dashboardConstant" value="<%= ChemisboxConstant.DASHBOARD_MENU %>" />
 <title>Admin</title>
 
 <!-- Bootstrap core CSS -->
@@ -30,17 +32,14 @@
 </head>
 
 <body>
-	
 	<section id="container"> <header class="header black-bg">
 		<div class="sidebar-toggle-box">
-			<div class="fa fa-bars tooltips" data-placement="right"
-				data-original-title="Toggle Navigation"></div>
+			<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
 		</div>
-		<!--logo start--> <a href="Chemisbox/" class="logo"><b>ChemisBox</b></a>
-		<!--logo end-->
+		<a href="Chemisbox/" class="logo"><strong>ChemisBox</strong></a>
 		<div class="top-menu">
 			<ul class="nav pull-right top-menu">
-				<li><a class="logout" href="${baseURL}/admin/logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
+				<li><a class="logout btn btn-default" href="${baseURL}/admin/logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 		</div>
 		</header>
@@ -54,10 +53,16 @@
 				<jsp:include
 					page="admin/equationManagement.jsp" />
 			</c:if>
-			
+			<c:if test="${page eq elementConstant}">
+				<jsp:include
+					page="admin/elementManagement.jsp" />
+			</c:if>
+			<c:if test="${page eq dashboardConstant}">
+				<jsp:include
+					page="admin/dashboardManagement.jsp" />
+			</c:if>
 		</section> 
 		 
-			 <!--footer start--> 
 		 <footer class="site-footer">
 			<div class="text-center">
 				2015 - ChemisBox <a href="blank.html#" class="go-top"> <i
@@ -77,7 +82,5 @@
 		src="${baseURL}/assets/js/jquery.dcjqaccordion.2.7.js"></script>
 	<script src="${baseURL}/assets/js/common-scripts.js"></script>
 	<script src="${baseURL}/assets/js/admin.js"></script>
-	<script>
-	</script>
 </body>
 </html>

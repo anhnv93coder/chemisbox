@@ -3,14 +3,27 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
 	<section class="wrapper site-min-height">
 		<h3>
 			<i class="fa fa-angle-right"></i> Quản lý chất hóa học
 		</h3>
 		<div class="row mt">
 			<div class="col-lg-10 col-lg-offset-1" style="display: block;" id="chemicalTable">
-				<div class="clearfix"><button class="btn btn-default pull-right"
-					style="margin-bottom: 10px;" data-toggle="modal" data-target="#addChemicalModal">Thêm mới</button></div>
+				<div class="clearfix">
+					<div class="col-md-6">
+						<form class="form-inline">
+						  <div class="form-group has-success has-feedback">
+						    <input type="text" class="form-control" id="inputSuccess4" aria-describedby="inputSuccess4Status" placeholder="Nhập từ khóa"/>
+						    <span class="fa fa-search fa-lg form-control-feedback" aria-hidden="true"></span>
+						    <span id="inputSuccess4Status" class="sr-only">(success)</span>
+						  </div>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<button class="btn btn-default pull-right" style="margin-bottom: 10px;" data-toggle="modal" data-target="#addChemicalModal"><span class="fa fa-plus"></span>&nbsp;Thêm mới</button>
+					</div>
+				</div>
 				<c:if test="${!empty chemicalMap.chemicalList}">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
@@ -24,6 +37,7 @@
 								<th>Tên khác</th>
 								<th>Ký hiệu</th>
 								<th>Khối lượng</th>
+								<th></th>
 							</tr>
 							<c:forEach items="${chemicalMap.chemicalList}" var="chemical">
 								<tr>
@@ -35,7 +49,7 @@
 									<td>
 										<a href="#" onclick="loadDetailsForChemical(${chemical.id})"  data-toggle="modal" data-target="#updateChemicalModal" style="padding: 0 2px;"><i
 											class="fa fa-pencil-square-o fa-lg" style="margin-top: 3px;"></i></a>
-										<a href="delete/${chemical.id}" style="padding: 0 2px;" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fa fa-trash-o fa-lg"></i></a>
+										<a href="${baseURL}/admin/chemical/delete/${chemical.id}" style="padding: 0 2px;" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fa fa-trash-o fa-lg"></i></a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -45,7 +59,7 @@
 								<li>
 									<c:choose>
 										<c:when test="${chemicalMap.currentPage > 1}">
-											<a href="${chemicalMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+											<a href="${baseURL}/admin/chemical/${chemicalMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
 										</c:when>
 										<c:otherwise>
 											<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
@@ -55,17 +69,17 @@
 								<c:forEach var="index" begin="1" end="${chemicalMap.totalPage}">
 									<c:choose>
 										<c:when test="${index == chemicalMap.currentPage}">
-											<li class="active"><a href="${index}"><c:out value="${index}"/></a></li>
+											<li class="active"><a href="${baseURL}/admin/chemical/${index}"><c:out value="${index}"/></a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a href="${index}"><c:out value="${index}"/></a></li>
+											<li><a href="${baseURL}/admin/chemical/${index}"><c:out value="${index}"/></a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								<li>
 									<c:choose>
 										<c:when test="${chemicalMap.currentPage < chemicalMap.totalPage}">
-											<a href="${chemicalMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
+											<a href="${baseURL}/admin/chemical/${chemicalMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
 										</c:when>
 										<c:otherwise>
 											<a aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
