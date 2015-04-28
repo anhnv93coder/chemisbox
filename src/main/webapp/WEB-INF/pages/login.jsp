@@ -46,6 +46,11 @@
                                 <label for="password">Mật khẩu</label>
                                 <input type="password" class="form-control" id="password" placeholder="Mật khẩu" required="required"/>
                             </div>
+                            <div class="checkbox">
+							    <label>
+							      <input type="checkbox"> Ghi nhớ
+							    </label>
+							  </div>
                             <button type="button" id="btnLogin" class="btn btn-primary"><i class="fa fa-sign-in"></i>&nbsp;Đăng nhập</button>
                         </div>
                     </form>
