@@ -43,7 +43,7 @@
 			<div class="col-lg-4">
 				<div class="align-center">
 					<a><i class="fa fa-refresh fa-spin fa-5x mar-bot20"></i></a>
-					<h4>Cập nhật thường xuyên</h4>
+					<h4>Cập nhật dữ liệu</h4>
 					<p>Thường xuyên cập nhật các công thức, phương trình hóa học</p>
 				</div>
 			</div>
@@ -59,9 +59,8 @@
 			<div class="col-lg-4">
 				<div class="align-center">
 					<a><i class="fa fa-check fa-5x mar-bot20"></i></a>
-					<h4>LO</h4>
-					<p>Luôn ghi nhận những đóng góp của người dùng để ứng dụng ngày
-						một hoàn thiện hơn.</p>
+					<h4>Bảo đảm thông tin chính xác</h4>
+					<p>Luôn kiểm tra phản hồi của người đùng để đảm bảo thông tin chính xác</p>
 				</div>
 			</div>
 
