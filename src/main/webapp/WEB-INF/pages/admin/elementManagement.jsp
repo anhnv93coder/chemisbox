@@ -127,70 +127,70 @@
 								<label for="inputPassword3" class="col-sm-4 control-label">Số nguyên tử</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="numberOfAtomic"
-										placeholder="Số nguyên tử"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Khối lượng nguyên tử</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="atomicVolume"
-										placeholder="Khối lượng nguyên tử"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Phân loại</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="classify"
-										placeholder="Phân loại"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Nhóm</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="group"
-										placeholder="Nhóm"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Chu kỳ</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="cycle"
-										placeholder="Chu kỳ"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Cấu hình electron</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="electronConfiguration"
-										placeholder="Cấu hình electron"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Lớp</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="layers"
-										placeholder="Lớp"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Mô tả</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="description"
-										placeholder="Mô tả"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Màu sắc</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="color"
-										placeholder="Màu sắc"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Trạng thái</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="condition"
-										placeholder="Trạng thái"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -230,7 +230,7 @@
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="exampleModalLabel">Cập nhật nguyên tố hóa học</h4>
+			        <h4 class="modal-title" id="exampleModalLabel">Cập nhật chất hóa học</h4>
 			      </div>
 			      <div class="modal-body">
 						<form class="form-horizontal">
@@ -238,84 +238,84 @@
 								<label for="inputEmail3" class="col-sm-4 control-label">Ký hiệu</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="notationUpdate"
-										placeholder="Ký hiệu"/>
+										placeholder="Tên chất"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Tên gọi</label>
 								<div class="col-sm-8">
 									<textarea class="form-control" id="nameUpdate"
-										placeholder="Tên gọi"></textarea>
+										placeholder="Tên gọi khác"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Số nguyên tử</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="numberOfAtomicUpdate"
-										placeholder="Số nguyên tử"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Khối lượng nguyên tử</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="atomicVolumeUpdate"
-										placeholder="Khối lượng nguyên tử"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Phân loại</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="classifyUpdate"
-										placeholder="Phân loại"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Nhóm</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="groupUpdate"
-										placeholder="Nhóm"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Chu kỳ</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="cycleUpdate"
-										placeholder="Chu kỳ"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Cấu hình electron</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="electronConfigurationUpdate"
-										placeholder="Cấu hình electron"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Lớp</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="layersUpdate"
-										placeholder="Lớp"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Mô tả</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="descriptionUpdate"
-										placeholder="Mô tả"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Màu sắc</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="colorUpdate"
-										placeholder="Màu sắc"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Trạng thái</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="condition"
-										placeholder="Trạng thái"/>
+										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>
 							<div class="form-group">

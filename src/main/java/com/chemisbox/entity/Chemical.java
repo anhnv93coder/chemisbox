@@ -61,6 +61,9 @@ public class Chemical implements Serializable {
 	@Column(name = "img")
 	private String img;
 
+	@Column(name = "chemical_typeof")
+	private int chemicalTypeof;
+
 	@Column(name = "created_date")
 	private Date createdDate;
 
@@ -76,6 +79,14 @@ public class Chemical implements Serializable {
 
 	public void setLastUserModify(String lastUserModify) {
 		this.lastUserModify = lastUserModify;
+	}
+
+	public int getChemicalTypeof() {
+		return chemicalTypeof;
+	}
+
+	public void setChemicalTypeof(int chemicalTypeof) {
+		this.chemicalTypeof = chemicalTypeof;
 	}
 
 	public Date getCreatedDate() {

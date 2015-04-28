@@ -4,7 +4,7 @@ function loadDetailsForElement(notation) {
 		"notation" : notation
 	};
 	$.ajax({
-		url : "element/loadDetails",
+		url : "loadDetails",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -37,7 +37,7 @@ function loadDetailsForEquation(id) {
 		"equationId" : id
 	};
 	$.ajax({
-		url : "equation/loadDetails",
+		url : "loadDetails",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -82,7 +82,7 @@ function loadDetailsForChemical(id) {
 		"chemicalId" : id
 	};
 	$.ajax({
-		url : "chemical/loadDetails",
+		url : "loadDetails",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -153,7 +153,7 @@ $("#btnUpdateElement").click(function() {
 		"element" : jsonData
 	};
 	$.ajax({
-		url : "element/update",
+		url : "add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -214,7 +214,7 @@ $("#btnUpdateChemical").click(function() {
 		"chemical" : jsonData
 	};
 	$.ajax({
-		url : "chemical/update",
+		url : "update",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -273,7 +273,7 @@ $("#btnAddChemical").click(function() {
 		"chemical" : jsonData
 	};
 	$.ajax({
-		url : "chemical/add",
+		url : "add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -330,7 +330,7 @@ $("#btnAddElement").click(function() {
 		"element" : jsonData
 	};
 	$.ajax({
-		url : "element/add",
+		url : "add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -404,7 +404,7 @@ function() {
 		"equation" : jsonData
 	};
 	$.ajax({
-		url : "equation/add",
+		url : "add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -476,7 +476,7 @@ $("#btnUpdateEquation").click(
 				"equation" : jsonData
 			};
 			$.ajax({
-				url : "equation/update",
+				url : "update",
 				type : "POST",
 				data : JSON.stringify(model),
 				dataType : "json",
