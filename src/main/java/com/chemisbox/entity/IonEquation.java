@@ -36,9 +36,9 @@ public class IonEquation implements Serializable {
 	@Column(name = "shortcut_ion_equation")
 	private String shortcutIonEquation;
 
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy = "ionEquation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Equation> equations = new ArrayList<Equation>();
+	private List<Equation> equations = new ArrayList<Equation>();*/
 
 	public IonEquation() {
 		// TODO Auto-generated constructor stub
@@ -50,14 +50,14 @@ public class IonEquation implements Serializable {
 		this.shortcutIonEquation = shortcutIonEquation;
 	}
 
-	
+	/*
 	public List<Equation> getEquations() {
 		return equations;
 	}
 
 	public void setEquations(List<Equation> equations) {
 		this.equations = equations;
-	}
+	}*/
 
 	public Long getIonId() {
 		return ionId;

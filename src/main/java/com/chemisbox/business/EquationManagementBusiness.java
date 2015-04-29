@@ -38,11 +38,11 @@ public class EquationManagementBusiness
 	@Autowired
 	private EquationDAO equationDao;
 
-	@Autowired
-	private IonEquationDAO ionDao;
-
-	@Autowired
-	private OxiReduceEquationDAO oxiDao;
+//	@Autowired
+//	private IonEquationDAO ionDao;
+//
+//	@Autowired
+//	private OxiReduceEquationDAO oxiDao;
 
 	@Autowired
 	private ChemistryEquationDAO chemistryEquationDao;
@@ -51,18 +51,18 @@ public class EquationManagementBusiness
 	public EquationManagementOutputParam execute(
 			EquationManagementInputParam inParam) throws ChemisboxException {
 		this.out = new EquationManagementOutputParam();
-		Long ionId = null;
+//		Long ionId = null;
 		Long equationId = null;
-		Long oxiId = null;
+//		Long oxiId = null;
 		Equation equationObj = null;
-		IonEquation ionObj = null;
-		OxiReduceEquation oxiObj = null;
+//		IonEquation ionObj = null;
+//		OxiReduceEquation oxiObj = null;
 		List<ChemistryEquation> chemicalList = null;
 		try {
 			switch (inParam.getBusinessType()) {
 			case ChemisboxConstant.BUSINESS_FOR_ADD:
 				equationObj = inParam.getEquation();
-				ionObj = equationObj.getIonEquation();
+				/*ionObj = equationObj.getIonEquation();
 				oxiObj = equationObj.getOxiReduceEquation();
 
 				String equation = ChemisboxUtilities.trimFullSize(equationObj
@@ -82,7 +82,7 @@ public class EquationManagementBusiness
 					oxiObj.setOxiReduceId(oxiId);
 					oxiObj.getEquations().add(equationObj);
 					equationObj.setOxiReduceEquation(oxiObj);
-				}
+				}*/
 
 				equationId = equationDao.add(equationObj);
 
@@ -93,9 +93,9 @@ public class EquationManagementBusiness
 			case ChemisboxConstant.BUSINESS_FOR_DELETE:
 				
 				equationObj = equationDao.get(inParam.getEquationId());
-				ionObj = equationObj.getIonEquation();
+				/*ionObj = equationObj.getIonEquation();
 				oxiObj = equationObj.getOxiReduceEquation();
-				
+				*/
 				
 				
 				break;
@@ -137,16 +137,16 @@ public class EquationManagementBusiness
 
 			case ChemisboxConstant.BUSINESS_FOR_UPDATE:
 				
-				boolean mustIonDelete = false;
-				boolean mustOxiDelete = false;
+				/*boolean mustIonDelete = false;
+				boolean mustOxiDelete = false;*/
 				equationObj = inParam.getEquation();
-				ionObj = equationObj.getIonEquation();
+				/*ionObj = equationObj.getIonEquation();
 				oxiObj = equationObj.getOxiReduceEquation();
 				IonEquation tempIonObj = null;
-				OxiReduceEquation tempOxiObj = null;
+				OxiReduceEquation tempOxiObj = null;*/
 				Equation tempEquationObj = equationDao.get(equationObj.getEquationId());
 				
-				if (ionObj != null){
+				/*if (ionObj != null){
 					tempIonObj = ionDao.get(ionObj.getIonId());
 					if(!ChemisboxUtilities.isNullOrEmpty(ionObj.getIonEquation())
 							&& !ChemisboxUtilities.isNullOrEmpty(ionObj.getShortcutIonEquation())){
@@ -193,7 +193,7 @@ public class EquationManagementBusiness
 							mustOxiDelete = true;
 						}
 					}
-				}
+				}*/
 				
 				String equationStr = equationObj.getEquation();
 
@@ -210,16 +210,23 @@ public class EquationManagementBusiness
 				tempEquationObj.setDescription(equationObj.getDescription()); 
 				tempEquationObj.setCondition(equationObj.getCondition());
 				tempEquationObj.setVideoLink(equationObj.getVideoLink());
+				tempEquationObj.setIonEquation(equationObj.getIonEquation());
+				tempEquationObj.setShortcutIonEquation(equationObj.getShortcutIonEquation());
+				tempEquationObj.setMolOxi(equationObj.getMolOxi());
+				tempEquationObj.setMolReduce(equationObj.getMolReduce());
+				tempEquationObj.setOxiEquation(equationObj.getOxiEquation());
+				tempEquationObj.setReduceEquation(equationObj.getReduceEquation());
+				tempEquationObj.setSummary(equationObj.getSummary());
 				tempEquationObj.setEditedDate(new Date());
 				
 				equationDao.update(tempEquationObj);
 				
-				if(mustIonDelete){
+				/*if(mustIonDelete){
 					ionDao.delete(tempIonObj);
 				}
 				if(mustOxiDelete){
 					oxiDao.delete(tempOxiObj);
-				}
+				}*/
 
 				break;
 
@@ -312,13 +319,13 @@ public class EquationManagementBusiness
 		this.equationDao = equationDao;
 	}
 
-	public void setIonDao(IonEquationDAO ionDao) {
-		this.ionDao = ionDao;
-	}
-
-	public void setOxiDao(OxiReduceEquationDAO oxiDao) {
-		this.oxiDao = oxiDao;
-	}
+//	public void setIonDao(IonEquationDAO ionDao) {
+//		this.ionDao = ionDao;
+//	}
+//
+//	public void setOxiDao(OxiReduceEquationDAO oxiDao) {
+//		this.oxiDao = oxiDao;
+//	}
 
 	public void setChemistryEquationDao(
 			ChemistryEquationDAO chemistryEquationDao) {

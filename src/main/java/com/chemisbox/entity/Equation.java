@@ -18,7 +18,7 @@ import org.hibernate.annotations.NamedNativeQuery;
 
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "callGetEquation", query = "CALL getEquation(:chemical)", resultClass = Equation.class),
-	
+
 		@NamedNativeQuery(name = "callGetEquationByChemical", query = "CALL getEquationByChemical(:chemical, :typeOf)", resultClass = Equation.class),
 
 		@NamedNativeQuery(name = "callGetEquationsByLeftRight", query = "CALL getEquationByLeftAndRightChemical(:leftChemical, :rightChemical)", resultClass = Equation.class),
@@ -54,23 +54,48 @@ public class Equation implements Serializable {
 	@Column(name = "video_link")
 	private String videoLink;
 
-	@ManyToOne
-	@JoinColumn(name = "ion_id")
-	private IonEquation ionEquation;
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "ion_id") private IonEquation ionEquation;
+	 */
 
-	@ManyToOne
-	@JoinColumn(name = "oxi_id")
-	private OxiReduceEquation oxiReduceEquation;
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "oxi_id") private OxiReduceEquation oxiReduceEquation;
+	 */
+
+	@Column(name = "ion_equation")
+	private String ionEquation;
+
+	@Column(name = "shortcut_ion_equation")
+	private String shortcutIonEquation;
+
+	@Column(name = "mol_reduce")
+	private int molReduce;
+
+	@Column(name = "reduce_equation")
+	private String reduceEquation;
+
+	@Column(name = "mol_oxi")
+	private int molOxi;
+
+	@Column(name = "oxi_equation")
+	private String oxiEquation;
+
+	@Column(name = "summary")
+	private String summary;
 
 	@Column(name = "active")
 	private int active;
-	
+
 	@Column(name = "created_date")
 	private Date createdDate;
-	
+
 	@Column(name = "edited_date")
 	private Date editedDate;
-	
+
 	@Column(name = "last_user_modify")
 	private String lastUserModify;
 
@@ -146,20 +171,73 @@ public class Equation implements Serializable {
 		this.videoLink = videoLink;
 	}
 
-	public IonEquation getIonEquation() {
+	public String getIonEquation() {
 		return ionEquation;
 	}
 
-	public void setIonEquation(IonEquation ionEquation) {
+	public void setIonEquation(String ionEquation) {
 		this.ionEquation = ionEquation;
 	}
 
-	public OxiReduceEquation getOxiReduceEquation() {
-		return oxiReduceEquation;
+	public String getShortcutIonEquation() {
+		return shortcutIonEquation;
 	}
 
-	public void setOxiReduceEquation(OxiReduceEquation oxiReduceEquation) {
-		this.oxiReduceEquation = oxiReduceEquation;
+	public void setShortcutIonEquation(String shortcutIonEquation) {
+		this.shortcutIonEquation = shortcutIonEquation;
 	}
+
+	public int getMolReduce() {
+		return molReduce;
+	}
+
+	public void setMolReduce(int molReduce) {
+		this.molReduce = molReduce;
+	}
+
+	public String getReduceEquation() {
+		return reduceEquation;
+	}
+
+	public void setReduceEquation(String reduceEquation) {
+		this.reduceEquation = reduceEquation;
+	}
+
+	public int getMolOxi() {
+		return molOxi;
+	}
+
+	public void setMolOxi(int molOxi) {
+		this.molOxi = molOxi;
+	}
+
+	public String getOxiEquation() {
+		return oxiEquation;
+	}
+
+	public void setOxiEquation(String oxiEquation) {
+		this.oxiEquation = oxiEquation;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	/*
+	 * public IonEquation getIonEquation() { return ionEquation; }
+	 * 
+	 * public void setIonEquation(IonEquation ionEquation) { this.ionEquation =
+	 * ionEquation; }
+	 * 
+	 * public OxiReduceEquation getOxiReduceEquation() { return
+	 * oxiReduceEquation; }
+	 * 
+	 * public void setOxiReduceEquation(OxiReduceEquation oxiReduceEquation) {
+	 * this.oxiReduceEquation = oxiReduceEquation; }
+	 */
 
 }

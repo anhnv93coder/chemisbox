@@ -45,19 +45,19 @@ public class OxiReduceEquation implements Serializable {
 	@Column(name = "summary")
 	private String summary;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy = "oxiReduceEquation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Equation> equations = new ArrayList<Equation>();
-
+*/
 	
-	public List<Equation> getEquations() {
+	/*public List<Equation> getEquations() {
 		return equations;
 	}
 
 	public void setEquations(List<Equation> equations) {
 		this.equations = equations;
 	}
-
+*/
 	public Long getOxiReduceId() {
 		return oxiReduceId;
 	}

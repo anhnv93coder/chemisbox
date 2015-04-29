@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
 <jsp:include page="base/head.jsp"></jsp:include>
@@ -38,7 +39,28 @@
 		</div>
 	</div>
 
-	<jsp:include page="base/header.jsp"></jsp:include>
+	<section class="featured">
+		<div class="container">
+			<div class="row mar-bot40">
+				<div class="col-md-6 col-md-offset-3">
+	
+					<div class="align-center">
+						<i class="fa fa-flask fa-5x mar-bot20"></i>
+						<h2 class="slogan">ChemisBox</h2>
+						<p>Công cụ hỗ trợ học hóa học</p>
+					</div>
+					<div class="col-md-12"
+						style="margin: 30px auto 0; float: none; margin: 0 auto;">
+						<div class="form-inline">
+							<input id="keyWord" type="text" class="form-control" placeholder="Nhập từ khóa"
+								style="width: 83%;" value="${searchModel.keyWord}"/>
+							<button id="btnSearch" type="button" class="btn btn-default">Tìm kiếm</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 	<!-- about -->
 	<section class="section appear clearfix bg-white"
 		id="result-block" style="display: none">
@@ -111,17 +133,21 @@
 
 	<!-- section footer -->
 	<jsp:include page="base/footer.jsp"></jsp:include>
-	
+	<%-- var ion = {ionId: '${myData.ionEquation.ionId}', ionEquation : '${myData.ionEquation.ionEquation}', shortcutIonEquation : '${myData.ionEquation.shortcutIonEquation}'};
+		var oxi = {oxiReduceId : '${myData.oxiReduceEquation.oxiReduceId}', molReduce : '${myData.oxiReduceEquation.molReduce}'
+				,reduceEquation : '${myData.oxiReduceEquation.reduceEquation}', molOxi : '${myData.oxiReduceEquation.molOxi}' 
+				,oxiEquation : '${myData.oxiReduceEquation.oxiEquation}', summary : '${myData.oxiReduceEquation.summary}'}; 
+		
+		var result = {condition : '${myData.condition}', description : '${myData.description}', equation : '${myData.equation}'
+				,equationId : '${myData.equationId}', ionEquation : ion, oxiReduceEquation : oxi, videoLink : '${myData.videoLink}'};*/ --%>
 	<script type="text/javascript">
 	var listResult = [];
 	<c:forEach var="myData" items="${searchModel.equationList}" >
-		var ion = {ionId: '${myData.ionEquation.ionId}', ionEquation : '${myData.ionEquation.ionEquation}', shortcutIonEquation : '${myData.ionEquation.shortcutIonEquation}'};
-		var oxi = {oxiReduceId : '${myData.oxiReduceEquation.oxiReduceId}', molReduce : '${myData.oxiReduceEquation.molReduce}'
-				,reduceEquation : '${myData.oxiReduceEquation.reduceEquation}', molOxi : '${myData.oxiReduceEquation.molOxi}' 
-				,oxiEquation : '${myData.oxiReduceEquation.oxiEquation}', summary : '${myData.oxiReduceEquation.summary}'};
 		
 		var result = {condition : '${myData.condition}', description : '${myData.description}', equation : '${myData.equation}'
-				,equationId : '${myData.equationId}', ionEquation : ion, oxiReduceEquation : oxi, videoLink : '${myData.videoLink}'};
+			,equationId : '${myData.equationId}', videoLink : '${myData.videoLink}', ionEquation : '${myData.ionEquation}'
+			, shortcutIonEquation : '${myData.shortcutIonEquation}', molReduce : '${myData.molReduce}', reduceEquation : '${myData.reduceEquation}'
+			, molOxi : '${myData.molOxi}', oxiEquation : '${myData.oxiEquation}', summary : '${myData.summary}'};
 		listResult.push(result);
 	</c:forEach>
 	

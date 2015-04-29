@@ -309,14 +309,26 @@ function fillResult(data){
 		$.each(data.equationList, function(key, value) {
 			var equation = JSON.parse(value.equation);
 			$.each(equation, function(index,chemicals) {
+//				var oxiEquation = "";
+//				if(!stringIsNullOrEmpty(value.oxiReduceEquation.oxiReduceId)){
+//					 oxiEquation = mergeOxiReduceEquation(value.oxiReduceEquation);
+//				}
+				
+//				var ionEquation = "";
+//				if(value.ionEquation != null && !stringIsNullOrEmpty(value.ionEquation.ionId)){
+//					ionEquation = mergeIonEquation(value.ionEquation);
+//				}
+				
 				var oxiEquation = "";
-				if(!stringIsNullOrEmpty(value.oxiReduceEquation.oxiReduceId)){
-					 oxiEquation = mergeOxiReduceEquation(value.oxiReduceEquation);
+				if(!stringIsNullOrEmpty(value.reduceEquation) 
+						&& !stringIsNullOrEmpty(value.oxiEquation) 
+						&& !stringIsNullOrEmpty(value.summary)) {
+					oxiEquation = mergeOxiReduceEquation(value);
 				}
 				
 				var ionEquation = "";
-				if(value.ionEquation != null && !stringIsNullOrEmpty(value.ionEquation.ionId)){
-					ionEquation = mergeIonEquation(value.ionEquation);
+				if(!stringIsNullOrEmpty(value.ionEquation) && !stringIsNullOrEmpty(value.shortcutIonEquation)) {
+					ionEquation = mergeIonEquation(value);
 				}
 				
 				var videoBlock = "";
@@ -342,7 +354,7 @@ function fillResult(data){
 }
 
 function getEquation() {
-	var keyWord = $("#keyWord").val().trim();
+	var keyWord = $.trim($("#keyWord").val());
 	$("#chemicalImg").removeAttr("src");
 	$("#chemicalImg").css("display", "none");
 	$("#equation-list").empty();
@@ -377,6 +389,9 @@ var scrollToElement = function(el, ms) {
 	}, speed);
 }
 
-function stringIsNullOrEmpty(source){
-	return (source == '' || !source || source == undefined);
+function stringIsNullOrEmpty(source) {
+	if(typeof(source) == 'undefined' || source == null|| source == "" || source == ''){
+		return true;
+	}
+	return false;
 }

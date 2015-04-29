@@ -13,27 +13,27 @@
 	<jsp:include page="base/menu.jsp"></jsp:include>
 
 	<section class="featured">
-	<div class="container">
-		<div class="row mar-bot40">
-			<div class="col-md-6 col-md-offset-3">
-
-				<div class="align-center">
-					<i class="fa fa-flask fa-5x mar-bot20"></i>
-					<h2 class="slogan">ChemisBox</h2>
-					<p>Công cụ hỗ trợ học hóa học</p>
-				</div>
-				<div class="col-md-12"
-					style="margin: 30px auto 0; float: none; margin: 0 auto;">
-					<form:form class="form-inline" action="search" modelAttribute="searchModel">
-						<form:input id="key-word" class="form-control" placeholder="Nhập từ khóa"
-							style="width: 83%;" path="keyWord" />
-						<button type="submit" class="btn btn-default">Tìm kiếm</button>
-					</form:form>
-
+		<div class="container">
+			<div class="row mar-bot40">
+				<div class="col-md-6 col-md-offset-3">
+	
+					<div class="align-center">
+						<i class="fa fa-flask fa-5x mar-bot20"></i>
+						<h2 class="slogan">ChemisBox</h2>
+						<p>Công cụ hỗ trợ học hóa học</p>
+					</div>
+					<div class="col-md-12"
+						style="margin: 30px auto 0; float: none; margin: 0 auto;">
+						<form:form class="form-inline" action="search" modelAttribute="searchModel">
+							<form:input id="key-word" class="form-control" placeholder="Nhập từ khóa"
+								style="width: 83%;" path="keyWord" />
+							<button type="submit" class="btn btn-default">Tìm kiếm</button>
+						</form:form>
+	
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</section>
 
 	<!-- services -->
