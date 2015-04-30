@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
+<c:if test="${empty userObject}">
+	<c:redirect url="/login"></c:redirect>
+</c:if>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,19 +45,49 @@
     <section class="section appear clearfix">
         <div class="container">
             <div class="col-md-9">
-                <div class="row" style="padding: 10px 0;">
+                <c:if test="${!empty forumModel.questionList}">
+        	 <div class="row" style="padding: 10px 0;">
                     <div class="">
                         <h3>Top question</h3>
                     </div>
                 </div>
                 <div class="row">
                     <table class="table">
+                    	<c:forEach items="${forumModel.questionList}" var="question">
+	                    	<tr>
+	                            <td>
+	                                <div class="col-md-4">
+	                                		<div class="col-sm-4">Votes</div>
+                                    		<div class="col-sm-4">Answers</div>
+	                                    	<div class="col-sm-4">Views</div>                                	
+	                                </div>
+	                                <div class="col-md-8">
+	                                    <div class="row">
+	                                        <div class="col-md-12">
+	                                             <a href="${baseURL}/question/${question.questionId}">${question.title}</a>
+	                                        </div>
+	                                    </div>
+	                                    <div class="row" style="margin-top: 10px;">
+	                                        <div class="col-md-8">
+												<c:forEach items="${question.questionTagList}" var="questionTag">
+													<a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag fa-lg"></i>&nbsp;${questionTag.tag.tagName}</a>	
+												</c:forEach>
+											</div>
+	                                        <div class="col-md-4">
+	                                            <span>modified 51 secs ago</span>
+	                                        </div>
+	                                    </div>                                    
+	                                </div>
+	                            </td>
+	                        </tr>
+                    	</c:forEach>
+                    
                         <tr>
                             <td>
                                 <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
+                                    <div class="col-sm-4">Votes</div>
+                                	<div class="col-sm-4">Answers</div>
+                                   	<div class="col-sm-4">Views</div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="row">
@@ -60,10 +95,9 @@
                                              <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
+                                            <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag fa-lg"></i>&nbsp;HTC</a>
                                         </div>
                                         <div class="col-md-4">
                                             <span>modified 51 secs ago</span>
@@ -75,20 +109,20 @@
                         <tr>
                             <td>
                                 <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
+                                    <div class="col-sm-4">Votes</div>
+                                  	<div class="col-sm-4">Answers</div>
+                                   	<div class="col-sm-4">Views</div>
                                 </div>
                                 <div class="col-lg-8">
-                                    <div class="row">
+                                    <div class="row ">
                                         <div class="col-md-12">
                                              <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
+                                            <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag fa-lg"></i>&nbsp;HTC</a>
+                                            <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag fa-lg"></i>&nbsp;HTC</a>
                                         </div>
                                         <div class="col-md-4">
                                             <span>modified 51 secs ago</span>
@@ -97,159 +131,9 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                    <div class="col-lg-4"><span class="label label-primary"><span>42</span>&nbsp;Votes</span></div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                            <a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
-                       
                     </table>
                 </div>
+        </c:if>
             </div>
             <div class="col-md-3">
                 <div class="list-group">

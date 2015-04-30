@@ -13,6 +13,11 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
+	<import resource="loadForumContext.xml"/>
+	<import resource="loadQuestionContext.xml"/>
+	<import resource="loginUserContext.xml"/>
+
+
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -81,6 +86,18 @@
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
 
+	<bean id="questionDao" class="com.chemisbox.dao.impl.QuestionDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="answerDao" class="com.chemisbox.dao.impl.AnswerDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="userDao" class="com.chemisbox.dao.impl.UserDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
 	<bean id="equationManagementBusiness" class="com.chemisbox.business.EquationManagementBusiness">
 		<property name="chemicalDao" ref="chemicalDao" />
 		<property name="chemistryEquationDao" ref="chemistryEquationDao" />
@@ -135,5 +152,7 @@
 	<bean id="loginAdminController" class="com.chemisbox.controller.LoginAdminController">
 		<property name="business" ref="loginAdminBusiness"></property>
 	</bean>
+	
+	
 	
 </beans>

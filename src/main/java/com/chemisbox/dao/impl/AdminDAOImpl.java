@@ -3,12 +3,16 @@ package com.chemisbox.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.chemisbox.dao.AdminDAO;
 import com.chemisbox.entity.Admin;
 import com.chemisbox.exception.ChemisboxException;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
+@Repository
+@Transactional
 public class AdminDAOImpl implements AdminDAO {
 
 	private SessionFactory sessionFactory;
