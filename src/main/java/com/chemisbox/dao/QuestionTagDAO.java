@@ -6,7 +6,7 @@ import com.chemisbox.exception.ChemisboxException;
 
 public interface QuestionTagDAO {
 	
-	public Integer add(QuestionTag questionTag) throws ChemisboxException;
+	public boolean add(QuestionTag questionTag) throws ChemisboxException;
 	
-	public Integer delete(QuestionTag questionTag) throws ChemisboxException;
+	public boolean delete(QuestionTag questionTag) throws ChemisboxException;
 }

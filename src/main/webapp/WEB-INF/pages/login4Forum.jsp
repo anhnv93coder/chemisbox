@@ -12,9 +12,9 @@
 <meta name="author" content="Dashboard">
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
 
-<c:if test="${not empty userObject}">
+<%-- <c:if test="${not empty userObject}">
 	<c:redirect url="/forum"></c:redirect>
-</c:if>
+</c:if> --%>
 <title>Đăng nhập</title>
 
 <!-- Bootstrap core CSS -->
@@ -71,7 +71,7 @@
 			var email = $.trim($("#email").val());
 			var password = $.trim($("#password").val());
 			
-			if(stringIsNullOrEmpty(userName) || stringIsNullOrEmpty(password)){
+			if(stringIsNullOrEmpty(email) || stringIsNullOrEmpty(password)){
 				$("#loginMessage").css("display", "block");
 				$("#errorMessage").html("Tài khoản và mật khẩu không được để trống!");
 				return;

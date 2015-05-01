@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
-<c:if test="${empty userObject}">
-	<c:redirect url="/login"></c:redirect>
-</c:if>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,14 +25,16 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="fa fa-bars color-white"></span>
                 </button>
-                <h1><a class="navbar-brand" href="index.html" data-0="line-height:90px;" data-300="line-height:50px;">ChemisBox</a></h1>
+                <h1><a class="navbar-brand" href="${baseURL}" data-0="line-height:90px;" data-300="line-height:50px;">ChemisBox</a></h1>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                    <li class="active"><a href="index.html">Trang chủ</a></li>
-                    <li><a href="#section-works">Bảng tuần hoàn</a></li>
-                    <li><a href="#section-about">Thông tin</a></li>
-                    <li><a href="#section-contact">Liên hệ</a></li>
+                    <li class="active"><a href="${baseURL}">Trang chủ</a></li>
+                    <li><a href="${baseURL}/ask">Đặt câu hỏi</a></li>
+                    <c:if test="${not empty userObject}">
+                    	<li><a>Xin chào: ${userObject.fullName}</a></li>
+                    	<li><a href="${baseURL}/logout">Logout</a></li>
+                    </c:if>
                 </ul>
             </div><!--/.navbar-collapse -->
         </div>
@@ -74,7 +75,7 @@
 												</c:forEach>
 											</div>
 	                                        <div class="col-md-4">
-	                                            <span>modified 51 secs ago</span>
+	                                            <span><fmt:formatDate type="both" value="${question.createdDate}" /></span>
 	                                        </div>
 	                                    </div>                                    
 	                                </div>

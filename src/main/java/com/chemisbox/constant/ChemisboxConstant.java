@@ -12,6 +12,11 @@ public class ChemisboxConstant {
 	public static final int CHEMICAL_MENU = 2;
 	public static final int ELEMENT_MENU = 3;
 	
+	// Approved question
+	public static final int QUESTION_IS_APPROVED = 0;
+	public static final int QUESTION_IS_NOT_APPROVED = 1;
+	
+	
 	// Element constant
 	// Element group
 	public static final int ALKADI_METALS = 0;			// KLKiem
@@ -56,7 +61,7 @@ public class ChemisboxConstant {
 	public static final String ADD_EQUATION_API = "/addEquation";
 	
 	//Error code
-	public static final String CB_001 = "CB_001";
+	public static final String CB_001 = "CB_001"; // User chua dang nhap
 	public static final String CB_002 = "CB_002";
 	public static final String CB_003 = "CB_003";
 	public static final String CB_004 = "CB_004";

@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,28 +24,29 @@ public class Answer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "answer_id")
 	private int answerId;
-	
+
 	@Column(name = "content")
 	private String content;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "question_id")
 	private Question question;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "email")
 	private User user;
-	
+
 	@Column(name = "votes")
 	private int votes;
-	
-	@Column(name = "answer_date")
-	private Date answer_date;
-	
+
+	@Column(name = "answer_date", insertable = false, updatable = false)
+	private Date answerDate;
+
 	@Column(name = "edited_date")
-	private Date edited_date;
+	private Date editedDate;
 
 	public int getAnswerId() {
 		return answerId;
@@ -85,20 +88,20 @@ public class Answer implements Serializable {
 		this.votes = votes;
 	}
 
-	public Date getAnswer_date() {
-		return answer_date;
+	public Date getAnswerDate() {
+		return answerDate;
 	}
 
-	public void setAnswer_date(Date answer_date) {
-		this.answer_date = answer_date;
+	public void setAnswerDate(Date answerDate) {
+		this.answerDate = answerDate;
 	}
 
-	public Date getEdited_date() {
-		return edited_date;
+	public Date getEditedDate() {
+		return editedDate;
 	}
 
-	public void setEdited_date(Date edited_date) {
-		this.edited_date = edited_date;
+	public void setEditedDate(Date editedDate) {
+		this.editedDate = editedDate;
 	}
 
 }

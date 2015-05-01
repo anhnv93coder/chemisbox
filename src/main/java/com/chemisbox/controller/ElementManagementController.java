@@ -188,7 +188,7 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 	}
 	
 	@Override
-	public ElementManagementModel execute(ElementManagementModel model)
+	public ElementManagementModel execute(ElementManagementModel model, ModelMap map)
 			throws ChemisboxException {
 		// TODO Auto-generated method stub
 		return null;

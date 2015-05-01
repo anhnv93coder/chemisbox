@@ -27,8 +27,7 @@ public class LoadForumBusiness extends
 		this.out = new LoadForumOutputParam();
 		List<Question> questionList = null;
 		try {
-			questionList = questionDao.selectQuestionByUser(inParam.getEmail(),
-					inParam.getStartIndex(), 5);
+			questionList = questionDao.selectLastestQuestion(inParam.getStartIndex(), 5);
 
 			if (ChemisboxUtilities.isNullOrEmpty(questionList)) {
 				this.out.setErrorMessage("Khong tim thay danh sach cau hoi.");

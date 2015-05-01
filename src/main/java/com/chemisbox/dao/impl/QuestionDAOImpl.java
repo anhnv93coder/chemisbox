@@ -2,24 +2,15 @@ package com.chemisbox.dao.impl;
 
 import java.util.List;
 
-
-
-
-
-
-
-
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.dao.QuestionDAO;
 import com.chemisbox.entity.Question;
 import com.chemisbox.exception.ChemisboxException;
@@ -38,7 +29,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 	public List<Question> selectLastestQuestion(int startIndex, int pageSize)
 			throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
-		return (List<Question>)session.createCriteria(Question.class).addOrder(Order.desc("createdDate")).setFirstResult(startIndex).setMaxResults(pageSize).list();
+		return (List<Question>)session.createCriteria(Question.class).add(Restrictions.eq("approved", ChemisboxConstant.QUESTION_IS_APPROVED)).addOrder(Order.desc("createdDate")).setFirstResult(startIndex).setMaxResults(pageSize).list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,7 +48,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 		return null;
 	}
 
-	public Integer add(Question question) {
+	public Integer add(Question question)  throws ChemisboxException {
 		if(question == null){
 			return null;
 		}
@@ -66,7 +57,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 		return question.getQuestionId();
 	}
 
-	public Integer update(Question question) {
+	public Integer update(Question question)  throws ChemisboxException {
 		if(question == null){
 			return null;
 		}
@@ -75,8 +66,8 @@ public class QuestionDAOImpl implements QuestionDAO {
 		return question.getQuestionId();
 	}
 
-	public boolean delete(Question question) {
-		if(question == null){
+	public boolean delete(Question question)  throws ChemisboxException {
+		if(question == null) {
 			return false;
 		}
 		Session session = sessionFactory.getCurrentSession();
@@ -84,7 +75,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 		return true;
 	}
 
-	public Question get(Integer id) {
+	public Question get(Integer id)  throws ChemisboxException {
 		if(id == null){
 			return null;
 		}

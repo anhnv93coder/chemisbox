@@ -190,7 +190,7 @@ public class ChemicalManagementController
 	}
 
 	@Override
-	public ChemicalManagementModel execute(ChemicalManagementModel model)
+	public ChemicalManagementModel execute(ChemicalManagementModel model, ModelMap map)
 			throws ChemisboxException {
 		this.model = new ChemicalManagementModel();
 

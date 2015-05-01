@@ -60,7 +60,7 @@ public class DefaultController extends ChemisboxController<DefaultBusiness, Defa
 	}
 
 	@Override
-	public DefaultModel execute(DefaultModel model) throws ChemisboxException {
+	public DefaultModel execute(DefaultModel model, ModelMap map) throws ChemisboxException {
 		// TODO Auto-generated method stub
 		return null;
 	}

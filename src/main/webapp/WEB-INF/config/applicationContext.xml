@@ -16,7 +16,9 @@
 	<import resource="loadForumContext.xml"/>
 	<import resource="loadQuestionContext.xml"/>
 	<import resource="loginUserContext.xml"/>
-
+	<import resource="loadAskQuestionContext.xml"/>
+	<import resource="addQuestionContext.xml"/>
+	<import resource="answerQuestionContext.xml"/>
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -95,6 +97,14 @@
 	</bean>
 	
 	<bean id="userDao" class="com.chemisbox.dao.impl.UserDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="questionTagDao" class="com.chemisbox.dao.impl.QuestionTagDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="tagDao" class="com.chemisbox.dao.impl.TagDAOImpl">
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
 	

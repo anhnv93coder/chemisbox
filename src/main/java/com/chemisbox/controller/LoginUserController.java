@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.chemisbox.business.LoginUserBusiness;
 import com.chemisbox.exception.ChemisboxException;
@@ -21,6 +22,12 @@ public class LoginUserController extends ChemisboxController<LoginUserBusiness, 
 
 	@RequestMapping(value = "/login")
 	public String doLoadLoginForm(){
+		return "login4Forum";
+	}
+	
+	@RequestMapping(value = "/logout")
+	public String doLogout(SessionStatus sessionStatus){
+		sessionStatus.setComplete();
 		return "login4Forum";
 	}
 	
@@ -46,7 +53,7 @@ public class LoginUserController extends ChemisboxController<LoginUserBusiness, 
 	}
 	
 	@Override
-	public LoginUserModel execute(LoginUserModel model)
+	public LoginUserModel execute(LoginUserModel model, ModelMap map)
 			throws ChemisboxException {
 		// TODO Auto-generated method stub
 		return null;

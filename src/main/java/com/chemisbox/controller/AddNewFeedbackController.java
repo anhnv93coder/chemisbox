@@ -1,6 +1,7 @@
 package com.chemisbox.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,7 @@ public class AddNewFeedbackController extends
 
 	@RequestMapping(value = "/feedback", method = RequestMethod.POST)
 	@Override
-	public @ResponseBody AddNewFeedbackModel execute(@RequestBody AddNewFeedbackModel model)
+	public @ResponseBody AddNewFeedbackModel execute(@RequestBody AddNewFeedbackModel model, ModelMap map)
 			throws ChemisboxException {
 		
 		if(model.getFeedback() == null){

@@ -1,6 +1,8 @@
 package com.chemisbox.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 import com.chemisbox.exception.ChemisboxException;
 
@@ -9,7 +11,7 @@ public abstract class ChemisboxController<T, V> {
 	protected T business;
 	protected V model;
 
-	public abstract V execute(V model) throws ChemisboxException;
+	public abstract V execute(V model, ModelMap map) throws ChemisboxException;
 
 	public void setBusiness(T business) {
 		this.business = business;

@@ -3,6 +3,7 @@ package com.chemisbox.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chemisbox.business.LoadForumBusiness;
 import com.chemisbox.exception.ChemisboxException;
@@ -12,6 +13,7 @@ import com.chemisbox.output.LoadForumOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
+@SessionAttributes("userObject")
 public class LoadForumController extends
 		ChemisboxController<LoadForumBusiness, LoadForumModel> {
 
@@ -19,7 +21,6 @@ public class LoadForumController extends
 	public String doLoadForum(ModelMap map) throws ChemisboxException {
 		LoadForumInputParam inParam = new LoadForumInputParam();
 		inParam.setStartIndex(0);
-		inParam.setEmail("anhnv@a.com");
 		LoadForumOutputParam outParam = this.business.execute(inParam);
 		this.model = new LoadForumModel();
 		if (ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
@@ -31,16 +32,8 @@ public class LoadForumController extends
 		return "forum";
 	}
 
-	
-
-	@RequestMapping(value = { "/ask", "/ask/" })
-	public String doLoadAskQuestion() throws ChemisboxException {
-
-		return "askQuestion";
-	}
-
 	@Override
-	public LoadForumModel execute(LoadForumModel model)
+	public LoadForumModel execute(LoadForumModel model, ModelMap map)
 			throws ChemisboxException {
 		// TODO Auto-generated method stub
 		return null;

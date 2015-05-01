@@ -189,7 +189,7 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 	}
 	
 	@Override
-	public EquationManagementModel execute(EquationManagementModel model)
+	public EquationManagementModel execute(EquationManagementModel model, ModelMap map)
 			throws ChemisboxException {
 		// TODO Auto-generated method stub
 		return null;

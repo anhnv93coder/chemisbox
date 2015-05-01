@@ -72,7 +72,7 @@ public class LoginAdminController extends ChemisboxController<LoginAdminBusiness
 	
 	
 	@Override
-	public LoginAdminModel execute(LoginAdminModel model) throws ChemisboxException {
+	public LoginAdminModel execute(LoginAdminModel model, ModelMap map) throws ChemisboxException {
 		
 		this.model = new LoginAdminModel();
 		

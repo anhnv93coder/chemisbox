@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chemisbox.business.LoadQuestionBusiness;
 import com.chemisbox.exception.ChemisboxException;
@@ -13,6 +14,7 @@ import com.chemisbox.output.LoadQuestionOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
+@SessionAttributes("userObject")
 public class LoadQuestionController extends ChemisboxController<LoadQuestionBusiness, LoadQuestionModel> {
 
 	@RequestMapping(value = {"/question/{index}"})
@@ -33,7 +35,7 @@ public class LoadQuestionController extends ChemisboxController<LoadQuestionBusi
 	}
 	
 	@Override
-	public LoadQuestionModel execute(LoadQuestionModel model)
+	public LoadQuestionModel execute(LoadQuestionModel model, ModelMap map)
 			throws ChemisboxException {
 		// TODO Auto-generated method stub
 		return null;

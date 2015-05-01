@@ -13,11 +13,11 @@ public interface QuestionDAO {
 	
 	public List<Question> selectHotQuestion(int startIndex, int pageSize) throws ChemisboxException;
 	
-	public Integer add(Question question);
+	public Integer add(Question question) throws ChemisboxException;
 	
-	public Integer update(Question question);
+	public Integer update(Question question) throws ChemisboxException;
 	
-	public boolean delete(Question question);
+	public boolean delete(Question question) throws ChemisboxException;
 	
-	public Question get(Integer id);
+	public Question get(Integer id) throws ChemisboxException;
 }

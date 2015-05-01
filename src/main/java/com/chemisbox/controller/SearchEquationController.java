@@ -22,7 +22,7 @@ public class SearchEquationController extends
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String searchEquationBySubmit(@ModelAttribute("searchModel") SearchEquationModel model,
             ModelMap map) throws ChemisboxException {
-		this.model = execute(model);
+		this.model = execute(model, map);
 		map.put("searchModel", this.model);
 		return "search";
 	}
@@ -32,7 +32,7 @@ public class SearchEquationController extends
             ModelMap map) throws ChemisboxException {
 		SearchEquationModel searchEquationModel = new  SearchEquationModel();
 		searchEquationModel.setKeyWord(keyWord.trim());
-		this.model = execute(searchEquationModel);
+		this.model = execute(searchEquationModel, map);
 		map.put("searchModel", this.model);
 		return "search";
 	}
@@ -42,11 +42,11 @@ public class SearchEquationController extends
 			@PathVariable("keyword") String keyWord) throws ChemisboxException {
 		SearchEquationModel searchEquationModel = new SearchEquationModel();
 		searchEquationModel.setKeyWord(keyWord.trim());
-		return execute(searchEquationModel);
+		return execute(searchEquationModel, null);
 	}
 	
 	@Override
-	public  SearchEquationModel execute(SearchEquationModel model) throws ChemisboxException {
+	public  SearchEquationModel execute(SearchEquationModel model, ModelMap map) throws ChemisboxException {
 		
 		if (ChemisboxUtilities.isNullOrEmpty(model.getKeyWord())) {
 			model.setErrorMessage("Key word is null");

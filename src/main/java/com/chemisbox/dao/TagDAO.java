@@ -13,7 +13,9 @@ public interface TagDAO {
 
 	public Integer update(Tag tag) throws ChemisboxException;
 
-	public Integer delete(Tag tag) throws ChemisboxException;
+	public boolean delete(Tag tag) throws ChemisboxException;
 
-	public Tag get(Integer id) throws ChemisboxException;
+	public Tag get(String tagName) throws ChemisboxException;
+	
+	
 }

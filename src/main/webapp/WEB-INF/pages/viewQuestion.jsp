@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.chemisbox.constant.ChemisboxConstant" %>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,14 +23,16 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="fa fa-bars color-white"></span>
                 </button>
-                <h1><a class="navbar-brand" href="index.html" data-0="line-height:90px;" data-300="line-height:50px;">ChemisBox</a></h1>
+                <h1><a class="navbar-brand" href="${baseURL}" data-0="line-height:90px;" data-300="line-height:50px;">ChemisBox</a></h1>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                    <li class="active"><a href="index.html">Trang chủ</a></li>
-                    <li><a href="#section-works">Bảng tuần hoàn</a></li>
-                    <li><a href="#section-about">Thông tin</a></li>
-                    <li><a href="#section-contact">Liên hệ</a></li>
+                    <li class="active"><a href="${baseURL}">Trang chủ</a></li>
+                    <li><a href="${baseURL}/ask">Đặt câu hỏi</a></li>
+                    <c:if test="${not empty userObject}">
+                    	<li><a>Xin chào: ${userObject.fullName}</a></li>
+                    	<li><a href="${baseURL}/logout">Logout</a></li>
+                    </c:if>
                 </ul>
             </div><!--/.navbar-collapse -->
         </div>
@@ -58,11 +61,12 @@
 						<div class="col-md-11" style="padding: 10px 0;">
 							${loadQuestionModel.question.content}
 							<div class="tag-block">
-								<a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></span></span></a>
-								<a href="#"><span class="label label-danger"><i class="fa fa-tag"></i>&nbsp;HTC<span></span></span></a>
+								<c:forEach items="${loadQuestionModel.question.questionTagList}" var="questionTag">
+									<a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag"></i>&nbsp;<strong>${questionTag.tag.tagName}</strong></a>	
+								</c:forEach>
 							</div>
 							<div class="alert alert-success col-md-4 pull-right">
-								<p><a href="#">Đăng bởi: ${loadQuestionModel.question.user.fullName}</a></p>
+								<p>Đăng bởi: <a href="#"><strong>${loadQuestionModel.question.user.fullName}</strong></a></p>
 								<span>${loadQuestionModel.question.createdDate}</span>
 							</div>
 						</div>
@@ -72,21 +76,29 @@
 							<h4>1 Answers</h4>
 							<c:forEach items="${loadQuestionModel.answerList}" var="answer">
 								<hr/>
-								<div class="col-md-1">
-									<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
-									<h3 class="text-center">4</h3>
-									<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
-									<p class="text-center"><i class="fa fa-star fa-2x"></i></p>
-								</div>
-								<div class="col-md-11" style="padding: 10px 0;">
-									${answer.content}
+								<div class="row">
+									<div class="col-md-1">
+										<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
+										<h3 class="text-center">4</h3>
+										<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
+										<p class="text-center"><i class="fa fa-star fa-2x"></i></p>
+									</div>
+									<div class="col-md-11" style="padding: 10px 0;">
+										<p>${answer.content}</p>
+										<div class="alert alert-success col-md-4 pull-right">
+											<p>Trả lời bởi: <a><strong>${answer.user.fullName}</strong></a></p>
+											<span>${answer.answerDate}</span>
+										</div>
+									</div>
 								</div>
 							</c:forEach>
+							
 						</div>
 					</c:if>
 					<div class="your-answer clearfix" style="margin-top: 50px;">
 						<h4>Your answer</h4>
 						<hr/>
+						<input type="hidden" value="${loadQuestionModel.question.questionId}" id="questionId"/>
 						<div class="col-md-12">
 							<textarea id="ckeditor" class="ckeditor" name="editor1"></textarea>
 							<button id="btnSendAnswer" type="button" class="btn btn-primary" style="margin: 20px auto;">Post your answer</button>
@@ -113,10 +125,41 @@
     </section>
 	<jsp:include page="base/footer.jsp"></jsp:include>
 	<script type="text/javascript">
+		var CB_001 = '<%= ChemisboxConstant.CB_001 %>' 
 		
 		$("#btnSendAnswer").click(function() {
-			var value = CKEDITOR.instances['ckeditor'].getData();
 			
+			var content = CKEDITOR.instances['ckeditor'].getData();
+			var questionId = $("#questionId").val(); 
+			
+			//validate
+			
+			var model = {
+				content : content,
+				questionId : questionId
+			};
+
+			$.ajax({
+				url : '${baseURL}/answer',
+				dataType : "json",
+				contentType : "application/json",
+				type : 'POST',
+				data : JSON.stringify(model),
+				success : function(data) {
+					if (!stringIsNullOrEmpty(data.errorMessage)) {
+						if(data.errorMessage.localeCompare(CB_001) == 0){
+							window.location = "${baseURL}/login";
+						} else {
+							alert(data.errorMessage);	
+						}
+					} else {
+						window.location = "${baseURL}/question/${loadQuestionModel.question.questionId}";
+					}
+				},
+				error : function(data) {
+					alert(JSON.stringify(data));
+				}
+			});
 		});
 	</script>
 </body>

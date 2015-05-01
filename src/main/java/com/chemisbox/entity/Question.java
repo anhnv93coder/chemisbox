@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,6 +31,7 @@ public class Question implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "question_id")
 	private int questionId;
 
@@ -48,11 +51,14 @@ public class Question implements Serializable {
 	@Column(name = "views")
 	private int views;
 
-	@Column(name = "created_date")
+	@Column(name = "created_date", updatable = false, insertable = false)
 	private Date createdDate;
 
 	@Column(name = "edited_date")
 	private Date editedDate;
+	
+	@Column(name = "approved", insertable = false)
+	private int approved;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
