@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd 
+        http://www.springframework.org/schema/context
+      	http://www.springframework.org/schema/context/spring-context-4.1.xsd        
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<bean id="showDashboardBusiness" class="com.chemisbox.business.ShowDashboardBusiness">
+		<property name="questionDao" ref="questionDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="chemicalDao" ref="chemicalDao" />
+		<property name="equationDao" ref="equationDao" />
+		<property name="elementDao" ref="elementDao" />
+	</bean>
+	
+	<bean id="showDashboardController" class="com.chemisbox.controller.ShowDashboardController">
+		<property name="business" ref="showDashboardBusiness" />
+	</bean>
+	
+</beans>

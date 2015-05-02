@@ -28,10 +28,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
                     <li class="active"><a href="${baseURL}">Trang chủ</a></li>
+                    <li class="active"><a href="${baseURL}/forum">Forum</a></li>
                     <li><a href="${baseURL}/ask">Đặt câu hỏi</a></li>
+                    <c:if test="${empty userObject}">
+                    	<li><a href="${baseURL}/login">Đăng nhập</a></li>	
+                    </c:if>
                     <c:if test="${not empty userObject}">
                     	<li><a>Xin chào: ${userObject.fullName}</a></li>
-                    	<li><a href="${baseURL}/logout">Logout</a></li>
+                    	<li><a href="${baseURL}/logout">Đăng xuất</a></li>
                     </c:if>
                 </ul>
             </div><!--/.navbar-collapse -->
@@ -51,12 +55,10 @@
             </div>
 			<div class="row">
 				<div class="col-md-9">
-					<div class="question-block clearfix">
+					<div class="row question-block clearfix">
 						<div class="col-md-1">
-							<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
-							<h3 class="text-center">4</h3>
-							<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
-							<p class="text-center"><i class="fa fa-star fa-2x"></i></p>
+							<p class="text-center"><i class="fa fa-question-circle fa-2x"></i></p>
+							<p class="text-center"><a href="#" title="Favorite question"><i class="fa fa-star fa-2x"></i></a></p>
 						</div>
 						<div class="col-md-11" style="padding: 10px 0;">
 							${loadQuestionModel.question.content}
@@ -65,7 +67,7 @@
 									<a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag"></i>&nbsp;<strong>${questionTag.tag.tagName}</strong></a>	
 								</c:forEach>
 							</div>
-							<div class="alert alert-success col-md-4 pull-right">
+							<div class="alert alert-info col-md-4 pull-right">
 								<p>Đăng bởi: <a href="#"><strong>${loadQuestionModel.question.user.fullName}</strong></a></p>
 								<span>${loadQuestionModel.question.createdDate}</span>
 							</div>
@@ -78,14 +80,19 @@
 								<hr/>
 								<div class="row">
 									<div class="col-md-1">
-										<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
-										<h3 class="text-center">4</h3>
-										<p class="text-center"><i class="fa fa-code fa-2x"></i></p>
-										<p class="text-center"><i class="fa fa-star fa-2x"></i></p>
+										<p class="text-center"><i class="fa fa-quote-left fa-2x"></i></p>
+										<c:if test="${not empty userObject}">
+											<c:if test="${userObject.email eq loadQuestionModel.question.user.email and loadQuestionModel.question.goodAnswerId < 0}">
+												<p class="text-center"><a href="#" onclick="doVoteGoodAnswer(${loadQuestionModel.question.questionId}, ${answer.answerId})" title="Bình chọn câu trả lời tốt nhất"><i class="fa fa-check-square fa-2x"></i></a></p>
+											</c:if>
+										</c:if>
+										<c:if test="${loadQuestionModel.question.goodAnswerId eq answer.answerId}">
+											<p class="text-center"><a title="Đây là câu trả lời tốt nhất"><i class="fa fa-check fa-2x"></i></a></p>
+										</c:if>
 									</div>
 									<div class="col-md-11" style="padding: 10px 0;">
 										<p>${answer.content}</p>
-										<div class="alert alert-success col-md-4 pull-right">
+										<div class="alert alert-info col-md-4 pull-right">
 											<p>Trả lời bởi: <a><strong>${answer.user.fullName}</strong></a></p>
 											<span>${answer.answerDate}</span>
 										</div>
@@ -161,6 +168,37 @@
 				}
 			});
 		});
+		
+		function doVoteGoodAnswer(questionId, answerId) {
+			//validate
+			
+			var model = {
+				answerId : answerId,
+				questionId : questionId
+			};
+
+			$.ajax({
+				url : '${baseURL}/answer/vote',
+				dataType : "json",
+				contentType : "application/json",
+				type : 'POST',
+				data : JSON.stringify(model),
+				success : function(data) {
+					if (!stringIsNullOrEmpty(data.errorMessage)) {
+						if(data.errorMessage.localeCompare(CB_001) == 0){
+							window.location = "${baseURL}/login";
+						} else {
+							alert(data.errorMessage);	
+						}
+					} else {
+						window.location = "${baseURL}/question/${loadQuestionModel.question.questionId}";
+					}
+				},
+				error : function(data) {
+					alert(JSON.stringify(data));
+				}
+			});
+		}
 	</script>
 </body>
 </html>

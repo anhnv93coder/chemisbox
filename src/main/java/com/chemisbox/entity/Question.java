@@ -56,17 +56,37 @@ public class Question implements Serializable {
 
 	@Column(name = "edited_date")
 	private Date editedDate;
-	
+
 	@Column(name = "approved", insertable = false)
 	private int approved;
+
+	@Column(name = "good_answer_id", insertable = false)
+	private int goodAnswerId;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SELECT)
 	private List<QuestionTag> questionTagList = new ArrayList<QuestionTag>();
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
 	private List<Answer> answerList = new ArrayList<Answer>();
+
+	public int getApproved() {
+		return approved;
+	}
+
+	public void setApproved(int approved) {
+		this.approved = approved;
+	}
+
+	public int getGoodAnswerId() {
+		return goodAnswerId;
+	}
+
+	public void setGoodAnswerId(int goodAnswerId) {
+		this.goodAnswerId = goodAnswerId;
+	}
 
 	public List<Answer> getAnswerList() {
 		return answerList;

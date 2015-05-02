@@ -12,9 +12,6 @@
 <meta name="author" content="Dashboard">
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
 
-<c:if test="${not empty adminObject}">
-	<c:redirect url="/admin/dashboard"></c:redirect>
-</c:if>
 <title>Đăng nhập</title>
 
 <!-- Bootstrap core CSS -->
@@ -87,7 +84,7 @@
 				contentType : "application/json",
 				success : function(data) {
 					if(stringIsNullOrEmpty(data.errorMessage)){
-						window.location = "${baseURL}/admin";
+						window.location = "${baseURL}/admin/dashboard";
 					}else{
 						$("#loginMessage").css("display", "block");
 						$("#errorMessage").html(data.errorMessage);

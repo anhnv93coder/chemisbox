@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chemisbox.business.ChemicalManagementBusiness;
 import com.chemisbox.constant.ChemisboxConstant;
@@ -19,12 +20,16 @@ import com.chemisbox.output.ChemicalManagementOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
+@SessionAttributes("adminObject")
 public class ChemicalManagementController
 		extends
 		ChemisboxController<ChemicalManagementBusiness, ChemicalManagementModel> {
 
 	@RequestMapping(value = {"/admin/chemical", "/admin/chemical/"}, method = RequestMethod.GET)
 	public String defaultAPI(ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
 		try {
@@ -51,6 +56,9 @@ public class ChemicalManagementController
 
 	@RequestMapping(value = "/admin/chemical/{index}", method = RequestMethod.GET)
 	public String getChemicals(@PathVariable("index") String index, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
 		try {
@@ -89,8 +97,10 @@ public class ChemicalManagementController
 
 	@RequestMapping(value = "/admin/chemical/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChemicalManagementModel loadDataForUpdate(
-			@RequestBody ChemicalManagementModel model) {
-
+			@RequestBody ChemicalManagementModel model, ModelMap map) throws ChemisboxException{
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
 
@@ -115,8 +125,10 @@ public class ChemicalManagementController
 
 	@RequestMapping(value = "/admin/chemical/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChemicalManagementModel addChemical(
-			@RequestBody ChemicalManagementModel model) {
-
+			@RequestBody ChemicalManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
 
@@ -140,8 +152,10 @@ public class ChemicalManagementController
 
 	@RequestMapping(value = "/admin/chemical/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChemicalManagementModel updateChemical(
-			@RequestBody ChemicalManagementModel model) {
-
+			@RequestBody ChemicalManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
 
@@ -164,7 +178,10 @@ public class ChemicalManagementController
 	}
 
 	@RequestMapping(value = "/admin/chemical/delete/{id}", method = RequestMethod.GET)
-	public String deleteChemical(@PathVariable("id") String id, ModelMap map) {
+	public String deleteChemical(@PathVariable("id") String id, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new ChemicalManagementModel();
 		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
 		try {

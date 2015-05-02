@@ -5,8 +5,20 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.chemisbox.constant.ChemisboxConstant;
+
 public class ChemisboxUtilities {
 
+	public static boolean isValidEmail(String source){
+		boolean result = false;
+		Pattern emailPattern = Pattern.compile(ChemisboxConstant.EMAIL_PATTERN);
+		Matcher matcher = emailPattern.matcher(source);
+		if(matcher.find()){
+			result = true;
+		}
+		return result;
+	}
+	
 	public static Long getLongInString(String source) {
 		Long value = null;
 		try {

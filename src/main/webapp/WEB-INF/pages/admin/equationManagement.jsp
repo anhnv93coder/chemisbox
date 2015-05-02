@@ -9,7 +9,7 @@
 		</h3>
 		<div class="row mt">
 			<div class="col-lg-10 col-lg-offset-1" style="display: block;" id="equationTable">
-				<div class="clearfix">
+				<div class="row clearfix">
 					<div class="col-md-6">
 						<form class="form-inline">
 						  <div class="form-group has-success has-feedback">

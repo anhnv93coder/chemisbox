@@ -2,6 +2,7 @@ package com.chemisbox.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +22,13 @@ public class UserDAOImpl implements UserDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	public String register(User user) throws ChemisboxException {
+	public boolean register(User user) throws ChemisboxException {
 		if(user == null){
-			return null;
+			return false;
 		}
 		Session session = sessionFactory.getCurrentSession();
 		session.save(user);
-		return user.getEmail();
+		return true;
 	}
 
 	public String update(User user) throws ChemisboxException {
@@ -52,4 +53,19 @@ public class UserDAOImpl implements UserDAO {
 		return result;
 	}
 
+	public User get(String email) throws ChemisboxException {
+		if(ChemisboxUtilities.isNullOrEmpty(email)){
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		User result = (User) session.createCriteria(User.class).add(
+				Restrictions.and(Restrictions.eq("email", email))).uniqueResult();
+		return result;
+	}
+
+	public Long getCount() throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session.createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
+	}
+	
 }

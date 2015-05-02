@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -58,6 +59,11 @@ public class TagDAOImpl implements TagDAO {
 	public Tag get(String tagName) throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		return (Tag) session.createCriteria(Tag.class).add(Restrictions.like("tagName", tagName)).uniqueResult();
+	}
+
+	public Long getCount() throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session.createCriteria(Tag.class).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }

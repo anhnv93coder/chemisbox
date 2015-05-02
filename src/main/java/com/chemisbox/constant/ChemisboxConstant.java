@@ -5,12 +5,15 @@ public class ChemisboxConstant {
 	public static final int INPUT = 1;
 	public static final int OUTPUT = 2;
 	
+	public static final String EMAIL_PATTERN = "^[^@]+@[^@]+.[^@]+$";
+	
 	// Menu constant
 	public static final String MENU_CONSTANT = "page";
 	public static final int DASHBOARD_MENU = 0;
 	public static final int EQUATION_MENU = 1;
 	public static final int CHEMICAL_MENU = 2;
 	public static final int ELEMENT_MENU = 3;
+	public static final int QUESTION_MENU = 4;
 	
 	// Approved question
 	public static final int QUESTION_IS_APPROVED = 0;
@@ -45,6 +48,7 @@ public class ChemisboxConstant {
 	public static final int TOTAL_CHEMICAL_RECORDS_IN_A_PAGE = 10;
 	public static final int TOTAL_EQUATION_RECORDS_IN_A_PAGE = 5;
 	public static final int TOTAL_ELEMENT_RECORDS_IN_A_PAGE = 10;
+	public static final int TOTAL_QUESTION_RECORDS_IN_A_PAGE = 10;
 	
 	// Result
 	public static final int SUCCESS = 0;

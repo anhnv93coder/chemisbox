@@ -21,14 +21,17 @@ import com.chemisbox.utilities.ChemisboxUtilities;
 public class LoginUserController extends ChemisboxController<LoginUserBusiness, LoginUserModel> {
 
 	@RequestMapping(value = "/login")
-	public String doLoadLoginForm(){
-		return "login4Forum";
+	public String doLoadLoginForm(ModelMap map){
+		if(map.containsAttribute("userObject")){
+			return "redirect: /forum";
+		}
+		return "forumLogin";
 	}
 	
 	@RequestMapping(value = "/logout")
 	public String doLogout(SessionStatus sessionStatus){
 		sessionStatus.setComplete();
-		return "login4Forum";
+		return "redirect: /forum";
 	}
 	
 	@RequestMapping(value = "/doAuth", method = RequestMethod.POST)

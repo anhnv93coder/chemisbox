@@ -17,7 +17,7 @@ public class LoadAskQuestionController extends
 	@RequestMapping(value = { "/ask", "/ask/" })
 	public String doLoadAskQuestion(ModelMap map) throws ChemisboxException {
 		if (!map.containsAttribute("userObject")) {
-			return "login4Forum";
+			return "redirect: /login";
 		}
 		return "askQuestion";
 	}

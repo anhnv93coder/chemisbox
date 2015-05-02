@@ -44,7 +44,7 @@ public class User implements Serializable {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@Column(name = "register_date")
+	@Column(name = "register_date", insertable = false, updatable = false)
 	private Date registerDate;
 
 	@JsonIgnore

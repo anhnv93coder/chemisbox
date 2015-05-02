@@ -27,6 +27,7 @@
 					<li><a href="#">Ngừng kích hoạt</a></li>
 				</ul>
 			</li>
+			<li><a href="${baseURL}/admin/question" id="question">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>Câu hỏi</span></a></li>
 		</ul>
 	</div>
 </aside>

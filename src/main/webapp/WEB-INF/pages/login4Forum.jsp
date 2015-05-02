@@ -20,8 +20,6 @@
 <!-- Bootstrap core CSS -->
 
 <link rel="stylesheet" href="${baseURL}/assets/css/bootstrap.css">
-<!-- Custom styles for this template -->
-<link href="${baseURL}/assets/css/admin-style.css" rel="stylesheet">
 
 </head>
 

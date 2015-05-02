@@ -19,6 +19,9 @@
 	<import resource="loadAskQuestionContext.xml"/>
 	<import resource="addQuestionContext.xml"/>
 	<import resource="answerQuestionContext.xml"/>
+	<import resource="questionManagementContext.xml"/>
+	<import resource="registerUserContext.xml"/>
+	<import resource="showDashboardContext.xml"/>
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

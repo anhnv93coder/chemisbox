@@ -17,5 +17,5 @@ public interface TagDAO {
 
 	public Tag get(String tagName) throws ChemisboxException;
 	
-	
+	public Long getCount() throws ChemisboxException;
 }

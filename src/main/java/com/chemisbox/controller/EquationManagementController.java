@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chemisbox.business.EquationManagementBusiness;
 import com.chemisbox.constant.ChemisboxConstant;
@@ -19,10 +20,14 @@ import com.chemisbox.output.EquationManagementOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
+@SessionAttributes("adminObject")
 public class EquationManagementController extends ChemisboxController<EquationManagementBusiness, EquationManagementModel> {
 	
 	@RequestMapping(value = {"/admin/equation/", "/admin/equation"})
 	public String defaultAPI(ModelMap map){
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
 		try {
@@ -49,6 +54,9 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 	
 	@RequestMapping("/admin/equation/{index}")
 	public String getEquation(@PathVariable("index") String index, ModelMap map){
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
 		try {
@@ -88,8 +96,10 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 	
 	@RequestMapping(value = "/admin/equation/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel loadDataForUpdate(
-			@RequestBody EquationManagementModel model) {
-
+			@RequestBody EquationManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
 
@@ -114,8 +124,10 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 	
 	@RequestMapping(value = "/admin/equation/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel addEquation(
-			@RequestBody EquationManagementModel model) {
-
+			@RequestBody EquationManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
 
@@ -139,8 +151,10 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 
 	@RequestMapping(value = "/admin/equation/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel updateEquation(
-			@RequestBody EquationManagementModel model) {
-
+			@RequestBody EquationManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
 
@@ -164,6 +178,9 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 	
 	@RequestMapping(value = "/admin/equation/delete/{id}", method = RequestMethod.GET)
 	public String deleteEquation(@PathVariable("id") String id, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new EquationManagementModel();
 		EquationManagementInputParam inParam = new EquationManagementInputParam();
 		try {

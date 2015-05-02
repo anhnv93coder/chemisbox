@@ -41,6 +41,10 @@ public class LoadQuestionBusiness extends
 				return this.out;
 			}
 			
+			question.setViews(question.getViews() + 1);
+			
+			questionDao.update(question);
+			
 			this.out.setQuestion(question);
 			this.out.setAnswerList(answerList);
 			

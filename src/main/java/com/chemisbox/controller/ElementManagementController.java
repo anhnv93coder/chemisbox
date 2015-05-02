@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chemisbox.business.ElementManagementBusiness;
 import com.chemisbox.constant.ChemisboxConstant;
@@ -19,10 +20,14 @@ import com.chemisbox.output.ElementManagementOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
+@SessionAttributes("adminObject")
 public class ElementManagementController extends ChemisboxController<ElementManagementBusiness, ElementManagementModel> {
 
 	@RequestMapping(value = {"/admin/element", "/admin/element/"}, method = RequestMethod.GET)
-	public String defaultAPI(ModelMap map) {
+	public String defaultAPI(ModelMap map) throws ChemisboxException{
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new ElementManagementModel();
 		ElementManagementInputParam inParam = new ElementManagementInputParam();
 		try {
@@ -49,6 +54,9 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 
 	@RequestMapping(value = "/admin/element/{index}", method = RequestMethod.GET)
 	public String getelements(@PathVariable("index") String index, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new ElementManagementModel();
 		ElementManagementInputParam inParam = new ElementManagementInputParam();
 		try {
@@ -88,8 +96,10 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 
 	@RequestMapping(value = "/admin/element/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ElementManagementModel loadDataForUpdate(
-			@RequestBody ElementManagementModel model) {
-
+			@RequestBody ElementManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new ElementManagementModel();
 		ElementManagementInputParam inParam = new ElementManagementInputParam();
 
@@ -114,8 +124,10 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 
 	@RequestMapping(value = "/admin/element/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ElementManagementModel addelement(
-			@RequestBody ElementManagementModel model) {
-
+			@RequestBody ElementManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new ElementManagementModel();
 		ElementManagementInputParam inParam = new ElementManagementInputParam();
 
@@ -139,8 +151,10 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 
 	@RequestMapping(value = "/admin/element/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ElementManagementModel updateelement(
-			@RequestBody ElementManagementModel model) {
-
+			@RequestBody ElementManagementModel model, ModelMap map) throws ChemisboxException {
+		if(!map.containsAttribute("adminObject")){
+			throw new ChemisboxException("Nguoi dung chua dang nhap");
+		}
 		this.model = new ElementManagementModel();
 		ElementManagementInputParam inParam = new ElementManagementInputParam();
 
@@ -163,7 +177,10 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 	}
 
 	@RequestMapping(value = "/admin/element/delete/{id}", method = RequestMethod.GET)
-	public String deleteelement(@PathVariable("id") String id, ModelMap map) {
+	public String deleteElement(@PathVariable("id") String id, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
 		this.model = new ElementManagementModel();
 		ElementManagementInputParam inParam = new ElementManagementInputParam();
 		try {

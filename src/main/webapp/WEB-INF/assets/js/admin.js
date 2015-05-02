@@ -1,3 +1,52 @@
+$("#btnApproved").click(function() {
+	var questionId = $("#questionId").val();
+	var model = {
+		questionId : questionId
+	};
+	$.ajax({
+		url : "question/approved",
+		type : "POST",
+		data : JSON.stringify(model),
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data) {
+			if(stringIsNullOrEmpty(data.errorMessage)){
+				$("#btnCancelUpdate").click();
+				window.location = "/ChemisBox/admin/question"
+			} else {
+				alert("Occur error. Please contact administrator");
+				console.log(data.errorMessage);
+			}
+		},
+		error : function(msg) {
+			alert(JSON.stringify(msg));
+		}
+	});
+});
+
+function loadDetailsForQuestion(questionId) {
+	var model = {
+		questionId : questionId
+	};
+	$.ajax({
+		url : "question/loadDetails",
+		type : "POST",
+		data : JSON.stringify(model),
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data) {
+			$("#questionId").val(data.question.questionId);
+			$("#fullName").val(data.question.user.fullName);
+			$("#email").val(data.question.user.email);
+			$("#title").val(data.question.title);
+			$("#content").val(data.question.content);
+		},
+		error : function(msg) {
+			alert(JSON.stringify(msg));
+		}
+	});
+}
+
 
 function loadDetailsForElement(notation) {
 	var model = {
@@ -445,11 +494,9 @@ $("#btnUpdateEquation").click(
 			var condition = $.trim($("#conditionUpdate").val());
 			var videoLink = $.trim($("#videoLinkUpdate").val());
 
-			var ionId = $.trim($("#ionIdUpdate").val());
 			var ionEquation = $.trim($("#ionEquationUpdate").val());
 			var ionShortcut = $.trim($("#ionShortcutUpdate").val());
 
-			var oxiId = $.trim($("#oxiIdUpdate").val());
 			var molOxi = $.trim($("#molOxiUpdate").val());
 			var oxiEquation = $.trim($("#oxiEquationUpdate").val());
 
@@ -505,7 +552,12 @@ $("#btnUpdateEquation").click(
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data) {
-					$("#btnCancelUpdate").click();
+					if(stringIsNullOrEmpty(data.errorMessage)){
+						$("#btnCancelUpdate").click();
+					} else {
+						console.log(data.errorMessage);
+					}
+					
 				},
 				error : function(msg) {
 					alert("error");

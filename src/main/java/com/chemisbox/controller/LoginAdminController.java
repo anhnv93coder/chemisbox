@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.chemisbox.business.LoginAdminBusiness;
-import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.exception.ChemisboxException;
 import com.chemisbox.input.LoginAdminInputParam;
 import com.chemisbox.model.LoginAdminModel;
@@ -26,15 +25,7 @@ public class LoginAdminController extends ChemisboxController<LoginAdminBusiness
 	public String getIndex(ModelMap map){
 		return "login";
 	}
-
-
-	@RequestMapping(value = {"/admin/dashboard", "/admin/dashboard/"})
-	public String doDashboard(ModelMap map){
-		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.DASHBOARD_MENU);
-		return "adminIndex";
-	}
-	
-	
+		
 	@RequestMapping(value = {"/admin/logout"})
 	public String doLogout(SessionStatus sessionStatus){
 		sessionStatus.setComplete();

@@ -21,6 +21,7 @@
 <c:set var="chemicalConstant" value="<%= ChemisboxConstant.CHEMICAL_MENU %>" />
 <c:set var="elementConstant" value="<%= ChemisboxConstant.ELEMENT_MENU %>" />
 <c:set var="dashboardConstant" value="<%= ChemisboxConstant.DASHBOARD_MENU %>" />
+<c:set var="questionConstant" value="<%= ChemisboxConstant.QUESTION_MENU %>" />
 <title>Admin</title>
 
 <!-- Bootstrap core CSS -->
@@ -60,6 +61,10 @@
 			<c:if test="${page eq dashboardConstant}">
 				<jsp:include
 					page="admin/dashboardManagement.jsp" />
+			</c:if>
+			<c:if test="${page eq questionConstant}">
+				<jsp:include
+					page="admin/questionManagement.jsp" />
 			</c:if>
 		</section> 
 		 

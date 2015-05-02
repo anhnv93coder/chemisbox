@@ -29,8 +29,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                    <li class="active"><a href="${baseURL}">Trang chủ</a></li>
+                    <li><a href="${baseURL}">Trang chủ</a></li>
                     <li><a href="${baseURL}/ask">Đặt câu hỏi</a></li>
+                    <c:if test="${empty userObject}">
+                    	<li><a href="${baseURL}/login">Đăng nhập</a></li>	
+                    </c:if>
                     <c:if test="${not empty userObject}">
                     	<li><a>Xin chào: ${userObject.fullName}</a></li>
                     	<li><a href="${baseURL}/logout">Logout</a></li>
@@ -58,9 +61,8 @@
 	                    	<tr>
 	                            <td>
 	                                <div class="col-md-4">
-	                                		<div class="col-sm-4">Votes</div>
-                                    		<div class="col-sm-4">Answers</div>
-	                                    	<div class="col-sm-4">Views</div>                                	
+                                    		<div class="col-sm-6" style="margin: 10% auto;">10 Answers</div>
+                                   			<div class="col-sm-6" style="margin: 10% auto;">10 Views</div>                                	
 	                                </div>
 	                                <div class="col-md-8">
 	                                    <div class="row">
@@ -86,9 +88,8 @@
                         <tr>
                             <td>
                                 <div class="col-lg-4">
-                                    <div class="col-sm-4">Votes</div>
-                                	<div class="col-sm-4">Answers</div>
-                                   	<div class="col-sm-4">Views</div>
+                                	<div class="col-sm-6" style="margin: 10% auto;">100 Answers</div>
+                                   	<div class="col-sm-6" style="margin: 10% auto;">100 Views</div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="row">
@@ -110,9 +111,8 @@
                         <tr>
                             <td>
                                 <div class="col-lg-4">
-                                    <div class="col-sm-4">Votes</div>
-                                  	<div class="col-sm-4">Answers</div>
-                                   	<div class="col-sm-4">Views</div>
+                                  	<div class="col-sm-6" style="margin: 10% auto;">10 Answers</div>
+                                	<div class="col-sm-6" style="margin: 10% auto;">1000 Views</div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="row ">

@@ -9,6 +9,8 @@ public interface QuestionDAO {
 	
 	public List<Question> selectLastestQuestion(int startIndex, int pageSize) throws ChemisboxException;
 	
+	public List<Question> selectNotApprovedQuestions(int startIndex, int pageSize) throws ChemisboxException;
+	
 	public List<Question> selectQuestionByUser(String email, int startIndex, int pageSize) throws ChemisboxException;
 	
 	public List<Question> selectHotQuestion(int startIndex, int pageSize) throws ChemisboxException;
@@ -20,4 +22,12 @@ public interface QuestionDAO {
 	public boolean delete(Question question) throws ChemisboxException;
 	
 	public Question get(Integer id) throws ChemisboxException;
+	
+	public boolean doApprove(Integer id) throws ChemisboxException;
+	
+	public boolean doVoteGoodAnswer(Integer questionId, Integer answerId)  throws ChemisboxException;
+	
+	public Long getCount() throws ChemisboxException;
+	
+	public Long getQuestionIsNotAprroved() throws ChemisboxException;
 }

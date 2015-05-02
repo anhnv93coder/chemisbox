@@ -7,4 +7,5 @@ public interface AdminDAO {
 	public Admin authenticate(String userName, String password) throws ChemisboxException;
 	
 	public boolean update(Admin admin) throws ChemisboxException;
+	
 }
