@@ -14,13 +14,9 @@ import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.dao.ChemicalDAO;
 import com.chemisbox.dao.ChemistryEquationDAO;
 import com.chemisbox.dao.EquationDAO;
-import com.chemisbox.dao.IonEquationDAO;
-import com.chemisbox.dao.OxiReduceEquationDAO;
 import com.chemisbox.entity.Chemical;
 import com.chemisbox.entity.ChemistryEquation;
 import com.chemisbox.entity.Equation;
-import com.chemisbox.entity.IonEquation;
-import com.chemisbox.entity.OxiReduceEquation;
 import com.chemisbox.exception.ChemisboxException;
 import com.chemisbox.input.EquationManagementInputParam;
 import com.chemisbox.output.EquationManagementOutputParam;
@@ -37,13 +33,7 @@ public class EquationManagementBusiness
 
 	@Autowired
 	private EquationDAO equationDao;
-
-//	@Autowired
-//	private IonEquationDAO ionDao;
-//
-//	@Autowired
-//	private OxiReduceEquationDAO oxiDao;
-
+	
 	@Autowired
 	private ChemistryEquationDAO chemistryEquationDao;
 
@@ -51,41 +41,18 @@ public class EquationManagementBusiness
 	public EquationManagementOutputParam execute(
 			EquationManagementInputParam inParam) throws ChemisboxException {
 		this.out = new EquationManagementOutputParam();
-//		Long ionId = null;
 		Long equationId = null;
-//		Long oxiId = null;
 		Equation equationObj = null;
-//		IonEquation ionObj = null;
-//		OxiReduceEquation oxiObj = null;
 		List<ChemistryEquation> chemicalList = null;
 		try {
 			switch (inParam.getBusinessType()) {
 			case ChemisboxConstant.BUSINESS_FOR_ADD:
 				equationObj = inParam.getEquation();
-				/*ionObj = equationObj.getIonEquation();
-				oxiObj = equationObj.getOxiReduceEquation();
-
-				String equation = ChemisboxUtilities.trimFullSize(equationObj
-						.getEquation());
-
-				chemicalList = mergeAllList(equation);
-
-				if (ionObj != null) {
-					ionId = ionDao.add(ionObj);
-					ionObj.setIonId(ionId);
-					ionObj.getEquations().add(equationObj);
-					equationObj.setIonEquation(ionObj);
-				}
-
-				if (oxiObj != null) {
-					oxiId = oxiDao.add(oxiObj);
-					oxiObj.setOxiReduceId(oxiId);
-					oxiObj.getEquations().add(equationObj);
-					equationObj.setOxiReduceEquation(oxiObj);
-				}*/
-
+				
 				equationId = equationDao.add(equationObj);
 
+				chemicalList = mergeAllList(equationObj.getEquation());
+				
 				addListChemistryEquation(equationId, chemicalList);
 
 				break;
@@ -93,10 +60,6 @@ public class EquationManagementBusiness
 			case ChemisboxConstant.BUSINESS_FOR_DELETE:
 				
 				equationObj = equationDao.get(inParam.getEquationId());
-				/*ionObj = equationObj.getIonEquation();
-				oxiObj = equationObj.getOxiReduceEquation();
-				*/
-				
 				
 				break;
 
@@ -137,63 +100,8 @@ public class EquationManagementBusiness
 
 			case ChemisboxConstant.BUSINESS_FOR_UPDATE:
 				
-				/*boolean mustIonDelete = false;
-				boolean mustOxiDelete = false;*/
 				equationObj = inParam.getEquation();
-				/*ionObj = equationObj.getIonEquation();
-				oxiObj = equationObj.getOxiReduceEquation();
-				IonEquation tempIonObj = null;
-				OxiReduceEquation tempOxiObj = null;*/
 				Equation tempEquationObj = equationDao.get(equationObj.getEquationId());
-				
-				/*if (ionObj != null){
-					tempIonObj = ionDao.get(ionObj.getIonId());
-					if(!ChemisboxUtilities.isNullOrEmpty(ionObj.getIonEquation())
-							&& !ChemisboxUtilities.isNullOrEmpty(ionObj.getShortcutIonEquation())){
-						if(ionObj.getIonId() == null){
-							ionId = ionDao.add(ionObj);
-							tempEquationObj.setIonEquation(ionObj);
-						} else {
-							if (!ionObj.getIonEquation().equalsIgnoreCase(tempIonObj.getIonEquation()) 
-									|| !ionObj.getShortcutIonEquation().equalsIgnoreCase(tempIonObj.getShortcutIonEquation())) {
-								tempIonObj.setIonEquation(ionObj.getIonEquation());
-								tempIonObj.setShortcutIonEquation(ionObj.getShortcutIonEquation());
-								ionId = ionDao.update(tempIonObj);
-							}
-						}	
-					} else {
-						if(tempEquationObj.getIonEquation() != null){
-							tempEquationObj.getIonEquation().setIonId(null);
-							mustIonDelete = true;
-						}
-					}
-				}
-				
-				if (oxiObj != null){
-					tempOxiObj = oxiDao.get(oxiObj.getOxiReduceId());
-					if(!ChemisboxUtilities.isNullOrEmpty(oxiObj.getOxiEquation())
-						&& !ChemisboxUtilities.isNullOrEmpty(oxiObj.getReduceEquation())
-						&& !ChemisboxUtilities.isNullOrEmpty(oxiObj.getSummary())){
-						if(oxiObj.getOxiReduceId() == null){
-							oxiId = oxiDao.add(oxiObj);
-							tempEquationObj.setOxiReduceEquation(oxiObj);
-						} else {
-							if (!oxiObj.getOxiEquation().equalsIgnoreCase(tempOxiObj.getOxiEquation()) 
-									|| !oxiObj.getReduceEquation().equalsIgnoreCase(tempOxiObj.getReduceEquation())
-									|| !oxiObj.getSummary().equalsIgnoreCase(tempOxiObj.getSummary())) {
-								tempOxiObj.setOxiEquation(oxiObj.getOxiEquation());
-								tempOxiObj.setReduceEquation(oxiObj.getReduceEquation());
-								tempOxiObj.setSummary(oxiObj.getSummary());
-								oxiId = oxiDao.update(tempOxiObj);
-							}
-						}
-					} else {
-						if(tempEquationObj.getOxiReduceEquation() != null){
-							tempEquationObj.getOxiReduceEquation().setOxiReduceId(null);
-							mustOxiDelete = true;
-						}
-					}
-				}*/
 				
 				String equationStr = equationObj.getEquation();
 
@@ -221,13 +129,6 @@ public class EquationManagementBusiness
 				
 				equationDao.update(tempEquationObj);
 				
-				/*if(mustIonDelete){
-					ionDao.delete(tempIonObj);
-				}
-				if(mustOxiDelete){
-					oxiDao.delete(tempOxiObj);
-				}*/
-
 				break;
 
 			default:
@@ -282,7 +183,7 @@ public class EquationManagementBusiness
 
 		//
 		Pattern patternForNumber = Pattern.compile("\\d+");
-		Pattern patternForString = Pattern.compile("[a-zA-Z()]+[0-9]*");
+		Pattern patternForString = Pattern.compile("[a-zA-Z()]+[0-9]*([a-zA-Z()]*[0-9]*)*");
 		Pattern patternCondition = Pattern
 				.compile("[↑↓]?\\({1}[a-zA-Z0-9]+\\){1}");
 		//
@@ -304,6 +205,8 @@ public class EquationManagementBusiness
 			matcher = patternCondition.matcher(source);
 			if (matcher.find()) {
 				chemistryEquationElement.setCondition(matcher.group());
+			}else{
+				chemistryEquationElement.setCondition("");
 			}
 			chemistryEquationElement.setChemicalTypeof(typeOf);
 			list.add(chemistryEquationElement);
@@ -318,14 +221,6 @@ public class EquationManagementBusiness
 	public void setEquationDao(EquationDAO equationDao) {
 		this.equationDao = equationDao;
 	}
-
-//	public void setIonDao(IonEquationDAO ionDao) {
-//		this.ionDao = ionDao;
-//	}
-//
-//	public void setOxiDao(OxiReduceEquationDAO oxiDao) {
-//		this.oxiDao = oxiDao;
-//	}
 
 	public void setChemistryEquationDao(
 			ChemistryEquationDAO chemistryEquationDao) {

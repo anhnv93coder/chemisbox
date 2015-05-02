@@ -21,11 +21,13 @@ import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
 @SessionAttributes("adminObject")
-public class EquationManagementController extends ChemisboxController<EquationManagementBusiness, EquationManagementModel> {
-	
-	@RequestMapping(value = {"/admin/equation/", "/admin/equation"})
-	public String defaultAPI(ModelMap map){
-		if(!map.containsAttribute("adminObject")){
+public class EquationManagementController
+		extends
+		ChemisboxController<EquationManagementBusiness, EquationManagementModel> {
+
+	@RequestMapping(value = { "/admin/equation/", "/admin/equation" })
+	public String defaultAPI(ModelMap map) {
+		if (!map.containsAttribute("adminObject")) {
 			return "login";
 		}
 		this.model = new EquationManagementModel();
@@ -48,13 +50,14 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		}
 		map.put("equationMap", this.model);
 		map.put("equationObj", new Chemical());
-		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.EQUATION_MENU);
+		map.put(ChemisboxConstant.MENU_CONSTANT,
+				ChemisboxConstant.EQUATION_MENU);
 		return "adminIndex";
 	}
-	
+
 	@RequestMapping("/admin/equation/{index}")
-	public String getEquation(@PathVariable("index") String index, ModelMap map){
-		if(!map.containsAttribute("adminObject")){
+	public String getEquation(@PathVariable("index") String index, ModelMap map) {
+		if (!map.containsAttribute("adminObject")) {
 			return "login";
 		}
 		this.model = new EquationManagementModel();
@@ -90,14 +93,16 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		}
 		map.put("equationMap", this.model);
 		map.put("equationObj", new Chemical());
-		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.EQUATION_MENU);
+		map.put(ChemisboxConstant.MENU_CONSTANT,
+				ChemisboxConstant.EQUATION_MENU);
 		return "adminIndex";
 	}
-	
+
 	@RequestMapping(value = "/admin/equation/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel loadDataForUpdate(
-			@RequestBody EquationManagementModel model, ModelMap map) throws ChemisboxException {
-		if(!map.containsAttribute("adminObject")){
+			@RequestBody EquationManagementModel model, ModelMap map)
+			throws ChemisboxException {
+		if (!map.containsAttribute("adminObject")) {
 			throw new ChemisboxException("Nguoi dung chua dang nhap");
 		}
 		this.model = new EquationManagementModel();
@@ -121,11 +126,12 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		}
 		return this.model;
 	}
-	
+
 	@RequestMapping(value = "/admin/equation/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel addEquation(
-			@RequestBody EquationManagementModel model, ModelMap map) throws ChemisboxException {
-		if(!map.containsAttribute("adminObject")){
+			@RequestBody EquationManagementModel model, ModelMap map)
+			throws ChemisboxException {
+		if (!map.containsAttribute("adminObject")) {
 			throw new ChemisboxException("Nguoi dung chua dang nhap");
 		}
 		this.model = new EquationManagementModel();
@@ -151,18 +157,22 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 
 	@RequestMapping(value = "/admin/equation/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel updateEquation(
-			@RequestBody EquationManagementModel model, ModelMap map) throws ChemisboxException {
-		if(!map.containsAttribute("adminObject")){
-			throw new ChemisboxException("Nguoi dung chua dang nhap");
-		}
+			@RequestBody EquationManagementModel model, ModelMap map)
+			throws ChemisboxException {
 		this.model = new EquationManagementModel();
-		EquationManagementInputParam inParam = new EquationManagementInputParam();
-
-		if (model == null || model.getEquation() == null) {
-			this.model.setErrorMessage("Null pointer");
-			return this.model;
-		}
 		try {
+			
+			if (!map.containsAttribute("adminObject")) {
+				throw new ChemisboxException("Nguoi dung chua dang nhap");
+			}
+
+			EquationManagementInputParam inParam = new EquationManagementInputParam();
+
+			if (model == null || model.getEquation() == null) {
+				this.model.setErrorMessage("Null pointer");
+				return this.model;
+			}
+
 			inParam.setEquation(model.getEquation());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_UPDATE);
 			EquationManagementOutputParam outParam = this.business
@@ -175,10 +185,10 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		}
 		return this.model;
 	}
-	
+
 	@RequestMapping(value = "/admin/equation/delete/{id}", method = RequestMethod.GET)
 	public String deleteEquation(@PathVariable("id") String id, ModelMap map) {
-		if(!map.containsAttribute("adminObject")){
+		if (!map.containsAttribute("adminObject")) {
 			return "login";
 		}
 		this.model = new EquationManagementModel();
@@ -204,10 +214,10 @@ public class EquationManagementController extends ChemisboxController<EquationMa
 		map.put("equationMap", this.model);
 		return "redirect:/admin/equation/";
 	}
-	
+
 	@Override
-	public EquationManagementModel execute(EquationManagementModel model, ModelMap map)
-			throws ChemisboxException {
+	public EquationManagementModel execute(EquationManagementModel model,
+			ModelMap map) throws ChemisboxException {
 		// TODO Auto-generated method stub
 		return null;
 	}

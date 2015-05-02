@@ -62,10 +62,10 @@ public class Element implements Serializable {
 	@Column(name = "img")
 	private String img;
 
-	@Column(name = "created_date")
+	@Column(name = "created_date", insertable = false, updatable = false)
 	private Date createdDate;
 
-	@Column(name = "edited_date")
+	@Column(name = "edited_date", insertable = false)
 	private Date editedDate;
 
 	@Column(name = "last_user_modify")

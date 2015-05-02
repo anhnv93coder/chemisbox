@@ -4,7 +4,7 @@ $("#btnApproved").click(function() {
 		questionId : questionId
 	};
 	$.ajax({
-		url : "question/approved",
+		url : baseURL + "/admin/question/approved",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -29,7 +29,7 @@ function loadDetailsForQuestion(questionId) {
 		questionId : questionId
 	};
 	$.ajax({
-		url : "question/loadDetails",
+		url : baseURL + "/admin/question/loadDetails",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -53,7 +53,7 @@ function loadDetailsForElement(notation) {
 		"notation" : notation
 	};
 	$.ajax({
-		url : "element/loadDetails",
+		url : baseURL + "/admin/element/loadDetails",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -86,7 +86,7 @@ function loadDetailsForEquation(id) {
 		"equationId" : id
 	};
 	$.ajax({
-		url : "equation/loadDetails",
+		url : baseURL + "/admin/equation/loadDetails",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -145,7 +145,7 @@ function loadDetailsForChemical(id) {
 		"chemicalId" : id
 	};
 	$.ajax({
-		url : "chemical/loadDetails",
+		url : baseURL + "/admin/chemical/loadDetails",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -216,7 +216,7 @@ $("#btnUpdateElement").click(function() {
 		"element" : jsonData
 	};
 	$.ajax({
-		url : "element/add",
+		url : baseURL + "/admin/element/add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -277,7 +277,7 @@ $("#btnUpdateChemical").click(function() {
 		"chemical" : jsonData
 	};
 	$.ajax({
-		url : "chemical/update",
+		url : baseURL + "/admin/chemical/update",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -336,7 +336,7 @@ $("#btnAddChemical").click(function() {
 		"chemical" : jsonData
 	};
 	$.ajax({
-		url : "chemical/add",
+		url : baseURL + "/admin/chemical/add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -393,7 +393,7 @@ $("#btnAddElement").click(function() {
 		"element" : jsonData
 	};
 	$.ajax({
-		url : "element/add",
+		url : baseURL + "/admin/element/add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -433,27 +433,6 @@ function() {
 		return;
 	}
 
-	/*var ionData = null;
-	if (!stringIsNullOrEmpty(ionEquation)
-			&& !stringIsNullOrEmpty(ionShortcut)) {
-		ionData = {
-			"ionEquation" : ionEquation,
-			"shortcutIonEquation" : ionShortcut
-		};
-	}
-	var oxiData = null;
-	if (!stringIsNullOrEmpty(reduceEquation)
-			&& !stringIsNullOrEmpty(oxiEquation)
-			&& !stringIsNullOrEmpty(summary)) {
-		oxiData = {
-			"molReduce" : molReduce,
-			"reduceEquation" : reduceEquation,
-			"molOxi" : molOxi,
-			"oxiEquation" : oxiEquation,
-			"summary" : summary
-		};
-	}*/
-
 	var jsonData = {
 		"equation" : equation,
 		"description" : description,
@@ -472,7 +451,7 @@ function() {
 		"equation" : jsonData
 	};
 	$.ajax({
-		url : "equation/add",
+		url : baseURL + "/admin/equation/add",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
@@ -512,41 +491,27 @@ $("#btnUpdateEquation").click(
 			if (stringIsNullOrEmpty(condition)) {
 				return;
 			}
-
-//			var ionData = {
-//				"ionId" : ionId,
-//				"ionEquation" : ionEquation,
-//				"shortcutIonEquation" : ionShortcut
-//			};
-//			var oxiData = {
-//				"oxiReduceId" : oxiId,
-//				"molReduce" : molReduce,
-//				"reduceEquation" : reduceEquation,
-//				"molOxi" : molOxi,
-//				"oxiEquation" : oxiEquation,
-//				"summary" : summary
-//			};
 			
-
 			var jsonData = {
-				"equation" : equation,
-				"description" : description,
-				"condition" : condition,
-				"videoLink" : videoLink,
-				"ionEquation" : ionEquation,
-				"shortcutIonEquation" : ionShortcut,
-				"molReduce" : molReduce, 
-				"reduceEquation" : reduceEquation, 
-				"molOxi" : molOxi, 
-				"oxiEquation" : oxiEquation, 
-				"summary" : summary
+				equationId : equationId,
+				equation : equation,
+				description : description,
+				condition : condition,
+				videoLink : videoLink,
+				ionEquation : ionEquation,
+				shortcutIonEquation : ionShortcut,
+				molReduce : molReduce, 
+				reduceEquation : reduceEquation, 
+				molOxi : molOxi, 
+				oxiEquation : oxiEquation, 
+				summary : summary
 			};
 
 			var model = {
 				"equation" : jsonData
 			};
 			$.ajax({
-				url : "equation/update",
+				url : baseURL + "/admin/equation/update",
 				type : "POST",
 				data : JSON.stringify(model),
 				dataType : "json",

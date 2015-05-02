@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
+<script type="text/javascript">
+	var baseURL = '${baseURL}';
+</script>
 	<section class="wrapper site-min-height">
 		<h3>
 			<i class="fa fa-angle-right"></i> Quản lý phương trình phản ứng hóa học
@@ -109,8 +112,6 @@
 			      <div class="modal-body">
 			        <div class="form-horizontal">
 			        	<input type="hidden" id="equationIdUpdate"/>
-			        	<input type="hidden" id="ionIdUpdate"/>
-			        	<input type="hidden" id="oxiIdUpdate"/>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-3 control-label">Phương trình</label>
 							<div class="col-sm-9">

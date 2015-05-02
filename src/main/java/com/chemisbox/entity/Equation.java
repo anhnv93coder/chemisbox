@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NamedNativeQueries;
@@ -90,10 +88,10 @@ public class Equation implements Serializable {
 	@Column(name = "active")
 	private int active;
 
-	@Column(name = "created_date")
+	@Column(name = "created_date", insertable = false, updatable = false)
 	private Date createdDate;
 
-	@Column(name = "edited_date")
+	@Column(name = "edited_date", insertable = false)
 	private Date editedDate;
 
 	@Column(name = "last_user_modify")

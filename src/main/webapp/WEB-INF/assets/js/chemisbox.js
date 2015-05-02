@@ -204,10 +204,10 @@ function mergeChemicalToEquation(chemicals) {
 		}
 		
 		if (inParam.numberOfAtomic == '1') {
-			chemicalStr = formulaTemp + inParam.condition;
+			chemicalStr = formulaTemp + $.trim(inParam.condition);
 		} else {
 			chemicalStr = inParam.numberOfAtomic + formulaTemp
-					+ inParam.condition;
+					+ $.trim(inParam.condition);
 		}
 		
 		chemicalStr = "<a href='" + baseURLDetail + "/" + inParam.formula + "'>" + chemicalStr + "</a>";
