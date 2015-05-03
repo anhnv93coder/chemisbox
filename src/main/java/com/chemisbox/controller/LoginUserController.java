@@ -48,7 +48,7 @@ public class LoginUserController extends ChemisboxController<LoginUserBusiness, 
 		inParam.setPassword(userModel.getPassword());
 		LoginUserOutputParam outParam = this.business.execute(inParam);
 		if(!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())){
-			this.model.setEmail(outParam.getErrorMessage());
+			this.model.setErrorMessage(outParam.getErrorMessage());
 			return this.model;
 		}
 		map.put("userObject", outParam.getUser());

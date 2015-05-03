@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
+<script type="text/javascript">
+	var baseURL = '${baseURL}';
+</script>
 	<section class="wrapper site-min-height">
 		<h3>
 			<i class="fa fa-angle-right"></i> Quản lý câu hỏi

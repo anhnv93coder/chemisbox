@@ -33,7 +33,7 @@
 				<ul class="nav navbar-nav" data-0="margin-top:20px;"
 					data-300="margin-top:5px;">
 					<li class="active"><a href="${baseURL}">Trang chủ</a></li>
-					<li><a href="${baseURL}/forum">Forum</a></li>
+					<li><a href="${baseURL}/forum">Diễn đàn</a></li>
 				</ul>
 			</div>
 			<!--/.navbar-collapse -->
@@ -48,12 +48,12 @@
 			<div class="col-md-4 col-md-offset-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title"><i class="fa fa-flask fa-lg"></i><strong>&nbsp;Chemisbox</strong></h1>
+                        <h1 class="panel-title"><i class="fa fa-flask fa-lg"></i><strong>&nbsp;Đăng nhập vào diễn đàn hóa học</strong></h1>
                     </div>
                     <div class="panel-body">
                         <form style="padding: 15px;margin: 0 auto;">
                         	<div class="alert alert-warning alert-dismissible" role="alert" id="loginMessage" style="display:none">
-								<strong>Warning!</strong>&nbsp;<span id="errorMessage"></span>
+								<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="errorMessage"></span>
 							</div>
                             <div class="form-group">
                                 <label for="userName">Email</label>

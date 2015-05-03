@@ -6,6 +6,7 @@ import com.chemisbox.entity.Question;
 
 public class LoadForumOutputParam extends ChemisboxOutputParam {
 	private List<Question> questionList;
+	
 
 	public List<Question> getQuestionList() {
 		return questionList;

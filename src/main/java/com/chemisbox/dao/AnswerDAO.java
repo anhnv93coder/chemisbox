@@ -15,4 +15,6 @@ public interface AnswerDAO {
 	public boolean delete(Answer answer) throws ChemisboxException;
 	
 	public Answer get(Integer id) throws ChemisboxException;
+	
+	public Long getCountByQuestion(Integer questionId) throws ChemisboxException;
 }

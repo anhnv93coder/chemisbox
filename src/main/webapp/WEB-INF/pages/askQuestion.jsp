@@ -33,10 +33,10 @@
 				<ul class="nav navbar-nav" data-0="margin-top:20px;"
 					data-300="margin-top:5px;">
 					<li class="active"><a href="${baseURL}">Trang chủ</a></li>
-					<li><a href="${baseURL}/forum">Forum</a></li>
+					<li><a href="${baseURL}/forum">Diễn đàn</a></li>
 					<c:if test="${not empty userObject}">
 						<li><a>Xin chào: ${userObject.fullName}</a></li>
-						<li><a href="${baseURL}/logout">Logout</a></li>
+						<li><a href="${baseURL}/logout">Đăng xuất</a></li>
 					</c:if>
 				</ul>
 			</div>
@@ -50,7 +50,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h3>Ask question</h3>
+				<h3>Đặt câu hỏi</h3>
 				<hr />
 			</div>
 		</div>
@@ -69,23 +69,11 @@
 								class="form-control" id="tag" placeholder="Hữu cơ, Vô cơ,...">
 						</div>
 						<button type="button" class="btn btn-primary" id="btnSendQuestion"
-							style="margin: 20px auto;">Gửi câu hỏi của bạn</button>
+							style="margin: 20px auto;">Gửi câu hỏi</button>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
-				<div class="list-group">
-					<a href="#" class="list-group-item active"> Hot question </a> <a
-						href="#" class="list-group-item">Dapibus ac facilisis in</a> <a
-						href="#" class="list-group-item">Morbi leo risus</a> <a href="#"
-						class="list-group-item">Porta ac consectetur ac</a> <a href="#"
-						class="list-group-item">Vestibulum at eros</a> <a href="#"
-						class="list-group-item">Dapibus ac facilisis in</a> <a href="#"
-						class="list-group-item">Morbi leo risus</a> <a href="#"
-						class="list-group-item">Porta ac consectetur ac</a> <a href="#"
-						class="list-group-item">Vestibulum at eros</a>
-				</div>
-			</div>
+			<jsp:include page="forum/rightBar.jsp"></jsp:include>
 		</div>
 	</div>
 	</section>

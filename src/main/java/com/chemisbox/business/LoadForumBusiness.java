@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.chemisbox.dao.AnswerDAO;
 import com.chemisbox.dao.QuestionDAO;
 import com.chemisbox.entity.Question;
 import com.chemisbox.exception.ChemisboxException;
@@ -21,14 +22,18 @@ public class LoadForumBusiness extends
 	@Autowired
 	private QuestionDAO questionDao;
 
+//	@Autowired
+//	private AnswerDAO answerDao;
+
 	@Override
 	public LoadForumOutputParam execute(LoadForumInputParam inParam)
 			throws ChemisboxException {
 		this.out = new LoadForumOutputParam();
 		List<Question> questionList = null;
 		try {
-			questionList = questionDao.selectLastestQuestion(inParam.getStartIndex(), 5);
-
+			questionList = questionDao.selectLastestQuestion(
+					inParam.getStartIndex(), inParam.getPageSize());
+//			Long answerCount = answerDao.getCountByQuestion(questionId)
 			if (ChemisboxUtilities.isNullOrEmpty(questionList)) {
 				this.out.setErrorMessage("Khong tim thay danh sach cau hoi.");
 			} else {
@@ -44,5 +49,9 @@ public class LoadForumBusiness extends
 	public void setQuestionDao(QuestionDAO questionDao) {
 		this.questionDao = questionDao;
 	}
+
+//	public void setAnswerDao(AnswerDAO answerDao) {
+//		this.answerDao = answerDao;
+//	}
 
 }

@@ -67,9 +67,10 @@ public class AddQuestionBusiness extends
 					tagList.add(tag);
 				}
 			}
-			QuestionTag questionTag = new QuestionTag();
-			questionTag.setQuestion(question);
+			QuestionTag questionTag = null;
 			for (int i = 0; i < tagList.size(); i++) {
+				questionTag = new QuestionTag();
+				questionTag.setQuestion(question);
 				questionTag.setTag(tagList.get(i));
 				questionTagDao.add(questionTag);
 			}

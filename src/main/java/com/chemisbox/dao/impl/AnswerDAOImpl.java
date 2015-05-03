@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +70,15 @@ public class AnswerDAOImpl implements AnswerDAO{
 		Session session = sessionFactory.getCurrentSession();
 		Answer answer = (Answer) session.get(Answer.class, id);
 		return answer;
+	}
+
+	public Long getCountByQuestion(Integer questionId)
+			throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Answer.class);
+		criteria.createAlias("question", "q");
+		criteria.add(Restrictions.eq("q.questionId", questionId));
+		return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }

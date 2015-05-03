@@ -48,7 +48,7 @@ public class ChemisboxConstant {
 	public static final int TOTAL_CHEMICAL_RECORDS_IN_A_PAGE = 10;
 	public static final int TOTAL_EQUATION_RECORDS_IN_A_PAGE = 5;
 	public static final int TOTAL_ELEMENT_RECORDS_IN_A_PAGE = 10;
-	public static final int TOTAL_QUESTION_RECORDS_IN_A_PAGE = 10;
+	public static final int TOTAL_QUESTION_RECORDS_IN_A_PAGE = 20;
 	
 	// Result
 	public static final int SUCCESS = 0;

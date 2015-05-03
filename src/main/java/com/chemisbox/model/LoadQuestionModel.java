@@ -16,6 +16,16 @@ public class LoadQuestionModel extends ChemisboxModel {
 
 	private List<Answer> answerList;
 
+	private long answerCount;
+
+	public long getAnswerCount() {
+		return answerCount;
+	}
+
+	public void setAnswerCount(long answerCount) {
+		this.answerCount = answerCount;
+	}
+
 	public List<Answer> getAnswerList() {
 		return answerList;
 	}

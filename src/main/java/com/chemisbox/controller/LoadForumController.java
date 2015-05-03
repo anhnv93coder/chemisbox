@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chemisbox.business.LoadForumBusiness;
+import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.exception.ChemisboxException;
 import com.chemisbox.input.LoadForumInputParam;
 import com.chemisbox.model.LoadForumModel;
@@ -21,6 +22,7 @@ public class LoadForumController extends
 	public String doLoadForum(ModelMap map) throws ChemisboxException {
 		LoadForumInputParam inParam = new LoadForumInputParam();
 		inParam.setStartIndex(0);
+		inParam.setPageSize(ChemisboxConstant.TOTAL_QUESTION_RECORDS_IN_A_PAGE);
 		LoadForumOutputParam outParam = this.business.execute(inParam);
 		this.model = new LoadForumModel();
 		if (ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {

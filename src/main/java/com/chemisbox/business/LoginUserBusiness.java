@@ -22,7 +22,7 @@ public class LoginUserBusiness extends
 		try {
 			user = userDao.authenticate(inParam.getEmail(), inParam.getPassword());
 			if(user == null){
-				this.out.setErrorMessage("Tai khoan hoac mat khau khong dung");
+				this.out.setErrorMessage("Tài khoản hoặc mật khẩu không đúng.");
 				return this.out;
 			}
 			this.out.setUser(user);

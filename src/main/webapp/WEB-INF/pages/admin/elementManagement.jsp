@@ -4,6 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
+<script type="text/javascript">
+	var baseURL = '${baseURL}';
+</script>
 	<section class="wrapper site-min-height">
 		<h3>
 			<i class="fa fa-angle-right"></i> Quản lý nguyên tố hóa học

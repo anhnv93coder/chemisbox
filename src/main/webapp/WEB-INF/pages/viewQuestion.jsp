@@ -28,7 +28,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
                     <li class="active"><a href="${baseURL}">Trang chủ</a></li>
-                    <li class="active"><a href="${baseURL}/forum">Forum</a></li>
+                    <li class="active"><a href="${baseURL}/forum">Diễn đàn</a></li>
                     <li><a href="${baseURL}/ask">Đặt câu hỏi</a></li>
                     <c:if test="${empty userObject}">
                     	<li><a href="${baseURL}/login">Đăng nhập</a></li>	
@@ -75,7 +75,7 @@
 					</div>
 					<c:if test="${!empty loadQuestionModel.answerList}">
 						<div class="answers-block clearfix">
-							<h4>1 Answers</h4>
+							<h4>${loadQuestionModel.answerCount} Câu trả lời</h4>
 							<c:forEach items="${loadQuestionModel.answerList}" var="answer">
 								<hr/>
 								<div class="row">
@@ -103,30 +103,16 @@
 						</div>
 					</c:if>
 					<div class="your-answer clearfix" style="margin-top: 50px;">
-						<h4>Your answer</h4>
+						<h4>Gửi câu trả lời của bạn</h4>
 						<hr/>
 						<input type="hidden" value="${loadQuestionModel.question.questionId}" id="questionId"/>
 						<div class="col-md-12">
 							<textarea id="ckeditor" class="ckeditor" name="editor1"></textarea>
-							<button id="btnSendAnswer" type="button" class="btn btn-primary" style="margin: 20px auto;">Post your answer</button>
+							<button id="btnSendAnswer" type="button" class="btn btn-primary" style="margin: 20px auto;">Gửi câu trả lời</button>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="list-group">
-						<a href="#" class="list-group-item active">
-							Hot question
-						</a>
-						<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-						<a href="#" class="list-group-item">Morbi leo risus</a>
-						<a href="#" class="list-group-item">Porta ac consectetur ac</a>
-						<a href="#" class="list-group-item">Vestibulum at eros</a>
-						<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-						<a href="#" class="list-group-item">Morbi leo risus</a>
-						<a href="#" class="list-group-item">Porta ac consectetur ac</a>
-						<a href="#" class="list-group-item">Vestibulum at eros</a>
-					</div>
-				</div>
+				<jsp:include page="forum/rightBar.jsp"></jsp:include>
 			</div>
         </div>
     </section>

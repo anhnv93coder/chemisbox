@@ -52,18 +52,6 @@ public class Equation implements Serializable {
 	@Column(name = "video_link")
 	private String videoLink;
 
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "ion_id") private IonEquation ionEquation;
-	 */
-
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "oxi_id") private OxiReduceEquation oxiReduceEquation;
-	 */
-
 	@Column(name = "ion_equation")
 	private String ionEquation;
 
@@ -224,18 +212,5 @@ public class Equation implements Serializable {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-
-	/*
-	 * public IonEquation getIonEquation() { return ionEquation; }
-	 * 
-	 * public void setIonEquation(IonEquation ionEquation) { this.ionEquation =
-	 * ionEquation; }
-	 * 
-	 * public OxiReduceEquation getOxiReduceEquation() { return
-	 * oxiReduceEquation; }
-	 * 
-	 * public void setOxiReduceEquation(OxiReduceEquation oxiReduceEquation) {
-	 * this.oxiReduceEquation = oxiReduceEquation; }
-	 */
 
 }

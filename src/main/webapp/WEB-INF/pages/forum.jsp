@@ -52,7 +52,7 @@
                 <c:if test="${!empty forumModel.questionList}">
         	 <div class="row" style="padding: 10px 0;">
                     <div class="">
-                        <h3>Top question</h3>
+                        <h3>Câu hỏi mới nhất</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -62,7 +62,7 @@
 	                            <td>
 	                                <div class="col-md-4">
                                     		<div class="col-sm-6" style="margin: 10% auto;">10 Answers</div>
-                                   			<div class="col-sm-6" style="margin: 10% auto;">10 Views</div>                                	
+                                   			<div class="col-sm-6" style="margin: 10% auto;">${question.views} Views</div>                                	
 	                                </div>
 	                                <div class="col-md-8">
 	                                    <div class="row">
@@ -84,74 +84,11 @@
 	                            </td>
 	                        </tr>
                     	</c:forEach>
-                    
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                	<div class="col-sm-6" style="margin: 10% auto;">100 Answers</div>
-                                   	<div class="col-sm-6" style="margin: 10% auto;">100 Views</div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 10px;">
-                                        <div class="col-md-8">
-                                            <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag fa-lg"></i>&nbsp;HTC</a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-4">
-                                  	<div class="col-sm-6" style="margin: 10% auto;">10 Answers</div>
-                                	<div class="col-sm-6" style="margin: 10% auto;">1000 Views</div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row ">
-                                        <div class="col-md-12">
-                                             <a href="#">How to successfully connect HTC One M8 to Android Studio How to successfully connect HTC One M8 to Android Studio</a>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 10px;">
-                                        <div class="col-md-8">
-                                            <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag fa-lg"></i>&nbsp;HTC</a>
-                                            <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-tag fa-lg"></i>&nbsp;HTC</a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span>modified 51 secs ago</span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </td>
-                        </tr>
                     </table>
                 </div>
         </c:if>
             </div>
-            <div class="col-md-3">
-                <div class="list-group">
-                    <a href="#" class="list-group-item active">
-                        Hot question
-                    </a>
-                    <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item">Morbi leo risus</a>
-                    <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item">Vestibulum at eros</a>
-                    <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item">Morbi leo risus</a>
-                    <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item">Vestibulum at eros</a>
-                </div>
-            </div>
-
+            <jsp:include page="forum/rightBar.jsp"></jsp:include>
         </div>
     </section>
 

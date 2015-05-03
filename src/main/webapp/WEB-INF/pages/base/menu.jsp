@@ -23,7 +23,7 @@
 				<li><a href="#section-works">Bảng tuần hoàn</a></li>
 				<li><a href="#section-about">Thông tin</a></li>
 				<li><a href="#" data-toggle="modal" data-target="#guiModal">Hướng dẫn</a></li>
-				<li><a href="${baseURL}/forum">Forum</a></li>
+				<li><a href="${baseURL}/forum">Diễn đàn</a></li>
 			</ul>
 		</div>
 	</div>

@@ -45,6 +45,9 @@ public class LoadQuestionBusiness extends
 			
 			questionDao.update(question);
 			
+			Long answerCount =  answerDao.getCountByQuestion(question.getQuestionId());
+			
+			this.out.setAnswerCount(answerCount);
 			this.out.setQuestion(question);
 			this.out.setAnswerList(answerList);
 			

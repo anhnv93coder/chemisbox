@@ -32,6 +32,12 @@ public class AddQuestionController extends
 			throw new ChemisboxException(
 					"User must be login before add question");
 		}
+		
+		if(ChemisboxUtilities.isNullOrEmpty(model.getTitle())){
+			this.model.setErrorMessage("Tiêu đề của câu hỏi không được để trống");
+			return this.model;
+		}
+		
 		User userObject = (User) request.getSession().getAttribute("userObject");
 		inParam.setUser(userObject);
 		inParam.setTitle(model.getTitle());

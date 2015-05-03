@@ -8,6 +8,15 @@ import com.chemisbox.entity.Question;
 public class LoadQuestionOutputParam extends ChemisboxOutputParam {
 	private Question question;
 	private List<Answer> answerList;
+	private long answerCount;
+
+	public long getAnswerCount() {
+		return answerCount;
+	}
+
+	public void setAnswerCount(long answerCount) {
+		this.answerCount = answerCount;
+	}
 
 	public Question getQuestion() {
 		return question;
