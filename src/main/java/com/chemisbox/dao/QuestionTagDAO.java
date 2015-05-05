@@ -8,5 +8,5 @@ public interface QuestionTagDAO {
 	
 	public boolean add(QuestionTag questionTag) throws ChemisboxException;
 	
-	public boolean delete(QuestionTag questionTag) throws ChemisboxException;
+	public boolean delete(Integer questionId) throws ChemisboxException;
 }

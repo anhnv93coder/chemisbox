@@ -109,6 +109,7 @@
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="exampleModalLabel">Cập nhật phương trình hóa học</h4>
 			      </div>
+			      <form>
 			      <div class="modal-body">
 			        <div class="form-horizontal">
 			        	<input type="hidden" id="equationIdUpdate"/>
@@ -185,9 +186,11 @@
 					</div>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelUpdate">Thoát</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelUpdateEquation" style="display:none;">Thoát</button>
+			        <button type="reset" class="btn btn-default">Làm mới</button>
 			        <button type="button" class="btn btn-primary" id="btnUpdateEquation">Cập nhật</button>
 			      </div>
+			      </form>
 			    </div>
 			  </div>
 			</div>
@@ -200,6 +203,7 @@
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="exampleModalLabel">Thêm mới phương trình hóa học</h4>
 			      </div>
+			      <form>
 			      <div class="modal-body">
 			        <div class="form-horizontal">
 						<div class="form-group">
@@ -273,9 +277,11 @@
 					</div>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelAddEquation" style="display:none;">Thoát</button>
+			        <button type="reset" class="btn btn-default">Làm mới</button>
 			        <button type="button" class="btn btn-primary" id="btnAddEquation">Thêm mới</button>
 			      </div>
+			      </form>
 			    </div>
 			  </div>
 			</div>

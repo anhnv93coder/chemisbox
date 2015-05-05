@@ -47,6 +47,7 @@
 									<td>
 										<a href="#"  style="padding: 0 2px;" onclick="loadDetailsForQuestion(${question.questionId})" data-toggle="modal" data-target="#approveQuestionModal"><i
 											class="fa fa-pencil-square-o fa-lg" style="margin-top: 3px;"></i></a>
+										<a href="${baseURL}/admin/question/delete/${question.questionId}" style="padding: 0 2px;" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fa fa-trash-o fa-lg"></i></a>
 									</td>
 								</tr>
 							</c:forEach>

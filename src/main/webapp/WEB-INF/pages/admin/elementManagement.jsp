@@ -110,8 +110,9 @@
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="exampleModalLabel">Thêm mới nguyên tố hóa học</h4>
 			      </div>
+			      <form class="form-horizontal">
 			      <div class="modal-body">
-						<form class="form-horizontal">
+						
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-4 control-label">Ký hiệu</label>
 								<div class="col-sm-8">
@@ -217,12 +218,14 @@
 										placeholder="Link ảnh"/>
 								</div>
 							</div>
-						</form>
+						
 			      </div>  
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelUpdate">Thoát</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelAddElement" style="display:none;">Thoát</button>
+			        <button type="reset" class="btn btn-default">Làm mới</button>
 			        <button type="button" class="btn btn-primary" id="btnAddElement">Thêm mới</button>
 			      </div>
+			      </form>
 			    </div>
 			  </div>
 			</div>
@@ -235,8 +238,9 @@
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="exampleModalLabel">Cập nhật chất hóa học</h4>
 			      </div>
+			      <form class="form-horizontal">
 			      <div class="modal-body">
-						<form class="form-horizontal">
+						
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-4 control-label">Ký hiệu</label>
 								<div class="col-sm-8">
@@ -342,12 +346,14 @@
 										placeholder="Link ảnh"/>
 								</div>
 							</div>
-						</form>
+						
 			      </div>  
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelUpdate">Thoát</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelUpdateElement" style="display:none;">Thoát</button>
+			        <button type="reset" class="btn btn-default">Làm mới</button>
 			        <button type="button" class="btn btn-primary" id="btnUpdateElement">Cập nhật</button>
 			      </div>
+			      </form>
 			    </div>
 			  </div>
 			</div>

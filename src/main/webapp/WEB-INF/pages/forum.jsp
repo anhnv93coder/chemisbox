@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
-
+<fmt:setLocale value="vi_VN" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -61,8 +61,8 @@
 	                    	<tr>
 	                            <td>
 	                                <div class="col-md-4">
-                                    		<div class="col-sm-6" style="margin: 10% auto;">10 Answers</div>
-                                   			<div class="col-sm-6" style="margin: 10% auto;">${question.views} Views</div>                                	
+                                    		<div class="col-sm-6" style="margin: 10% auto;">${question.answerCounter} Lượt trả lời</div>
+                                   			<div class="col-sm-6" style="margin: 10% auto;">${question.views} Lượt xem</div>                                	
 	                                </div>
 	                                <div class="col-md-8">
 	                                    <div class="row">

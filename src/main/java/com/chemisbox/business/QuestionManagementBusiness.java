@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.dao.QuestionDAO;
+import com.chemisbox.dao.QuestionTagDAO;
 import com.chemisbox.entity.Question;
 import com.chemisbox.exception.ChemisboxException;
 import com.chemisbox.input.QuestionManagementInputParam;
@@ -22,6 +23,9 @@ public class QuestionManagementBusiness
 
 	@Autowired
 	private QuestionDAO questionDao;
+
+	@Autowired
+	private QuestionTagDAO questionTagDao;
 
 	@Override
 	public QuestionManagementOutputParam execute(
@@ -44,7 +48,7 @@ public class QuestionManagementBusiness
 			case ChemisboxConstant.BUSINESS_FOR_LIST:
 				List<Question> questionList = questionDao.selectNotApprovedQuestions(inParam.getStartIndex(), inParam.getPageSize());
 				if(ChemisboxUtilities.isNullOrEmpty(questionList)){
-					this.out.setErrorMessage("Not found any question");
+					this.out.setErrorMessage("Không có dữ liệu.");
 					return this.out;
 				}
 				this.out.setQuestionList(questionList);
@@ -54,14 +58,33 @@ public class QuestionManagementBusiness
 					this.out.setErrorMessage("Approving question is fail");
 				}
 				break;
-
+			case ChemisboxConstant.BUSINESS_FOR_DELETE:
+				Integer questionId = inParam.getQuestionId();
+				question = questionDao.get(questionId);
+				if(question == null){
+					this.out.setErrorMessage("Câu hỏi không tồn tại");
+					return this.out;
+				}
+				
+				questionTagDao.delete(questionId);
+				
+				if(!questionDao.delete(question)){
+					this.out.setErrorMessage("Xảy ra lỗi khi xóa câu hỏi.");
+					return this.out;
+				}
+				
+				break;
 			default:
-				throw new ChemisboxException("Business type	 invalid");
+				throw new ChemisboxException("Business type	invalid");
 			}
 		} catch (Exception e) {
 			this.out.setErrorMessage(e.getMessage());
 		}
 		return this.out;
+	}
+
+	public void setQuestionTagDao(QuestionTagDAO questionTagDao) {
+		this.questionTagDao = questionTagDao;
 	}
 
 	public void setQuestionDao(QuestionDAO questionDao) {

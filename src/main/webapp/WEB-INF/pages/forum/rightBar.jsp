@@ -4,7 +4,7 @@
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
 <div class="col-md-3">
 	<div class="list-group">
-		<a href="#" class="list-group-item active"><strong>Câu hỏi có lượt xem nhiều nhất</strong></a> 
+		<a href="#" class="list-group-item list-group-item-info"><strong>Câu hỏi có lượt xem nhiều nhất</strong></a> 
 		<a href="#" class="list-group-item">Bài toán tìm chuỗi phản ứng</a>
 		<a href="#" class="list-group-item">Hóa học 11</a>
 		<a href="#" class="list-group-item">Hóa học 12</a>

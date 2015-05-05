@@ -152,18 +152,19 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 	@RequestMapping(value = "/admin/element/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ElementManagementModel updateelement(
 			@RequestBody ElementManagementModel model, ModelMap map) throws ChemisboxException {
-		if(!map.containsAttribute("adminObject")){
-			throw new ChemisboxException("Nguoi dung chua dang nhap");
-		}
-		this.model = new ElementManagementModel();
-		ElementManagementInputParam inParam = new ElementManagementInputParam();
-
-		if (model == null || model.getElement() == null) {
-			this.model.setErrorMessage("Null pointer");
-			return this.model;
-		}
 		try {
-			inParam.setNotation(model.getNotation().trim());
+			if(!map.containsAttribute("adminObject")){
+				throw new ChemisboxException("Nguoi dung chua dang nhap");
+			}
+			this.model = new ElementManagementModel();
+			ElementManagementInputParam inParam = new ElementManagementInputParam();
+	
+			if (model == null || model.getElement() == null) {
+				this.model.setErrorMessage("Null pointer");
+				return this.model;
+			}
+		
+			inParam.setElement(model.getElement());
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_UPDATE);
 			ElementManagementOutputParam outParam = this.business
 					.execute(inParam);

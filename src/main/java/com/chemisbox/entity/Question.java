@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -71,6 +72,17 @@ public class Question implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
 	private List<Answer> answerList = new ArrayList<Answer>();
+
+	@Transient
+	private long answerCounter;
+
+	public long getAnswerCounter() {
+		return answerCounter;
+	}
+
+	public void setAnswerCounter(long answerCounter) {
+		this.answerCounter = answerCounter;
+	}
 
 	public int getApproved() {
 		return approved;

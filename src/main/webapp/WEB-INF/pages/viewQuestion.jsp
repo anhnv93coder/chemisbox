@@ -75,7 +75,7 @@
 					</div>
 					<c:if test="${!empty loadQuestionModel.answerList}">
 						<div class="answers-block clearfix">
-							<h4>${loadQuestionModel.answerCount} Câu trả lời</h4>
+							<h3>${loadQuestionModel.answerCount} câu trả lời</h3>
 							<c:forEach items="${loadQuestionModel.answerList}" var="answer">
 								<hr/>
 								<div class="row">
@@ -103,7 +103,7 @@
 						</div>
 					</c:if>
 					<div class="your-answer clearfix" style="margin-top: 50px;">
-						<h4>Gửi câu trả lời của bạn</h4>
+						<h3>Gửi câu trả lời của bạn</h3>
 						<hr/>
 						<input type="hidden" value="${loadQuestionModel.question.questionId}" id="questionId"/>
 						<div class="col-md-12">

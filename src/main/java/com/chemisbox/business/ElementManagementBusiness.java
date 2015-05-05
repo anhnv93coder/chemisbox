@@ -69,10 +69,9 @@ public class ElementManagementBusiness
 
 			case ChemisboxConstant.BUSINESS_FOR_UPDATE:
 				elementObj = inParam.getElement();
+										
 				notation = elementDao.update(elementObj);
-				if (ChemisboxUtilities.isNullOrEmpty(notation)) {
-					this.out.setErrorMessage("Update chemical failed");
-				}
+				
 				break;
 
 			default:

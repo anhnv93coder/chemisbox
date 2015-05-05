@@ -58,10 +58,15 @@
 			<div class="col-md-9">
 				<div class="your-answer">
 					<div class="col-md-12">
+						<div class="alert alert-warning alert-dismissible" role="alert" id="askErrorMsg" style="display:none">
+							<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="errorMessage"></span>
+						</div>
+						<div class="alert alert-success alert-dismissible" role="alert" id="askSuccessMsg" style="display:none">
+							<i class="fa fa-check fa-2x"></i>&nbsp;<span id="successMessage">Gửi câu hỏi thành công.</span>&nbsp;<a href="${baseURL}/forum">Quay lại diễn đàn</a>
+						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail1">Tiêu đề</label> <input
-								type="text" class="form-control" id="title"
-								placeholder="Tiêu đề">
+							<label for="exampleInputEmail1">Tiêu đề</label> 
+							<input type="text" class="form-control" id="title" placeholder="Tiêu đề">
 						</div>
 						<textarea id="ckeditor" class="ckeditor" name="editor1"></textarea>
 						<div class="form-group" style="margin: 10px auto;">
@@ -85,6 +90,13 @@
 			var title = $.trim($("#title").val());
 			var content = CKEDITOR.instances['ckeditor'].getData();
 			var tag = $.trim($("#tag").val());
+			
+			if(stringIsNullOrEmpty(title)){
+				$("#askSuccessMsg").css("display", "none")
+				$("#askErrorMsg").css("display", "block")
+				$("#errorMessage").html("Tiêu đề của câu hỏi không được để trống.");
+				return;
+			}
 
 			var model = {
 				title : title,
@@ -100,9 +112,12 @@
 				data : JSON.stringify(model),
 				success : function(data) {
 					if (!stringIsNullOrEmpty(data.errorMessage)) {
-						alert(data.errorMessage);
+						$("#askSuccessMsg").css("display", "none")
+						$("#askErrorMsg").css("display", "block")
+						$("#errorMessage").html(data.errorMessage);
 					} else {
-						alert("Success");
+						$("#askErrorMsg").css("display", "none")
+						$("#askSuccessMsg").css("display", "block")
 					}
 				},
 				error : function(data) {

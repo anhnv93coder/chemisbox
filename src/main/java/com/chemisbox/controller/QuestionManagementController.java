@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chemisbox.business.QuestionManagementBusiness;
 import com.chemisbox.constant.ChemisboxConstant;
@@ -19,6 +20,7 @@ import com.chemisbox.output.QuestionManagementOutputParam;
 import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Controller
+@SessionAttributes("adminObject")
 public class QuestionManagementController extends ChemisboxController<QuestionManagementBusiness, QuestionManagementModel>{
 
 	@RequestMapping(value = {"/admin/question", "/admin/question/"}, method = RequestMethod.GET)
@@ -136,6 +138,35 @@ public class QuestionManagementController extends ChemisboxController<QuestionMa
 			this.model.setErrorMessage(ex.getMessage());
 		}
 		return this.model;
+	}
+	
+	@RequestMapping(value = "/admin/question/delete/{id}", method = RequestMethod.GET)
+	public String deleteElement(@PathVariable("id") String id, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
+		this.model = new QuestionManagementModel();
+		QuestionManagementInputParam inParam = new QuestionManagementInputParam();
+		try {
+
+			if(ChemisboxUtilities.isNullOrEmpty(id)){
+				this.model.setErrorMessage("Invalid notation");
+			} else {
+				Integer questionId = ChemisboxUtilities.getIntegerInString(id);
+				inParam.setQuestionId(questionId);
+				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_DELETE);
+				QuestionManagementOutputParam outParam = this.business
+						.execute(inParam);
+				if (!ChemisboxUtilities.isNullOrEmpty(outParam
+						.getErrorMessage())) {
+					this.model.setErrorMessage(outParam.getErrorMessage());
+				}
+			}
+		} catch (Exception ex) {
+			this.model.setErrorMessage(ex.getMessage());
+		}
+		map.put("elementMap", this.model);
+		return "redirect:/admin/question/";
 	}
 	
 	@Override

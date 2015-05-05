@@ -45,7 +45,7 @@ public class ElementDAOImpl implements ElementDAO {
 	public String update(Element c)
 			throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
-		session.delete(c);	
+		session.update(c);	
 		return c.getNotation();
 	}
 

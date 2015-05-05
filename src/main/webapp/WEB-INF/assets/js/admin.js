@@ -12,14 +12,15 @@ $("#btnApproved").click(function() {
 		success : function(data) {
 			if(stringIsNullOrEmpty(data.errorMessage)){
 				$("#btnCancelUpdate").click();
-				window.location = "/ChemisBox/admin/question"
+				window.location = window.location;
 			} else {
-				alert("Occur error. Please contact administrator");
+				alert("Xuất hiện lỗi. Vui lòng liên hệ với quản trị.");
 				console.log(data.errorMessage);
 			}
 		},
 		error : function(msg) {
-			alert(JSON.stringify(msg));
+			alert("Xuất hiện lỗi. Vui lòng liên hệ với quản trị.");
+			console.log(msg);
 		}
 	});
 });
@@ -42,7 +43,8 @@ function loadDetailsForQuestion(questionId) {
 			$("#content").val(data.question.content);
 		},
 		error : function(msg) {
-			alert(JSON.stringify(msg));
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 }
@@ -76,7 +78,8 @@ function loadDetailsForElement(notation) {
 			$("#imgUpdate").val(data.element.img);
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 }
@@ -111,31 +114,10 @@ function loadDetailsForEquation(id) {
 					data.equation.molReduce);
 			$("#summaryUpdate")
 					.val(data.equation.summary);
-			
-			/*if (data.equation.ionEquation != null) {
-				$("#ionIdUpdate").val(data.equation.ionEquation.ionId);
-				$("#ionEquationUpdate").val(
-						data.equation.ionEquation.ionEquation);
-				$("#ionShortcutUpdate").val(
-						data.equation.ionEquation.shortcutIonEquation);
-			}
-
-			if (data.equation.oxiReduceEquation != null) {
-				$("#oxiIdUpdate").val(
-						data.equation.oxiReduceEquation.oxiReduceId);
-				$("#oxiEquationUpdate").val(
-						data.equation.oxiReduceEquation.oxiEquation);
-				$("#molOxiUpdate").val(data.equation.oxiReduceEquation.molOxi);
-				$("#reduceEquationUpdate").val(
-						data.equation.oxiReduceEquation.reduceEquation);
-				$("#molReduceUpdate").val(
-						data.equation.oxiReduceEquation.molReduce);
-				$("#summaryUpdate")
-						.val(data.equation.oxiReduceEquation.summary);
-			}*/
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 }
@@ -168,7 +150,8 @@ function loadDetailsForChemical(id) {
 			$("#imgUpdate").val(data.chemical.img);
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 }
@@ -216,16 +199,18 @@ $("#btnUpdateElement").click(function() {
 		"element" : jsonData
 	};
 	$.ajax({
-		url : baseURL + "/admin/element/add",
+		url : baseURL + "/admin/element/update",
 		type : "POST",
 		data : JSON.stringify(model),
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			alert("success");
+			$("#btnCancelUpdateElement").click();
+			window.location = window.location;
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 });
@@ -283,10 +268,12 @@ $("#btnUpdateChemical").click(function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			alert("success");
+			$("#btnCancelUpdateChemical").click();
+			window.location = window.location; 
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 });
@@ -342,10 +329,12 @@ $("#btnAddChemical").click(function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			alert("success");
+			$("#btnCancelAddChemical").click();
+			window.location = window.location; 
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 });
@@ -399,10 +388,12 @@ $("#btnAddElement").click(function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			alert("success");
+			$("#btnCancelAddElement").click();
+			window.location = window.location; 
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 });
@@ -457,10 +448,12 @@ function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			alert("success");
+			$("#btnCancelAddEquation").click();
+			window.location = window.location; 
 		},
 		error : function(msg) {
-			alert("error");
+			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+			console.log(msg);
 		}
 	});
 });
@@ -518,14 +511,16 @@ $("#btnUpdateEquation").click(
 				contentType : "application/json",
 				success : function(data) {
 					if(stringIsNullOrEmpty(data.errorMessage)){
-						$("#btnCancelUpdate").click();
+						$("#btnCancelUpdateEquation").click();
+						window.location = window.location;
 					} else {
 						console.log(data.errorMessage);
 					}
 					
 				},
 				error : function(msg) {
-					alert("error");
+					alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
+					console.log(msg);
 				}
 			});
 		});

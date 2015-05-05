@@ -22,8 +22,8 @@ public class LoadForumBusiness extends
 	@Autowired
 	private QuestionDAO questionDao;
 
-//	@Autowired
-//	private AnswerDAO answerDao;
+	@Autowired
+	private AnswerDAO answerDao;
 
 	@Override
 	public LoadForumOutputParam execute(LoadForumInputParam inParam)
@@ -33,7 +33,13 @@ public class LoadForumBusiness extends
 		try {
 			questionList = questionDao.selectLastestQuestion(
 					inParam.getStartIndex(), inParam.getPageSize());
-//			Long answerCount = answerDao.getCountByQuestion(questionId)
+			
+			for (int i = 0; i < questionList.size(); i++) {
+				Question questionObj = questionList.get(i);
+				Long answerCounter = answerDao.getCountByQuestion(questionObj.getQuestionId());
+				questionObj.setAnswerCounter(answerCounter);
+			}
+					
 			if (ChemisboxUtilities.isNullOrEmpty(questionList)) {
 				this.out.setErrorMessage("Khong tim thay danh sach cau hoi.");
 			} else {
@@ -50,8 +56,8 @@ public class LoadForumBusiness extends
 		this.questionDao = questionDao;
 	}
 
-//	public void setAnswerDao(AnswerDAO answerDao) {
-//		this.answerDao = answerDao;
-//	}
+	public void setAnswerDao(AnswerDAO answerDao) {
+		this.answerDao = answerDao;
+	}
 
 }
