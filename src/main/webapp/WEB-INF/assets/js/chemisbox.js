@@ -88,7 +88,11 @@ function fillChemical(chemical) {
 		$("#chemicalImg").css("display", "block");
 		$("#chemicalImg").attr("src", chemical.img);
 	}
-	$("#chemicalName").append(chemical.name);
+	if(stringIsNullOrEmpty(chemical.name)){
+		$("#chemicalName").append(chemical.formula);
+	}else{
+		$("#chemicalName").append(chemical.name);
+	}
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Tên chính</dt><dd>" + chemical.name
 					+ "</dd></dl>");
@@ -130,7 +134,11 @@ function fillElement(element) {
 		$("#chemicalImg").css("display", "block");
 		$("#chemicalImg").attr("src", element.img);
 	}
-	$("#chemicalName").append(element.name);
+	if(stringIsNullOrEmpty(element.notation)){
+		$("#chemicalName").append(element.name);
+	}else{
+		$("#chemicalName").append(element.notation);
+	}
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Ký hiệu</dt><dd>" + element.notation
 					+ "</dd></dl>");
@@ -196,7 +204,7 @@ function mergeChemicalToEquation(chemicals) {
 		}
 		
 		// replace (condition) by <sub>(condition)</sub>
-		var conditionRes = inParam.condition.match(/\({1}[a-zA-Z0-9]+\){1}/g);
+		var conditionRes = inParam.condition.match(/\({1}[catốtanốtchấtlỏngrắnkhídungdịchrấtloãngđậmđặc\s]+\){1}/g);
 		if(conditionRes != null && conditionRes.length > 0){
 			for(var i = 0; i < conditionRes.length; i++){
 				inParam.condition = inParam.condition.replace(conditionRes[i], "<sub>" + conditionRes[i] + "</sub>") 

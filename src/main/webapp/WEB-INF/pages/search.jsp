@@ -153,7 +153,7 @@
 			</div>
 
 			<div class="row mar-bot40">
-				<div class="col-md-7">
+				<div class="col-md-8">
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<i class="fa fa-list-alt fa-2x"></i> <span style="font-size: 30px;">Phản ứng</span>
@@ -163,7 +163,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<div class="panel panel-info" id="chemicalAndElementBlock">
 						<div class="panel-heading">
 							<i class="fa fa-info fa-2x"></i> <span style="font-size: 30px;" id="chemicalName"></span>

@@ -182,21 +182,20 @@ public class EquationManagementBusiness
 		List<ChemistryEquation> list = new ArrayList<ChemistryEquation>();
 
 		//
-		Pattern patternForNumber = Pattern.compile("\\d+");
-		Pattern patternForString = Pattern.compile("[a-zA-Z()]+[0-9]*([a-zA-Z()]*[0-9]*)*");
+		Pattern patternForNumber = Pattern.compile("^\\d+");
+		Pattern patternForString = Pattern.compile("[a-zA-Z()]+[0-9]*(([\\(]?[a-zA-Z]*[\\)]?)*[0-9]*)*");
 		Pattern patternCondition = Pattern
-				.compile("[↑↓]?\\({1}[a-zA-Z0-9]+\\){1}");
+				.compile("[↑↓]?\\({1}\\w+\\s?\\w+\\){1}[↑↓]?$", Pattern.UNICODE_CHARACTER_CLASS);
 		//
 		ChemistryEquation chemistryEquationElement = null;
 		Matcher matcher = null;
-
 		for (int i = 0; i < dataArray.length; i++) {
 			chemistryEquationElement = new ChemistryEquation();
 			String source = dataArray[i].trim();
 			matcher = patternForNumber.matcher(source);
 			if (matcher.find()) {
 				chemistryEquationElement.setNumberOfAtomic(Integer
-						.parseInt(matcher.group()));
+				.parseInt(matcher.group()));
 			}
 			matcher = patternForString.matcher(source);
 			if (matcher.find()) {
