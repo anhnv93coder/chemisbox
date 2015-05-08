@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/chemisbox/business/ChemicalManagementBusiness.java=UTF-8
 encoding//src/main/java/com/chemisbox/business/ElementManagementBusiness.java=UTF-8
 encoding//src/main/java/com/chemisbox/business/EquationManagementBusiness.java=UTF-8
 encoding//src/main/java/com/chemisbox/business/LoginUserBusiness.java=UTF-8

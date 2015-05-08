@@ -71,14 +71,6 @@
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
 
-	<!-- <bean id="ionDao" class="com.chemisbox.dao.impl.IonEquationDAOImpl">
-		<property name="sessionFactory" ref="mySessionFactory" />
-	</bean>
-
-	<bean id="oxiDao" class="com.chemisbox.dao.impl.OxiReduceEquationDAOImpl">
-		<property name="sessionFactory" ref="mySessionFactory" />
-	</bean> -->
-
 	<bean id="elementDao" class="com.chemisbox.dao.impl.ElementDAOImpl">
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
@@ -115,8 +107,6 @@
 		<property name="chemicalDao" ref="chemicalDao" />
 		<property name="chemistryEquationDao" ref="chemistryEquationDao" />
 		<property name="equationDao" ref="equationDao" />
-		<!-- <property name="ionDao" ref="ionDao" />
-		<property name="oxiDao" ref="oxiDao" /> -->
 	</bean>
 
 	<bean id="searchEquationBusiness" class="com.chemisbox.business.SearchEquationBusiness">
@@ -127,6 +117,7 @@
 	
 	<bean id="chemicalManagementBusiness" class="com.chemisbox.business.ChemicalManagementBusiness">
 		<property name="chemicalDao" ref="chemicalDao" />
+		<property name="elementDao" ref="elementDao" />
 	</bean>
 	
 		<bean id="addNewFeedbackBusiness" class="com.chemisbox.business.AddNewFeedbackBusiness">

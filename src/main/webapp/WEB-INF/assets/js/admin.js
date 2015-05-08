@@ -66,7 +66,7 @@ function loadDetailsForElement(notation) {
 			$("#numberOfAtomicUpdate").val(data.element.numberOfAtomic);
 			$("#atomicVolumeUpdate").val(data.element.atomicVolume);
 			$("#classifyUpdate").val(data.element.classify);
-			$("#groupUpdate").val(data.element.groupUpdate);
+			$("#groupUpdate").val(data.element.group);
 			$("#cycleUpdate").val(data.element.cycle);
 			$("#electronConfigurationUpdate").val(data.element.electronConfiguration);
 			$("#layersUpdate").val(data.element.layers);
@@ -300,9 +300,9 @@ $("#btnAddChemical").click(function() {
 		return;
 	}
 
-	if (!isNumeric(quantity)) {
-		return;
-	}
+//	if (!isNumeric(quantity)) {
+//		return;
+//	}
 
 	var jsonData = {
 		"name" : chemicalName,
@@ -361,17 +361,17 @@ $("#btnAddElement").click(function() {
 	}
 
 	var jsonData = {
-		"notation" : chemicalName,
-		"name" : differenceName,
-		"numberOfAtomic" : formula,
-		"atomicVolume" : quantity,
-		"classify" : description,
-		"group" : density,
-		"cycle" : meltingTemperature,
-		"electronConfiguration" : boilingTemperature,
-		"layers" : solubilityInWater,
-		"description" : ignitionPoint,
-		"color" : flavour,
+		"notation" : notation,
+		"name" : name,
+		"numberOfAtomic" : numberOfAtomic,
+		"atomicVolume" : atomicVolume,
+		"classify" : classify,
+		"group" : group,
+		"cycle" : cycle,
+		"electronConfiguration" : electronConfiguration,
+		"layers" : layers,
+		"description" : description,
+		"color" : color,
 		"condition" : condition,
 		"meltingTemperature" : meltingTemperature,
 		"boilingTemperature" : boilingTemperature,

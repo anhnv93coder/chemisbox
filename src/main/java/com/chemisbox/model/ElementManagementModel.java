@@ -33,14 +33,6 @@ public class ElementManagementModel extends ChemisboxModel {
 		this.totalPage = totalPage;
 	}
 
-	public Element getChemical() {
-		return element;
-	}
-
-	public void setChemical(Element element) {
-		this.element = element;
-	}
-
 	public Element getElement() {
 		return element;
 	}

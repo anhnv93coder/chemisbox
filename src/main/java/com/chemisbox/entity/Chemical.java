@@ -35,7 +35,7 @@ public class Chemical implements Serializable {
 	private String formula;
 
 	@Column(name = "quantity", nullable = false, columnDefinition = "int default 100")
-	private float quantity;
+	private double quantity;
 
 	@Column(name = "description")
 	private String description;
@@ -126,11 +126,11 @@ public class Chemical implements Serializable {
 		this.formula = formula;
 	}
 
-	public float getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(float quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 

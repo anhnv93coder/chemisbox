@@ -321,7 +321,7 @@
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-4 control-label">Trạng thái</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" id="condition"
+									<input type="text" class="form-control" id="conditionUpdate"
 										placeholder="Nhiệt độ nóng chảy"/>
 								</div>
 							</div>

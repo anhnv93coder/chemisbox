@@ -96,36 +96,60 @@ function fillChemical(chemical) {
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Tên chính</dt><dd>" + chemical.name
 					+ "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Tên khác</dt><dd>"
-					+ chemical.differenceName + "</dd></dl>");
+	if(!stringIsNullOrEmpty(chemical.differenceName)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Tên khác</dt><dd>"
+						+ chemical.differenceName + "</dd></dl>");
+	}
+			
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Công thức</dt><dd>"
 					+ chemical.formula + "</dd></dl>");
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Khối lượng (M)</dt><dd>"
 					+ chemical.quantity + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Mô tả</dt><dd>"
-					+ chemical.description + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Tỷ trọng</dt><dd>"
-					+ chemical.density + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Nhiệt độ nóng chảy</dt><dd>"
-					+ chemical.meltingTemperature + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Nhiệt độ sôi</dt><dd>"
-					+ chemical.boilingTemperature + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Độ hòa tan</dt><dd>"
-					+ chemical.solubilityInWater + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Điểm bắt lửa</dt><dd>"
-					+ chemical.ignitionPoint + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Mùi</dt><dd>" + chemical.flavour
-					+ "</dd></dl>");
+	
+	if(!stringIsNullOrEmpty(chemical.description)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Mô tả</dt><dd>"
+						+ chemical.description + "</dd></dl>");
+	}
+	
+	if(!stringIsNullOrEmpty(chemical.density)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Tỷ trọng</dt><dd>"
+						+ chemical.density + "</dd></dl>");
+	}
+	
+	if(!stringIsNullOrEmpty(chemical.meltingTemperature)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Nhiệt độ nóng chảy</dt><dd>"
+						+ chemical.meltingTemperature + "</dd></dl>");
+	}
+	
+	if(!stringIsNullOrEmpty(chemical.boilingTemperature)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Nhiệt độ sôi</dt><dd>"
+						+ chemical.boilingTemperature + "</dd></dl>");
+	}
+	
+	if(!stringIsNullOrEmpty(chemical.solubilityInWater)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Độ hòa tan</dt><dd>"
+						+ chemical.solubilityInWater + "</dd></dl>");
+	}
+	
+	if(!stringIsNullOrEmpty(chemical.ignitionPoint)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Điểm bắt lửa</dt><dd>"
+						+ chemical.ignitionPoint + "</dd></dl>");
+	}
+	
+	if(!stringIsNullOrEmpty(chemical.flavour)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Mùi</dt><dd>" + chemical.flavour
+						+ "</dd></dl>");
+	}
 }
 
 
@@ -134,10 +158,10 @@ function fillElement(element) {
 		$("#chemicalImg").css("display", "block");
 		$("#chemicalImg").attr("src", element.img);
 	}
-	if(stringIsNullOrEmpty(element.notation)){
-		$("#chemicalName").append(element.name);
+	if(!stringIsNullOrEmpty(element.name)){
+		$("#chemicalName").html(element.name);
 	}else{
-		$("#chemicalName").append(element.notation);
+		$("#chemicalName").html(element.notation);
 	}
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Ký hiệu</dt><dd>" + element.notation
@@ -175,12 +199,18 @@ function fillElement(element) {
 	$("#chemical-info").append(
 			"<dl class='dl-horizontal'><dt>Trạng thái</dt><dd>"
 					+ element.condition + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Nhiệt độ nóng chảy</dt><dd>"
-					+ element.meltingTemperature + "</dd></dl>");
-	$("#chemical-info").append(
-			"<dl class='dl-horizontal'><dt>Nhiệt độ sôi</dt><dd>"
-					+ element.boilingTemperature + "</dd></dl>");
+	if(!stringIsNullOrEmpty(element.meltingTemperature)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Nhiệt độ nóng chảy</dt><dd>"
+						+ element.meltingTemperature + "</dd></dl>");
+	}
+	
+	if(!stringIsNullOrEmpty(element.boilingTemperature)){
+		$("#chemical-info").append(
+				"<dl class='dl-horizontal'><dt>Nhiệt độ sôi</dt><dd>"
+						+ element.boilingTemperature + "</dd></dl>");
+	}
+	
 }
 
 

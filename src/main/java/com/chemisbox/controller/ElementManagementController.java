@@ -136,7 +136,7 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 			return this.model;
 		}
 		try {
-			inParam.setNotation(model.getNotation().trim());
+			inParam.setElement(model.getElement());;
 			inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_ADD);
 			ElementManagementOutputParam outParam = this.business
 					.execute(inParam);

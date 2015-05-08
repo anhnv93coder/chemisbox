@@ -1,5 +1,6 @@
 package com.chemisbox.business;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,20 @@ public class ElementManagementBusiness
 			ElementManagementInputParam inParam) throws ChemisboxException {
 		this.out = new ElementManagementOutputParam();
 		
-		String notation = null;
 		Element elementObj = null;
 		try {
 			switch (inParam.getBusinessType()) {
-			
+			case ChemisboxConstant.BUSINESS_FOR_ADD:
+				elementObj = elementDao.get(inParam.getElement().getNotation());
+				if (elementObj != null) {
+					this.out.setErrorMessage("Nguyên tố đã tồn tại.");
+					return this.out;
+				}
+				
+				elementDao.add(inParam.getElement());
+				
+				break;
+				
 			case ChemisboxConstant.BUSINESS_FOR_LOAD_DETAILS:
 				elementObj = elementDao.get(inParam.getNotation());
 				if (elementObj == null) {
@@ -69,8 +79,8 @@ public class ElementManagementBusiness
 
 			case ChemisboxConstant.BUSINESS_FOR_UPDATE:
 				elementObj = inParam.getElement();
-										
-				notation = elementDao.update(elementObj);
+				elementObj.setEditedDate(new Date());						
+				elementDao.update(elementObj);
 				
 				break;
 

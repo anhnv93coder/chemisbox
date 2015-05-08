@@ -27,7 +27,7 @@ public class Element implements Serializable {
 	private float numberOfAtomic;
 
 	@Column(name = "atomic_volume")
-	private String atomicVolume;
+	private double atomicVolume;
 
 	@Column(name = "classify")
 	private String classify;
@@ -119,11 +119,11 @@ public class Element implements Serializable {
 		this.numberOfAtomic = numberOfAtomic;
 	}
 
-	public String getAtomicVolume() {
+	public double getAtomicVolume() {
 		return atomicVolume;
 	}
 
-	public void setAtomicVolume(String atomicVolume) {
+	public void setAtomicVolume(double atomicVolume) {
 		this.atomicVolume = atomicVolume;
 	}
 
