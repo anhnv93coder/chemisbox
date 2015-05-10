@@ -19,9 +19,14 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedNativeQueries;
+import org.hibernate.annotations.NamedNativeQuery;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@NamedNativeQueries({
+	@NamedNativeQuery(name = "callGetQuestionHaveNotAnswer", query = "CALL getQuestionHaveNotAnswer()", resultClass = Question.class)
+})
 @Entity
 @Table(name = "t_question")
 public class Question implements Serializable {

@@ -340,13 +340,15 @@ function fillResult(data){
 	$("#result-block").css("display", "block");
 	$("#chemicalAndElementBlock").css("display", "block");
 	//
-	if (data.element != null) {
-		fillElement(data.element);
-	} else if (data.chemical != null) {
-		fillChemical(data.chemical);
-	}else{
-		//$("#chemicalImg").css("display", "none");
-		$("#chemicalAndElementBlock").css("display", "none");
+	if(currentPage == 0){
+		if (data.element != null) {
+			fillElement(data.element);
+		} else if (data.chemical != null) {
+			fillChemical(data.chemical);
+		}else{
+			//$("#chemicalImg").css("display", "none");
+			$("#chemicalAndElementBlock").css("display", "none");
+		}
 	}
 	
 	//
@@ -396,9 +398,8 @@ function fillResult(data){
 			$("#equation-list").html(
 					"<div class='alert alert-warning' id='error-msg' role='alert'><i class='fa fa-frown-o'></i> <strong>Xin lỗi!</strong> Không tìm thấy phản ứng nào của <strong>"
 					+ data.keyWord + "</strong></div>");
-		} else {
-			$("#divViewMore").css("display", "none");
 		}
+		$("#divViewMore").css("display", "none");
 	}
 	if(currentPage == 0){
 		scrollToElement("#result-block", 400);
@@ -409,15 +410,15 @@ function fillResult(data){
 
 function getEquation() {
 	var keyWord = $.trim($("#keyWord").val());
-	 
-	$("#chemicalImg").removeAttr("src");
-	$("#chemicalImg").css("display", "none");
+	
 	if(currentPage == 0 || keyWord.localeCompare(oldKeyWord) != 0){
 		$("#equation-list").empty();
+		$("#chemical-info").empty();
+		$("#chemicalName").empty();
+		$("#chemicalImg").removeAttr("src");
+		$("#chemicalImg").css("display", "none");
 		oldKeyWord = keyWord;
 	}
-	$("#chemical-info").empty();
-	$("#chemicalName").empty();
 	
 	var model = {currentPage : currentPage, keyWord : keyWord};
 	

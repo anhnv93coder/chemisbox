@@ -112,7 +112,24 @@
 						</div>
 					</div>
 				</div>
-				<jsp:include page="forum/rightBar.jsp"></jsp:include>
+				<div class="col-md-3">
+					<c:if test="${not empty loadQuestionModel.topQuestionList}">
+						<div class="list-group">
+						<a href="#" class="list-group-item list-group-item-info"><strong>Câu hỏi có lượt xem nhiều nhất</strong></a>
+							<c:forEach items="${loadQuestionModel.topQuestionList}" var="topQuestion">		 
+								<a href="${baseURL}/question/${topQuestion.questionId}" class="list-group-item">${topQuestion.title}</a>
+							</c:forEach>
+						</div>
+					</c:if>
+					<c:if test="${not empty loadQuestionModel.questionHaveNotAnswerList}">
+						<div class="list-group">
+						<a href="#" class="list-group-item list-group-item-warning"><strong>Câu hỏi chưa có câu trả lời</strong></a>
+							<c:forEach items="${loadQuestionModel.questionHaveNotAnswerList}" var="questionHaveNotAnswer">		 
+								<a href="${baseURL}/question/${questionHaveNotAnswer.questionId}" class="list-group-item">${questionHaveNotAnswer.title}</a>
+							</c:forEach>
+						</div>
+					</c:if>
+				</div>
 			</div>
         </div>
     </section>

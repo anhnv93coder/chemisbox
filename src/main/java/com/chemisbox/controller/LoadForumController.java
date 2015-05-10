@@ -27,6 +27,8 @@ public class LoadForumController extends
 		this.model = new LoadForumModel();
 		if (ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
 			this.model.setQuestionList(outParam.getQuestionList());
+			this.model.setTopQuestionList(outParam.getTopQuestionList());
+			this.model.setQuestionHaveNotAnswerList(outParam.getQuestionHaveNotAnswerList());
 		} else {
 			this.model.setErrorMessage(outParam.getErrorMessage());
 		}

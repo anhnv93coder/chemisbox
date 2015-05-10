@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
 	<bean id="loadAskQuestionBusiness" class="com.chemisbox.business.LoadAskQuestionBusiness">
-		<property name="answerDao" ref="answerDao" />
+		<property name="questionDao" ref="questionDao" />
 	</bean>
 	
 	<bean id="loadAskQuestionController" class="com.chemisbox.controller.LoadAskQuestionController">

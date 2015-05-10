@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.dao.AnswerDAO;
 import com.chemisbox.dao.QuestionDAO;
 import com.chemisbox.entity.Answer;
@@ -28,12 +29,15 @@ public class LoadQuestionBusiness extends
 	@Override
 	public LoadQuestionOutputParam execute(LoadQuestionInputParam inParam)
 			throws ChemisboxException {
+		this.out = new LoadQuestionOutputParam();
 		Question question = null;
 		List<Answer> answerList = null;
-		this.out = new LoadQuestionOutputParam();
+		List<Question> topQuestionList = null;
+		List<Question> questionHaveNotAnswer = null;
 		try {
 			question = questionDao.get(inParam.getQuestionId());
-			
+			topQuestionList = questionDao.selectViewTopQuestion(0, ChemisboxConstant.TOP_QUESTION_NUMBER_IN_PAGE);
+			questionHaveNotAnswer = questionDao.selectQuestionHaveNotAnswer(0, ChemisboxConstant.TOP_QUESTION_NUMBER_IN_PAGE);
 			answerList = answerDao.selectByQuestion(inParam.getQuestionId());
 			
 			if(question == null){
@@ -49,6 +53,8 @@ public class LoadQuestionBusiness extends
 			
 			this.out.setAnswerCount(answerCount);
 			this.out.setQuestion(question);
+			this.out.setTopQuestionList(topQuestionList);
+			this.out.setQuestionHaveNotAnswerList(questionHaveNotAnswer);
 			this.out.setAnswerList(answerList);
 			
 		} catch (Exception e) {

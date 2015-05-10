@@ -30,6 +30,8 @@ public class LoadQuestionController extends
 			this.model.setQuestion(outParam.getQuestion());
 			this.model.setAnswerList(outParam.getAnswerList());
 			this.model.setAnswerCount(outParam.getAnswerCount());
+			this.model.setTopQuestionList(outParam.getTopQuestionList());
+			this.model.setQuestionHaveNotAnswerList(outParam.getQuestionHaveNotAnswerList());
 		} else {
 			this.model.setErrorMessage(outParam.getErrorMessage());
 		}

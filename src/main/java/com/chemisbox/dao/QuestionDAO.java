@@ -13,7 +13,9 @@ public interface QuestionDAO {
 	
 	public List<Question> selectQuestionByUser(String email, int startIndex, int pageSize) throws ChemisboxException;
 	
-	public List<Question> selectHotQuestion(int startIndex, int pageSize) throws ChemisboxException;
+	public List<Question> selectViewTopQuestion(int startIndex, int pageSize) throws ChemisboxException;
+	
+	public List<Question> selectQuestionHaveNotAnswer(int startIndex, int pageSize) throws ChemisboxException;
 	
 	public Integer add(Question question) throws ChemisboxException;
 	

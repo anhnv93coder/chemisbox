@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.dao.AnswerDAO;
 import com.chemisbox.dao.QuestionDAO;
 import com.chemisbox.entity.Question;
@@ -30,10 +31,13 @@ public class LoadForumBusiness extends
 			throws ChemisboxException {
 		this.out = new LoadForumOutputParam();
 		List<Question> questionList = null;
+		List<Question> topQuestionList = null;
+		List<Question> questionHaveNotAnswer = null;
 		try {
 			questionList = questionDao.selectLastestQuestion(
 					inParam.getStartIndex(), inParam.getPageSize());
-			
+			topQuestionList = questionDao.selectViewTopQuestion(0, ChemisboxConstant.TOP_QUESTION_NUMBER_IN_PAGE);
+			questionHaveNotAnswer = questionDao.selectQuestionHaveNotAnswer(0, ChemisboxConstant.TOP_QUESTION_NUMBER_IN_PAGE);
 			for (int i = 0; i < questionList.size(); i++) {
 				Question questionObj = questionList.get(i);
 				Long answerCounter = answerDao.getCountByQuestion(questionObj.getQuestionId());
@@ -41,9 +45,11 @@ public class LoadForumBusiness extends
 			}
 					
 			if (ChemisboxUtilities.isNullOrEmpty(questionList)) {
-				this.out.setErrorMessage("Khong tim thay danh sach cau hoi.");
+				this.out.setErrorMessage("Không có dữ liệu");
 			} else {
 				this.out.setQuestionList(questionList);
+				this.out.setTopQuestionList(topQuestionList);
+				this.out.setQuestionHaveNotAnswerList(questionHaveNotAnswer);
 			}
 			return this.out;
 		} catch (Exception e) {

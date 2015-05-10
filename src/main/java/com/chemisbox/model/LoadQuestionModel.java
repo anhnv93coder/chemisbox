@@ -18,6 +18,26 @@ public class LoadQuestionModel extends ChemisboxModel {
 
 	private long answerCount;
 
+	private List<Question> topQuestionList;
+	private List<Question> questionHaveNotAnswerList;
+
+	public List<Question> getTopQuestionList() {
+		return topQuestionList;
+	}
+
+	public void setTopQuestionList(List<Question> topQuestionList) {
+		this.topQuestionList = topQuestionList;
+	}
+
+	public List<Question> getQuestionHaveNotAnswerList() {
+		return questionHaveNotAnswerList;
+	}
+
+	public void setQuestionHaveNotAnswerList(
+			List<Question> questionHaveNotAnswerList) {
+		this.questionHaveNotAnswerList = questionHaveNotAnswerList;
+	}
+
 	public long getAnswerCount() {
 		return answerCount;
 	}

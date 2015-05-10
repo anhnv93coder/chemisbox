@@ -50,6 +50,8 @@ public class ChemisboxConstant {
 	public static final int TOTAL_ELEMENT_RECORDS_IN_A_PAGE = 10;
 	public static final int TOTAL_QUESTION_RECORDS_IN_A_PAGE = 20;
 	public static final int EQUATION_RECORD_NUMBER_IN_RESULT = 5;
+	public static final int TOP_QUESTION_NUMBER_IN_PAGE = 5;
+	//
 	
 	// Result
 	public static final int SUCCESS = 0;

@@ -3,6 +3,7 @@ package com.chemisbox.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -47,12 +48,6 @@ public class QuestionDAOImpl implements QuestionDAO {
 		criteria.add(Restrictions.eq("u.email", email));
 		return (List<Question>) criteria.setFirstResult(startIndex)
 				.setMaxResults(pageSize).list();
-	}
-
-	public List<Question> selectHotQuestion(int startIndex, int pageSize)
-			throws ChemisboxException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public Integer add(Question question) throws ChemisboxException {
@@ -135,5 +130,23 @@ public class QuestionDAOImpl implements QuestionDAO {
 				.add(Restrictions.eq("approved",
 						ChemisboxConstant.QUESTION_IS_NOT_APPROVED))
 				.setProjection(Projections.rowCount()).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Question> selectViewTopQuestion(int startIndex, int pageSize)
+			throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<Question>) session.createCriteria(Question.class)
+				.addOrder(Order.desc("views"))
+				.setFirstResult(startIndex)
+				.setMaxResults(pageSize).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Question> selectQuestionHaveNotAnswer(int startIndex,
+			int pageSize) throws ChemisboxException {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.getNamedQuery("callGetQuestionHaveNotAnswer");
+		return query.list();
 	}
 }
