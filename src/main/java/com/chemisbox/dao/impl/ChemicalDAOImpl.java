@@ -3,9 +3,6 @@ package com.chemisbox.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,16 +28,16 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Chemical> list(String formula) throws ChemisboxException {
-		if(ChemisboxUtilities.isNullOrEmpty(formula)){
+		if (ChemisboxUtilities.isNullOrEmpty(formula)) {
 			return null;
 		}
 		Session session = sessionFactory.getCurrentSession();
-		return (List<Chemical>)session.createCriteria(Chemical.class)
+		return (List<Chemical>) session.createCriteria(Chemical.class)
 				.add(Restrictions.like("formula", formula)).list();
 	}
 
 	public Long add(Chemical c) throws ChemisboxException {
-		if(c == null){
+		if (c == null) {
 			return null;
 		}
 		Session session = sessionFactory.getCurrentSession();
@@ -49,7 +46,7 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 	}
 
 	public boolean delete(Chemical c) throws ChemisboxException {
-		if(c == null){
+		if (c == null) {
 			return false;
 		}
 		Session session = sessionFactory.getCurrentSession();
@@ -58,7 +55,7 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 	}
 
 	public Long update(Chemical c) throws ChemisboxException {
-		if(c == null){
+		if (c == null) {
 			return null;
 		}
 		Session session = sessionFactory.getCurrentSession();
@@ -67,7 +64,7 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 	}
 
 	public Chemical get(Long id) throws ChemisboxException {
-		if(id == null){
+		if (id == null) {
 			return null;
 		}
 		Session session = sessionFactory.getCurrentSession();
@@ -76,10 +73,10 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 	}
 
 	public Long get(String formula) throws ChemisboxException {
-		if(ChemisboxUtilities.isNullOrEmpty(formula)){
+		if (ChemisboxUtilities.isNullOrEmpty(formula)) {
 			return null;
 		}
-		
+
 		formula = ChemisboxUtilities.trimFullSize(formula);
 		Session session = sessionFactory.getCurrentSession();
 		Chemical obj = (Chemical) session.createCriteria(Chemical.class)
@@ -94,25 +91,55 @@ public class ChemicalDAOImpl implements ChemicalDAO {
 	public List<Chemical> list(int startIndex, int pageSize)
 			throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
-		return (List<Chemical>)session.createCriteria(Chemical.class).setFirstResult(startIndex).setMaxResults(pageSize).list();
+		return (List<Chemical>) session.createCriteria(Chemical.class)
+				.setFirstResult(startIndex).setMaxResults(pageSize).list();
 	}
 
 	public Long getCount() throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
-		return (Long) session.createCriteria(Chemical.class).setProjection(Projections.rowCount()).uniqueResult();
+		return (Long) session.createCriteria(Chemical.class)
+				.setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<String> selectFormulaAndNameList() throws ChemisboxException {
 		List<String> masterList = new ArrayList<String>();
-		Query query = sessionFactory.getCurrentSession().createSQLQuery("Select formula From chemical");
+		Query query = sessionFactory.getCurrentSession().createSQLQuery(
+				"Select formula From chemical");
 		List<String> formulaList = null;
 		Object tempList = query.list();
-		if(tempList instanceof List<?>){
-			formulaList = (List<String>)tempList;
+		if (tempList instanceof List<?>) {
+			formulaList = (List<String>) tempList;
 		}
 		masterList.addAll(formulaList);
 		return masterList;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Chemical> searchByKeyWord(String keyWord, int startIndex, int pageSize) {
+		if (ChemisboxUtilities.isNullOrEmpty(keyWord)) {
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		return session
+				.createCriteria(Chemical.class)
+				.add(Restrictions.or(Restrictions.like("name", keyWord),
+						Restrictions.like("differenceName", keyWord),
+						Restrictions.like("formula", keyWord)))
+				.setFirstResult(startIndex).setMaxResults(pageSize).list();
+	}
+
+	public Long getCountByKeyWord(String keyWord) throws ChemisboxException {
+		if (ChemisboxUtilities.isNullOrEmpty(keyWord)) {
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session
+				.createCriteria(Chemical.class)
+				.add(Restrictions.or(Restrictions.like("name", keyWord),
+						Restrictions.like("differenceName", keyWord),
+						Restrictions.like("formula", keyWord)))
+				.setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }

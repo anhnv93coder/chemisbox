@@ -25,7 +25,7 @@ public class ChemicalManagementController
 		extends
 		ChemisboxController<ChemicalManagementBusiness, ChemicalManagementModel> {
 
-	@RequestMapping(value = {"/admin/chemical", "/admin/chemical/"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/chemical"}, method = RequestMethod.GET)
 	public String defaultAPI(ModelMap map) {
 		if(!map.containsAttribute("adminObject")){
 			return "login";
@@ -48,6 +48,8 @@ public class ChemicalManagementController
 		} catch (Exception e) {
 			this.model.setErrorMessage(e.getMessage());
 		}
+		this.model.setCurrentUrl("/admin/chemical/");
+		map.put("chemicalModel", new ChemicalManagementModel());
 		map.put("chemicalMap", this.model);
 		map.put("chemicalObj", new Chemical());
 		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.CHEMICAL_MENU);
@@ -85,14 +87,65 @@ public class ChemicalManagementController
 				} else {
 					this.model.setChemicalList(outParam.getChemicalList());
 					this.model.setTotalPage(outParam.getTotalPages());
+					this.model.setCurrentUrl("/admin/chemical/");
 				}
 			}
 		} catch (Exception e) {
 			this.model.setErrorMessage(e.getMessage());
 		}
+		map.put("chemicalModel", new ChemicalManagementModel());
 		map.put("chemicalMap", this.model);
-		map.put("chemicalObj", new Chemical());
 		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.CHEMICAL_MENU);
+		return "adminIndex";
+	}
+
+	@RequestMapping(value = "/admin/chemical/search/{keyWord}/{index}", method = RequestMethod.GET)
+	public String searchChemical(@PathVariable("keyWord") String keyWord, @PathVariable("index") String index, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
+		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.CHEMICAL_MENU);
+		this.model = new ChemicalManagementModel();
+		ChemicalManagementInputParam inParam = new ChemicalManagementInputParam();
+		try {
+			Integer startIndex = ChemisboxUtilities.getIntegerInString(index);
+			if (startIndex == null) {
+				startIndex = 0;
+			}
+
+			if (startIndex < 0) {
+				this.model
+						.setErrorMessage("Số trang phải là số lớn hơn 0.");
+			} else {
+				if(ChemisboxUtilities.isNullOrEmpty(keyWord)){
+					this.model
+					.setErrorMessage("Từ khóa đang để trống.");
+					map.put("chemicalMap", this.model);		
+					return "adminIndex";
+				}
+				inParam.setKeyWord(keyWord.trim());
+				inParam.setStartIndex((startIndex - 1)
+						* ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE);
+				this.model.setCurrentPage(startIndex);
+
+				inParam.setPageSize(ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE);
+				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_SEARCH);
+				ChemicalManagementOutputParam outParam = this.business
+						.execute(inParam);
+				if (!ChemisboxUtilities.isNullOrEmpty(outParam
+						.getErrorMessage())) {
+					this.model.setErrorMessage(outParam.getErrorMessage());
+				} else {
+					this.model.setChemicalList(outParam.getChemicalList());
+					this.model.setTotalPage(outParam.getTotalPages());
+					this.model.setCurrentUrl("/admin/chemical/search/");
+					this.model.setKeyWord(keyWord.trim());
+				}
+			}
+		} catch (Exception e) {
+			this.model.setErrorMessage(e.getMessage());
+		}
+		map.put("chemicalMap", this.model);		
 		return "adminIndex";
 	}
 

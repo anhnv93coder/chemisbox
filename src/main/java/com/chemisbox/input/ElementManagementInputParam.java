@@ -8,6 +8,17 @@ public class ElementManagementInputParam extends ChemisboxInputParam {
 	private Element element;
 	private int businessType;
 	private String notation;
+	private String keyWord;
+	
+	
+	
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
 
 	public String getNotation() {
 		return notation;

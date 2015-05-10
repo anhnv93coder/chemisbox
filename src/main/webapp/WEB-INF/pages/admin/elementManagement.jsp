@@ -15,13 +15,13 @@
 			<div class="col-lg-10 col-lg-offset-1" style="display: block;" id="elementTable">
 				<div class="row clearfix">
 					<div class="col-md-6">
-							<form class="form-inline">
+							<div class="form-inline">
 							  <div class="form-group has-success has-feedback">
-							    <input type="text" class="form-control" id="inputSuccess4" aria-describedby="inputSuccess4Status"  placeholder="Nhập từ khóa" />
+							    <input type="text" class="form-control" id="elementKeyWord" aria-describedby="inputSuccess4Status"  placeholder="Nhập từ khóa" value="${elementMap.keyWord}" />
 							    <span class="fa fa-search fa-lg form-control-feedback" aria-hidden="true"></span>
 							    <span id="inputSuccess4Status" class="sr-only">(success)</span>
 							  </div>
-							</form>
+							</div>
 						</div>
 					<div class="col-md-6">
 							<button class="btn btn-default pull-right"
@@ -29,7 +29,7 @@
 					</div>
 				</div>
 					
-				<c:if test="${!empty elementMap.elementList}">
+				<c:if test="${not empty elementMap.elementList}">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 					    <h3 class="panel-title">Danh sách nguyên tố hóa học</h3>
@@ -58,7 +58,7 @@
 									<td>
 										<a href="#" onclick="loadDetailsForElement('${element.notation}')"  data-toggle="modal" data-target="#updateElementModal" style="padding: 0 2px;"><i
 											class="fa fa-pencil-square-o fa-lg" style="margin-top: 3px;"></i></a>
-										<a href="delete/${element.notation}" style="padding: 0 2px;" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fa fa-trash-o fa-lg"></i></a>
+										<a href="${baseURL}/admin/element/delete/${element.notation}" style="padding: 0 2px;" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fa fa-trash-o fa-lg"></i></a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -68,7 +68,7 @@
 								<li>
 									<c:choose>
 										<c:when test="${elementMap.currentPage > 1}">
-											<a href="${baseURL}/admin/element/${elementMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+											<a href="${baseURL}${elementMap.currentUrl}${elementMap.keyWord}/${elementMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
 										</c:when>
 										<c:otherwise>
 											<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
@@ -78,17 +78,17 @@
 								<c:forEach var="index" begin="1" end="${elementMap.totalPage}">
 									<c:choose>
 										<c:when test="${index == elementMap.currentPage}">
-											<li class="active"><a href="${baseURL}/admin/element/${index}"><c:out value="${index}"/></a></li>
+											<li class="active"><a href="${baseURL}${elementMap.currentUrl}${elementMap.keyWord}/${index}"><c:out value="${index}"/></a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a href="${baseURL}/admin/element/${index}"><c:out value="${index}"/></a></li>
+											<li><a href="${baseURL}${elementMap.currentUrl}${elementMap.keyWord}/${index}"><c:out value="${index}"/></a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								<li>
 									<c:choose>
 										<c:when test="${elementMap.currentPage < elementMap.totalPage}">
-											<a href="${baseURL}/admin/element/${elementMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
+											<a href="${baseURL}${elementMap.currentUrl}${elementMap.keyWord}/${elementMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
 										</c:when>
 										<c:otherwise>
 											<a aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
@@ -100,7 +100,9 @@
 						</div>
 					</div>
 				</c:if>
-				
+				<c:if test="${empty elementMap.elementList}">
+					<h4>Không có dữ liệu</h4>
+				</c:if>
 			</div>
 			
 			<div class="modal fade" id="addElementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -112,7 +114,9 @@
 			      </div>
 			      <form class="form-horizontal">
 			      <div class="modal-body">
-						
+			      			<div class="alert alert-warning alert-dismissible" role="alert" id="addElementMessage" style="display:none">
+								<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="addElementErrorMessage"></span>
+							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-4 control-label">Ký hiệu</label>
 								<div class="col-sm-8">
@@ -240,7 +244,9 @@
 			      </div>
 			      <form class="form-horizontal">
 			      <div class="modal-body">
-						
+						<div class="alert alert-warning alert-dismissible" role="alert" id="updateElementMessage" style="display:none">
+								<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="updateElementErrorMessage"></span>
+							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-4 control-label">Ký hiệu</label>
 								<div class="col-sm-8">

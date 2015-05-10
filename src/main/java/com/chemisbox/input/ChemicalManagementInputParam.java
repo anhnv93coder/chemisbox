@@ -8,6 +8,15 @@ public class ChemicalManagementInputParam extends ChemisboxInputParam {
 	private Chemical chemical;
 	private int businessType;
 	private Long chemicalId;
+	private String keyWord;
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
 
 	public Long getChemicalId() {
 		return chemicalId;

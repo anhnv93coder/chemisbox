@@ -49,6 +49,7 @@ public class ChemisboxConstant {
 	public static final int TOTAL_EQUATION_RECORDS_IN_A_PAGE = 5;
 	public static final int TOTAL_ELEMENT_RECORDS_IN_A_PAGE = 10;
 	public static final int TOTAL_QUESTION_RECORDS_IN_A_PAGE = 20;
+	public static final int EQUATION_RECORD_NUMBER_IN_RESULT = 5;
 	
 	// Result
 	public static final int SUCCESS = 0;
@@ -60,6 +61,7 @@ public class ChemisboxConstant {
 	public static final int BUSINESS_FOR_UPDATE = 3;
 	public static final int BUSINESS_FOR_DELETE = 4;
 	public static final int BUSINESS_FOR_LOAD_DETAILS = 5;
+	public static final int BUSINESS_FOR_SEARCH = 6;
 	
 	//Api name
 	public static final String ADD_EQUATION_API = "/addEquation";

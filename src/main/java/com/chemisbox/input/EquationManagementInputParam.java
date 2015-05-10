@@ -8,6 +8,15 @@ public class EquationManagementInputParam extends ChemisboxInputParam {
 	private int startIndex;
 	private int pageSize;
 	private long equationId;
+	private String keyWord;
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
 
 	public long getEquationId() {
 		return equationId;

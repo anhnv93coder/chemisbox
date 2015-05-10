@@ -1,3 +1,34 @@
+$(function() {
+	$("#chemicalKeyWord").keyup(function(e) {
+		var code = e.keyCode || e.which;
+		if(code == 13){
+			var keyWord = $.trim($("#chemicalKeyWord").val());
+			if(!stringIsNullOrEmpty(keyWord)){
+				window.location = baseURL + "/admin/chemical/search/" + keyWord + "/1";
+			}
+		}
+	});
+	$("#elementKeyWord").keyup(function(e) {
+		var code = e.keyCode || e.which;
+		if(code == 13){
+			var keyWord = $.trim($("#elementKeyWord").val());
+			if(!stringIsNullOrEmpty(keyWord)){
+				window.location = baseURL + "/admin/element/search/" + keyWord + "/1";
+			}
+		}
+	});
+	$("#equationKeyWord").keyup(function(e) {
+		var code = e.keyCode || e.which;
+		if(code == 13){
+			var keyWord = $.trim($("#equationKeyWord").val());
+			if(!stringIsNullOrEmpty(keyWord)){
+				window.location = baseURL + "/admin/equation/search/" + keyWord + "/1";
+			}
+		}
+	});
+});
+
+
 $("#btnApproved").click(function() {
 	var questionId = $("#questionId").val();
 	var model = {
@@ -20,7 +51,7 @@ $("#btnApproved").click(function() {
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi. Vui lòng liên hệ với quản trị.");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 });
@@ -44,7 +75,7 @@ function loadDetailsForQuestion(questionId) {
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 }
@@ -79,7 +110,7 @@ function loadDetailsForElement(notation) {
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 }
@@ -117,7 +148,7 @@ function loadDetailsForEquation(id) {
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 }
@@ -151,7 +182,7 @@ function loadDetailsForChemical(id) {
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 }
@@ -205,12 +236,18 @@ $("#btnUpdateElement").click(function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			$("#btnCancelUpdateElement").click();
-			window.location = window.location;
+			if(!stringIsNullOrEmpty(data.errorMessage)){
+				$("#updateElementMessage").css('display', 'block');
+				$("#updateElementErrorMessage").html(data.errorMessage);
+			} else {
+				$("#updateElementMessage").css('display', 'none');
+				$("#btnCancelUpdateElement").click();
+				window.location = window.location;
+			}
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 });
@@ -238,9 +275,9 @@ $("#btnUpdateChemical").click(function() {
 		return;
 	}
 
-	if (!isNumeric(quantity)) {
-		return;
-	}
+//	if (!isNumeric(quantity)) {
+//		return;
+//	}
 
 	var jsonData = {
 		"id" : chemicalId,
@@ -268,12 +305,19 @@ $("#btnUpdateChemical").click(function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			$("#btnCancelUpdateChemical").click();
-			window.location = window.location; 
+			if(!stringIsNullOrEmpty(data.errorMessage)){
+				$("#updateChemicalMessage").css('display', 'block');
+				$("#updateChemicalErrorMessage").html(data.errorMessage);
+			} else {
+				$("#updateChemicalMessage").css('display', 'none');
+				$("#btnCancelUpdateChemical").click();
+				window.location = window.location; 
+			}
+			
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 });
@@ -329,12 +373,18 @@ $("#btnAddChemical").click(function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			$("#btnCancelAddChemical").click();
-			window.location = window.location; 
+			if(!stringIsNullOrEmpty(data.errorMessage)){
+				$("#addChemicalMessage").css('display', 'block');
+				$("#addChemicalErrorMessage").html(data.errorMessage);
+			} else {
+				$("#addChemicalMessage").css('display', 'none');
+				$("#btnCancelAddChemical").click();
+				window.location = window.location; 
+			}
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 });
@@ -388,12 +438,18 @@ $("#btnAddElement").click(function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			$("#btnCancelAddElement").click();
-			window.location = window.location; 
+			if(!stringIsNullOrEmpty(data.errorMessage)) {
+				$("#addElementMessage").css('display', 'block');
+				$("#addElementErrorMessage").html(data.errorMessage);
+			} else {
+				$("#addElementMessage").css('display', 'none');
+				$("#btnCancelAddElement").click();
+				window.location = window.location;
+			} 
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 });
@@ -448,12 +504,18 @@ function() {
 		dataType : "json",
 		contentType : "application/json",
 		success : function(data) {
-			$("#btnCancelAddEquation").click();
-			window.location = window.location; 
+			if(!stringIsNullOrEmpty(data.errorMessage)){
+				$("#addEquationMessage").css('display', 'block');
+				$("#addEquationErrorMessage").html(data.errorMessage);
+			} else {
+				$("#addEquationMessage").css('display', 'none');
+				$("#btnCancelAddEquation").click();
+				window.location = window.location;	
+			} 
 		},
 		error : function(msg) {
 			alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-			console.log(msg);
+			window.location = baseURL + "/admin";
 		}
 	});
 });
@@ -510,17 +572,19 @@ $("#btnUpdateEquation").click(
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data) {
-					if(stringIsNullOrEmpty(data.errorMessage)){
+					if(!stringIsNullOrEmpty(data.errorMessage)){
+						$("#updateEquationMessage").css('display, block');
+						$("#updateEquationErrorMessage").html(data.errorMessage);
+					} else {
+						$("#updateEquationMessage").css('display, none');
 						$("#btnCancelUpdateEquation").click();
 						window.location = window.location;
-					} else {
-						console.log(data.errorMessage);
 					}
 					
 				},
 				error : function(msg) {
 					alert("Xuất hiện lỗi hệ thống. Vui lòng liên hệ với quản trị");
-					console.log(msg);
+					window.location = baseURL + "/admin";
 				}
 			});
 		});

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.chemisbox.dao.ElementDAO;
 import com.chemisbox.entity.Element;
 import com.chemisbox.exception.ChemisboxException;
+import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Repository
 @Transactional
@@ -73,6 +74,31 @@ public class ElementDAOImpl implements ElementDAO {
 	public Long getCount() throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		return (Long) session.createCriteria(Element.class).setProjection(Projections.rowCount()).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Element> searchByKeyWord(String keyWord, int startIndex, int pageSize) {
+		if (ChemisboxUtilities.isNullOrEmpty(keyWord)) {
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		return session
+				.createCriteria(Element.class)
+				.add(Restrictions.or(Restrictions.like("notation", keyWord),
+						Restrictions.like("name", keyWord)))
+				.setFirstResult(startIndex).setMaxResults(pageSize).list();
+	}
+
+	public Long getCountByKeyWord(String keyWord) throws ChemisboxException {
+		if (ChemisboxUtilities.isNullOrEmpty(keyWord)) {
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session
+				.createCriteria(Element.class)
+				.add(Restrictions.or(Restrictions.like("notation", keyWord),
+						Restrictions.like("name", keyWord)))
+				.setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }

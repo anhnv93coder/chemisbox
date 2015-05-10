@@ -4,11 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chemisbox.business.SearchEquationBusiness;
+import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.exception.ChemisboxException;
 import com.chemisbox.input.SearchEquationInputParam;
 import com.chemisbox.model.SearchEquationModel;
@@ -22,6 +24,7 @@ public class SearchEquationController extends
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String searchEquationBySubmit(@ModelAttribute("searchModel") SearchEquationModel model,
             ModelMap map) throws ChemisboxException {
+		model.setCurrentPage(0);
 		this.model = execute(model, map);
 		map.put("searchModel", this.model);
 		return "search";
@@ -37,12 +40,14 @@ public class SearchEquationController extends
 		return "search";
 	}
 	
-	@RequestMapping(value = "/search/{keyword}")
+	@RequestMapping(value = "/search/", method = RequestMethod.POST)
+//	@PathVariable("keyword") String keyWord
 	public @ResponseBody SearchEquationModel searchEquationByAjax(
-			@PathVariable("keyword") String keyWord) throws ChemisboxException {
-		SearchEquationModel searchEquationModel = new SearchEquationModel();
-		searchEquationModel.setKeyWord(keyWord.trim());
-		return execute(searchEquationModel, null);
+			@RequestBody SearchEquationModel model) throws ChemisboxException {
+//		SearchEquationModel searchEquationModel = new SearchEquationModel();
+//		searchEquationModel.setKeyWord(model.getKeyWord().trim());
+		this.model = execute(model, null);
+		return this.model;
 	}
 	
 	@Override
@@ -54,6 +59,7 @@ public class SearchEquationController extends
 		}
 		SearchEquationInputParam inParam = new SearchEquationInputParam();
 		inParam.setKeyWord(ChemisboxUtilities.trimFullSize(model.getKeyWord()));
+		inParam.setCurrentPage(model.getCurrentPage() * ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 		SearchEquationOutputParam outParam = this.business.execute(inParam);
 		if (!ChemisboxUtilities.isNullOrEmpty(outParam.getErrorMessage())) {
 			model.setErrorMessage(outParam.getErrorMessage());

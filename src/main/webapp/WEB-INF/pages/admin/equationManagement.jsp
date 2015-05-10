@@ -14,20 +14,20 @@
 			<div class="col-lg-10 col-lg-offset-1" style="display: block;" id="equationTable">
 				<div class="row clearfix">
 					<div class="col-md-6">
-						<form class="form-inline">
+						<div class="form-inline">
 						  <div class="form-group has-success has-feedback">
-						    <input type="text" class="form-control" id="inputSuccess4" aria-describedby="inputSuccess4Status"  placeholder="Nhập từ khóa" />
+						    <input type="text" class="form-control" id="equationKeyWord" aria-describedby="inputSuccess4Status"  placeholder="Nhập từ khóa" value="${equationMap.keyWord}" />
 						    <span class="fa fa-search fa-lg form-control-feedback" aria-hidden="true"></span>
 						    <span id="inputSuccess4Status" class="sr-only">(success)</span>
 						  </div>
-						</form>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<button class="btn btn-default pull-right"
 								style="margin-bottom: 10px;" data-toggle="modal" data-target="#addEquationModal"><span class="fa fa-plus"></span>&nbsp;Thêm mới</button>
 					</div>
 				</div>
-				<c:if test="${!empty equationMap.equationList}">
+				<c:if test="${not empty equationMap.equationList}">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 					    <h3 class="panel-title">Danh sách phương trình hóa học</h3>
@@ -51,14 +51,13 @@
 									<td>${equation.equation}</td>
 									<td>${equation.condition}</td>
 									<td>${equation.description}</td>
-									<%-- <td>${equation.videoLink}</td> --%>
 									<td>${equation.editedDate}</td>
 									<td>${equation.createdDate}</td>
 									<td>${equation.lastUserModify}</td>
 									<td><%-- onclick="loadDetailsForEquation(${equation.equationId})" --%>
 										<a href="#"  style="padding: 0 2px;" onclick="loadDetailsForEquation(${equation.equationId})" data-toggle="modal" data-target="#updateEquationModal"><i
 											class="fa fa-pencil-square-o fa-lg" style="margin-top: 3px;"></i></a>
-										<a href="delete/${equation.equationId}" style="padding: 0 2px;" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fa fa-trash-o fa-lg"></i></a>
+										<a href="${baseURL}/admin/equation/delete/${equation.equationId}" style="padding: 0 2px;" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i class="fa fa-trash-o fa-lg"></i></a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -68,7 +67,7 @@
 							<li>
 								<c:choose>
 									<c:when test="${equationMap.currentPage > 1}">
-										<a href="${baseURL}/admin/equation/${equationMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+										<a href="${baseURL}${equationMap.currentUrl}${equationMap.keyWord}/${equationMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
 									</c:when>
 									<c:otherwise>
 										<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
@@ -78,17 +77,17 @@
 							<c:forEach var="index" begin="1" end="${equationMap.totalPage}">
 								<c:choose>
 									<c:when test="${index == equationMap.currentPage}">
-										<li class="active"><a href="${baseURL}/admin/equation/${index}"><c:out value="${index}"/></a></li>
+										<li class="active"><a href="${baseURL}${equationMap.currentUrl}${equationMap.keyWord}/${index}"><c:out value="${index}"/></a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="${baseURL}/admin/equation/${index}"><c:out value="${index}"/></a></li>
+										<li><a href="${baseURL}${equationMap.currentUrl}${equationMap.keyWord}/${index}"><c:out value="${index}"/></a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							<li>
 								<c:choose>
 									<c:when test="${equationMap.currentPage < equationMap.totalPage}">
-										<a href="${baseURL}/admin/equation/${equationMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
+										<a href="${baseURL}${equationMap.currentUrl}${equationMap.keyWord}/${equationMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
 									</c:when>
 									<c:otherwise>
 										<a aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
@@ -99,6 +98,9 @@
 					</nav>
 					</div>
 				</div>
+				</c:if>
+				<c:if test="${empty equationMap.equationList}">
+					<h3>Không có dữ liệu.</h3>
 				</c:if>
 			</div>
 			
@@ -112,6 +114,9 @@
 			      <form>
 			      <div class="modal-body">
 			        <div class="form-horizontal">
+		       			<div class="alert alert-warning alert-dismissible" role="alert" id="updateEquationMessage" style="display:none">
+							<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="updateEquationErrorMessage"></span>
+						</div>
 			        	<input type="hidden" id="equationIdUpdate"/>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-3 control-label">Phương trình</label>
@@ -206,6 +211,9 @@
 			      <form>
 			      <div class="modal-body">
 			        <div class="form-horizontal">
+			        		<div class="alert alert-warning alert-dismissible" role="alert" id="addEquationMessage" style="display:none">
+								<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="addEquationErrorMessage"></span>
+							</div>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-3 control-label">Phương trình</label>
 							<div class="col-sm-9">

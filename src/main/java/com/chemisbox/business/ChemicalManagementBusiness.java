@@ -1,5 +1,6 @@
 package com.chemisbox.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.chemisbox.constant.ChemisboxConstant;
 import com.chemisbox.dao.ChemicalDAO;
+import com.chemisbox.dao.ChemistryEquationDAO;
 import com.chemisbox.dao.ElementDAO;
 import com.chemisbox.entity.Chemical;
 import com.chemisbox.entity.Element;
@@ -30,31 +32,36 @@ public class ChemicalManagementBusiness
 	@Autowired
 	private ElementDAO elementDao;
 
+	@Autowired
+	private ChemistryEquationDAO chemistryEquationDao;
+
 	@Override
 	public ChemicalManagementOutputParam execute(
 			ChemicalManagementInputParam inParam) throws ChemisboxException {
 
 		this.out = new ChemicalManagementOutputParam();
+		List<Chemical> chemicalList = null;
 		Long chemicalId = null;
 		Chemical chemicalObj = null;
 		double quantity = 0;
+		long totalRecords = 0;
+		long totalPage = 0;
 		try {
 			switch (inParam.getBusinessType()) {
 			case ChemisboxConstant.BUSINESS_FOR_ADD:
-				chemicalObj = inParam.getChemical(); 
-				Long oldId = chemicalDao
-						.get(chemicalObj.getFormula());
+				chemicalObj = inParam.getChemical();
+				Long oldId = chemicalDao.get(chemicalObj.getFormula());
 				if (oldId != null) {
-					this.out.setErrorMessage("Chemical is exist");
+					this.out.setErrorMessage("Chất hóa học đã tồn tại.");
 					return this.out;
 				}
 
 				quantity = chemicalQuantityCalculator(chemicalObj.getFormula());
 				chemicalObj.setQuantity(quantity);
-				
+
 				chemicalId = chemicalDao.add(chemicalObj);
 				if (chemicalId == null) {
-					this.out.setErrorMessage("Adding failed");
+					this.out.setErrorMessage("Thêm mới không thành công");
 					return this.out;
 				}
 
@@ -62,13 +69,18 @@ public class ChemicalManagementBusiness
 
 			case ChemisboxConstant.BUSINESS_FOR_DELETE:
 				chemicalId = inParam.getChemicalId();
-				chemicalObj = chemicalDao.get(chemicalId);
-				if (chemicalObj == null) {
-					this.out.setErrorMessage("Chemical id not exist");
-					return this.out;
-				}
-				if (!chemicalDao.delete(chemicalObj)) {
-					this.out.setErrorMessage("Delete chemical failed");
+				if(chemistryEquationDao.delete(chemicalId, false)){
+					chemicalObj = chemicalDao.get(chemicalId);
+					if (chemicalObj == null) {
+						this.out.setErrorMessage("Chất hóa học không tồn tại.");
+						return this.out;
+					}
+					if (!chemicalDao.delete(chemicalObj)) {
+						this.out.setErrorMessage("Xóa chất hóa học không thành công.");
+						return this.out;
+					}
+				} else {
+					this.out.setErrorMessage("Xóa dữ liệu không thành công");
 					return this.out;
 				}
 				break;
@@ -76,24 +88,52 @@ public class ChemicalManagementBusiness
 			case ChemisboxConstant.BUSINESS_FOR_LOAD_DETAILS:
 				chemicalObj = chemicalDao.get(inParam.getChemicalId());
 				if (chemicalObj == null) {
-					this.out.setErrorMessage("Chemical not exist");
+					this.out.setErrorMessage("Chất hóa học không tồn tại.");
 					return this.out;
 				}
 				this.out.setChemical(chemicalObj);
 				break;
 
+			case ChemisboxConstant.BUSINESS_FOR_SEARCH:
+				String keyWord = inParam.getKeyWord();
+				
+				StringBuffer buffer = new StringBuffer();
+				buffer.append("%");
+				buffer.append(keyWord);
+				buffer.append("%");
+				
+				chemicalList = chemicalDao.searchByKeyWord(buffer.toString(), inParam.getStartIndex(), ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE);
+				if (ChemisboxUtilities.isNullOrEmpty(chemicalList)) {
+					this.out.setErrorMessage("Không tìm thấy.");
+					return this.out;
+				}
+				totalRecords = chemicalDao.getCountByKeyWord(buffer.toString());
+
+				totalPage = 0;
+				if (totalRecords
+						% ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE == 0) {
+					totalPage = totalRecords
+							/ ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE;
+				} else {
+					totalPage = totalRecords
+							/ ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE
+							+ 1;
+				}
+				this.out.setTotalPages(totalPage);
+				this.out.setChemicalList(chemicalList);
+				break;
 			case ChemisboxConstant.BUSINESS_FOR_LIST:
-				List<Chemical> chemicalList = chemicalDao.list(
+				chemicalList = chemicalDao.list(
 						inParam.getStartIndex(), inParam.getPageSize());
 
 				if (ChemisboxUtilities.isNullOrEmpty(chemicalList)) {
-					this.out.setErrorMessage("Not found any chemical object");
+					this.out.setErrorMessage("Không có dữ liệu về chất hóa học.");
 					return this.out;
 				}
 
-				Long totalRecords = chemicalDao.getCount();
+				totalRecords = chemicalDao.getCount();
 
-				long totalPage = 0;
+				totalPage = 0;
 				if (totalRecords
 						% ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE == 0) {
 					totalPage = totalRecords
@@ -111,9 +151,10 @@ public class ChemicalManagementBusiness
 				chemicalObj = inParam.getChemical();
 				quantity = chemicalQuantityCalculator(chemicalObj.getFormula());
 				chemicalObj.setQuantity(quantity);
+				chemicalObj.setEditedDate(new Date());
 				chemicalId = chemicalDao.update(chemicalObj);
 				if (chemicalId == null) {
-					this.out.setErrorMessage("Update chemical failed");
+					this.out.setErrorMessage("Cập nhật chất không thành công");
 				}
 				break;
 
@@ -133,58 +174,69 @@ public class ChemicalManagementBusiness
 			throw new ChemisboxException(
 					"Lỗi hệ thống. Vui lòng liên hệ với quản trị.");
 		}
-					
+
 		Pattern detectChemicalPattern = Pattern.compile("[A-Z]{1}[a-z]*(\\d)*");
-		Pattern detectElementWithoutNumberPattern = Pattern.compile("[A-Z]{1}[a-z]*");
+		Pattern detectElementWithoutNumberPattern = Pattern
+				.compile("[A-Z]{1}[a-z]*");
 		Pattern detectBracketPattern = null;
-		Pattern detectElementWithNumberPattern = Pattern.compile("[A-Z]{1}[a-z]*(\\d)*");;
-		Pattern detectNumberPattern = Pattern.compile("\\d+$");
+		Pattern detectElementWithNumberPattern = Pattern
+				.compile("[A-Z]{1}[a-z]*(\\d)*");
 		
+		Pattern detectNumberPattern = Pattern.compile("\\d+$");
+
 		Matcher detectChemicalMatcher = null;
 		Matcher detectElementMatcher = null;
 		Matcher detectElementWithoutNumberMatcher = null;
 		Matcher detectNumberMatcher = null;
-		
+
 		Element element = null;
 		double quantityValue = 0;
 		if (formula.contains("(") && formula.contains(")")) {
-			
+
 			// Try detect Fe2 first
-			detectElementMatcher = detectElementWithNumberPattern.matcher(formula);
+			detectElementMatcher = detectElementWithNumberPattern
+					.matcher(formula);
 			// Found Fe2
 			if (detectElementMatcher.find()) {
-				//Get Fe2
+				// Get Fe2
 				String elementFistRaw = detectElementMatcher.group();
-				
+
 				// Get Fe
-				detectElementWithoutNumberMatcher = detectElementWithoutNumberPattern.matcher(elementFistRaw);
-				String elementFirst = detectElementWithoutNumberMatcher.find()? detectElementWithoutNumberMatcher.group() : null;
-				
+				detectElementWithoutNumberMatcher = detectElementWithoutNumberPattern
+						.matcher(elementFistRaw);
+				String elementFirst = detectElementWithoutNumberMatcher.find() ? detectElementWithoutNumberMatcher
+						.group() : null;
+
 				// Get Fe information from db
 				element = elementDao.get(elementFirst);
-				if(element == null){
-					throw new ChemisboxException("Lỗi hệ thống. Vui lòng liên hệ quản trị");
+				if (element == null) {
+					throw new ChemisboxException(
+							"Lỗi hệ thống. Vui lòng liên hệ quản trị");
 				}
-				
-				//Get 2
-				detectNumberMatcher = detectNumberPattern.matcher(elementFistRaw);
-				int atomicElementFirst = detectNumberMatcher.find()? Integer.parseInt(detectNumberMatcher.group()) : 1;  
+
+				// Get 2
+				detectNumberMatcher = detectNumberPattern
+						.matcher(elementFistRaw);
+				int atomicElementFirst = detectNumberMatcher.find() ? Integer
+						.parseInt(detectNumberMatcher.group()) : 1;
 				System.out.println("AtomicNumber: " + atomicElementFirst);
-				
-				chemicalQuantity += atomicElementFirst * element.getAtomicVolume();
-						
+
+				chemicalQuantity += atomicElementFirst
+						* element.getAtomicVolume();
+
 			}
 
 			detectBracketPattern = Pattern
 					.compile("[\\(]{1}([A-Z]{1}[a-z]*(\\d)*)*[\\)]{1}(\\d)+");
 
-			Matcher detectBracketMatcher = detectBracketPattern.matcher(formula);
+			Matcher detectBracketMatcher = detectBracketPattern
+					.matcher(formula);
 			// Found format with (SO4)3
 			if (detectBracketMatcher.find()) {
-				
+
 				// Get (SO4)3
 				String rawValue = detectBracketMatcher.group();
-				
+
 				// Get 3
 				detectNumberMatcher = detectNumberPattern.matcher(rawValue);
 				int atomicAround = detectNumberMatcher.find() ? Integer
@@ -193,8 +245,9 @@ public class ChemicalManagementBusiness
 				// Get S O4
 				detectChemicalPattern = Pattern.compile("[A-Z]{1}[a-z]*(\\d)*");
 				detectChemicalMatcher = detectChemicalPattern.matcher(rawValue);
-				
-				quantityValue = getQuantityOfChemicals(detectChemicalMatcher, atomicAround);
+
+				quantityValue = getQuantityOfChemicals(detectChemicalMatcher,
+						atomicAround);
 				chemicalQuantity += quantityValue;
 
 			} else {
@@ -205,67 +258,44 @@ public class ChemicalManagementBusiness
 			quantityValue = getQuantityOfChemicals(detectChemicalMatcher, 1);
 			chemicalQuantity += quantityValue;
 		}
-		
-		
-//		
-//		Pattern pattern = Pattern.compile("[A-Z]+[a-z]*[\\d]*");
-//		Matcher matcher = pattern.matcher(formula);
-//		Pattern pattern1 = Pattern.compile("[A-Z]+[a-z]*");
-//		Matcher getElementMatcher = null;
-//		Pattern pattern2 = Pattern.compile("\\d+$");
-//		Matcher getNumberMatcher = null;
-//		Element element1 = null;
-//		while (matcher.find()) {
-//			int atomicNumber = 1;	
-//			getElementMatcher = pattern1.matcher(matcher.group());
-//			if (getElementMatcher.find()) {
-//				element1 = elementDao.get(getElementMatcher.group());
-//				if(element1 == null){
-//					throw new ChemisboxException("Lỗi hệ thống. Vui lòng liên hệ quản trị");
-//				}
-//			}
-//
-//			getNumberMatcher = pattern2.matcher(matcher.group());
-//			if (getNumberMatcher.find()) {
-//				atomicNumber = Integer.parseInt(getNumberMatcher.group());
-//			}
-//			chemicalQuantity += atomicNumber * element1.getAtomicVolume();
-//		}
 		return chemicalQuantity;
 	}
-	
-	private double getQuantityOfChemicals(Matcher detectChemicalMatcher, int atomicAround) throws ChemisboxException {
+
+	private double getQuantityOfChemicals(Matcher detectChemicalMatcher,
+			int atomicAround) throws ChemisboxException {
 		double summaryQuantity = 0;
 		Matcher detectElementMatcher = null;
 		Matcher detectNumberMatcher = null;
-		Pattern detectElementWithoutNumberPattern = Pattern.compile("[A-Z]{1}[a-z]*");
+		Pattern detectElementWithoutNumberPattern = Pattern
+				.compile("[A-Z]{1}[a-z]*");
 		Pattern detectNumberPattern = Pattern.compile("\\d+$");
 		Element element = null;
 		while (detectChemicalMatcher.find()) {
 			double atomicValue = 1;
-			
+
 			// Get S O4
 			String elementValue = detectChemicalMatcher.group();
 			detectElementMatcher = detectElementWithoutNumberPattern
 					.matcher(elementValue);
-			
+
 			// Get S O
 			if (detectElementMatcher.find()) {
 				element = elementDao.get(detectElementMatcher.group());
-				if(element == null){
-					throw new ChemisboxException("Lỗi hệ thống. Vui lòng liên hệ quản trị");
+				if (element == null) {
+					throw new ChemisboxException(
+							"Lỗi hệ thống. Vui lòng liên hệ quản trị");
 				}
 			}
 
 			// Get 1 4
-			detectNumberMatcher = detectNumberPattern
-					.matcher(elementValue);
-			
+			detectNumberMatcher = detectNumberPattern.matcher(elementValue);
+
 			if (detectNumberMatcher.find()) {
 				atomicValue = Double.parseDouble(detectNumberMatcher.group());
 			}
-			
-			summaryQuantity += atomicValue * atomicAround * element.getAtomicVolume();
+
+			summaryQuantity += atomicValue * atomicAround
+					* element.getAtomicVolume();
 		}
 		return summaryQuantity;
 	}
@@ -276,6 +306,11 @@ public class ChemicalManagementBusiness
 
 	public void setChemicalDao(ChemicalDAO chemicalDao) {
 		this.chemicalDao = chemicalDao;
+	}
+
+	public void setChemistryEquationDao(
+			ChemistryEquationDAO chemistryEquationDao) {
+		this.chemistryEquationDao = chemistryEquationDao;
 	}
 
 }

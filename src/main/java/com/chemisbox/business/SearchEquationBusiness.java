@@ -88,9 +88,9 @@ public class SearchEquationBusiness extends
 				
 				if(keyWordList.size() == 2){
 					if(Character.toString(keyWord.charAt(0)).equalsIgnoreCase("=")){
-						equationList = equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), ChemisboxConstant.OUTPUT);
+						equationList = equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), ChemisboxConstant.OUTPUT, inParam.getCurrentPage(), ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 					}else{
-						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), ChemisboxConstant.INPUT);
+						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), ChemisboxConstant.INPUT, inParam.getCurrentPage(), ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 					}
 					this.out.setEquationList(equationList);
 					return this.out;
@@ -98,9 +98,9 @@ public class SearchEquationBusiness extends
 				
 				if(keyWordList.size() == 3){
 					if(Character.toString(keyWord.charAt(0)).equalsIgnoreCase("=")){
-						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), keyWordList.get(2), ChemisboxConstant.OUTPUT);
+						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), keyWordList.get(2), ChemisboxConstant.OUTPUT, inParam.getCurrentPage(), ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 					}else{
-						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), keyWordList.get(2), ChemisboxConstant.INPUT);
+						equationList =  equationDao.selectByChemicals(keyWordList.get(0), keyWordList.get(1), keyWordList.get(2), ChemisboxConstant.INPUT, inParam.getCurrentPage(), ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 					}
 					this.out.setEquationList(equationList);
 					return this.out;
@@ -111,12 +111,12 @@ public class SearchEquationBusiness extends
 			if (Character.toString(keyWord.charAt(0)).equalsIgnoreCase("=")) {
 				keyWord = keyWord.substring(1, keyWord.length()).trim();
 				equationList = equationDao.selectByChemical(keyWord,
-						ChemisboxConstant.OUTPUT);
+						ChemisboxConstant.OUTPUT, inParam.getCurrentPage(), ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 			} else if (Character.toString(keyWord.charAt(keyWord.length() - 1)).equalsIgnoreCase("=")) {
 				equationList = equationDao.selectByChemical(keyWord,
-						ChemisboxConstant.INPUT);
+						ChemisboxConstant.INPUT, inParam.getCurrentPage(), ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 			}else{
-				equationList = equationDao.selectByChemical(keyWord);
+				equationList = equationDao.selectByChemical(keyWord, inParam.getCurrentPage(), ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT);
 			}
 
 			// Find element

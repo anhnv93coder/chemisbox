@@ -46,6 +46,7 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 		} catch (Exception e) {
 			this.model.setErrorMessage(e.getMessage());
 		}
+		this.model.setCurrentUrl("/admin/element/");
 		map.put("elementMap", this.model);
 		map.put("elementObj", new Element());
 		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.ELEMENT_MENU);
@@ -53,7 +54,7 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 	}
 
 	@RequestMapping(value = "/admin/element/{index}", method = RequestMethod.GET)
-	public String getelements(@PathVariable("index") String index, ModelMap map) {
+	public String getElements(@PathVariable("index") String index, ModelMap map) {
 		if(!map.containsAttribute("adminObject")){
 			return "login";
 		}
@@ -83,6 +84,7 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 				} else {
 					this.model.setElementList(outParam.getElementList());
 					this.model.setTotalPage(outParam.getTotalPages());
+					this.model.setCurrentUrl("/admin/element/");
 				}
 			}
 		} catch (Exception e) {
@@ -94,6 +96,56 @@ public class ElementManagementController extends ChemisboxController<ElementMana
 		return "adminIndex";
 	}
 
+	@RequestMapping(value = "/admin/element/search/{keyWord}/{index}", method = RequestMethod.GET)
+	public String searchChemical(@PathVariable("keyWord") String keyWord, @PathVariable("index") String index, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
+		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.ELEMENT_MENU);
+		this.model = new ElementManagementModel();
+		ElementManagementInputParam inParam = new ElementManagementInputParam();
+		try {
+			Integer startIndex = ChemisboxUtilities.getIntegerInString(index);
+			if (startIndex == null) {
+				startIndex = 0;
+			}
+
+			if (startIndex < 0) {
+				this.model
+						.setErrorMessage("Số trang phải là số lớn hơn 0.");
+			} else {
+				if(ChemisboxUtilities.isNullOrEmpty(keyWord)){
+					this.model
+					.setErrorMessage("Từ khóa đang để trống.");
+					map.put("elementMap", this.model);		
+					return "adminIndex";
+				}
+				inParam.setKeyWord(keyWord.trim());
+				inParam.setStartIndex((startIndex - 1)
+						* ChemisboxConstant.TOTAL_ELEMENT_RECORDS_IN_A_PAGE);
+				this.model.setCurrentPage(startIndex);
+
+				inParam.setPageSize(ChemisboxConstant.TOTAL_ELEMENT_RECORDS_IN_A_PAGE);
+				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_SEARCH);
+				ElementManagementOutputParam outParam = this.business
+						.execute(inParam);
+				if (!ChemisboxUtilities.isNullOrEmpty(outParam
+						.getErrorMessage())) {
+					this.model.setErrorMessage(outParam.getErrorMessage());
+				} else {
+					this.model.setElementList(outParam.getElementList());
+					this.model.setTotalPage(outParam.getTotalPages());
+					this.model.setCurrentUrl("/admin/element/search/");
+					this.model.setKeyWord(keyWord.trim());
+				}
+			}
+		} catch (Exception e) {
+			this.model.setErrorMessage(e.getMessage());
+		}
+		map.put("elementMap", this.model);		
+		return "adminIndex";
+	}
+	
 	@RequestMapping(value = "/admin/element/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ElementManagementModel loadDataForUpdate(
 			@RequestBody ElementManagementModel model, ModelMap map) throws ChemisboxException {

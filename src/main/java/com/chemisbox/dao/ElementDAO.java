@@ -22,5 +22,10 @@ public interface ElementDAO {
 	public Long getCount() throws ChemisboxException;
 	
 	public List<Element> getByKeyWord(String keyWord)
-			throws ChemisboxException; 
+			throws ChemisboxException;
+	
+	public List<Element> searchByKeyWord(String keyWord, int startIndex, int pageSize) throws ChemisboxException;
+	
+	public Long getCountByKeyWord(String keyWord) throws ChemisboxException;
+	
 }

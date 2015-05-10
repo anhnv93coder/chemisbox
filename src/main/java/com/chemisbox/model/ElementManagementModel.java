@@ -16,6 +16,24 @@ public class ElementManagementModel extends ChemisboxModel {
 	private long totalPage;
 	private String notation;
 	private int currentPage;
+	private String currentUrl;
+	private String keyWord;
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	public String getCurrentUrl() {
+		return currentUrl;
+	}
+
+	public void setCurrentUrl(String currentUrl) {
+		this.currentUrl = currentUrl;
+	}
 
 	public int getCurrentPage() {
 		return currentPage;

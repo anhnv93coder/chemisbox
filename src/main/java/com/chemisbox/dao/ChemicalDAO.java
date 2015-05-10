@@ -24,4 +24,8 @@ public interface ChemicalDAO {
 	public Long getCount() throws ChemisboxException;
 	
 	public List<String> selectFormulaAndNameList() throws ChemisboxException;
+	
+	public List<Chemical> searchByKeyWord(String keyWord, int startIndex, int pageSize) throws ChemisboxException;
+	
+	public Long getCountByKeyWord(String keyWord) throws ChemisboxException;
 }

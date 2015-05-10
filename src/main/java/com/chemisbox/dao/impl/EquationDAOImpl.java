@@ -6,12 +6,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.chemisbox.dao.EquationDAO;
 import com.chemisbox.entity.Equation;
 import com.chemisbox.exception.ChemisboxException;
+import com.chemisbox.utilities.ChemisboxUtilities;
 
 @Repository
 @Transactional
@@ -24,12 +26,14 @@ public class EquationDAOImpl implements EquationDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Equation> selectByChemical(String chemical, int typeOf)
+	public List<Equation> selectByChemical(String chemical, int typeOf, int startIndex, int pageSize)
 			throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.getNamedQuery("callGetEquationByChemical")
 				.setParameter("chemical", chemical)
-				.setParameter("typeOf", typeOf);
+				.setParameter("typeOf", typeOf)
+				.setParameter("startIndex", startIndex)
+				.setParameter("pageSize", pageSize);
 		return query.list();
 	}
 
@@ -45,24 +49,28 @@ public class EquationDAOImpl implements EquationDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Equation> selectByChemicals(String chemical1, String chemical2,
-			int typeOf) throws ChemisboxException {
+			int typeOf, int startIndex, int pageSize) throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.getNamedQuery("callGetEquationBy2Chemical")
 				.setParameter("chemical1", chemical1)
 				.setParameter("chemical2", chemical2)
-				.setParameter("typeOf", typeOf);
+				.setParameter("typeOf", typeOf)
+				.setParameter("startIndex", startIndex)
+				.setParameter("pageSize", pageSize);
 		return query.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Equation> selectByChemicals(String chemical1, String chemical2,
-			String chemical3, int typeOf) throws ChemisboxException {
+			String chemical3, int typeOf, int startIndex, int pageSize) throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.getNamedQuery("callGetEquationBy3Chemical")
 				.setParameter("chemical1", chemical1)
 				.setParameter("chemical2", chemical2)
 				.setParameter("chemical3", chemical3)
-				.setParameter("typeOf", typeOf);
+				.setParameter("typeOf", typeOf)
+				.setParameter("startIndex", startIndex)
+				.setParameter("pageSize", pageSize);
 		return query.list();
 	}
 
@@ -109,12 +117,39 @@ public class EquationDAOImpl implements EquationDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Equation> selectByChemical(String chemical)
+	public List<Equation> selectByChemical(String chemical, int startIndex, int pageSize)
 			throws ChemisboxException {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.getNamedQuery("callGetEquation")
-				.setParameter("chemical", chemical);
+				.setParameter("chemical", chemical)
+				.setParameter("startIndex", startIndex)
+				.setParameter("pageSize", pageSize);
 		return query.list();
 	}
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Equation> searchByKeyWord(String keyWord, int startIndex, int pageSize) {
+		if (ChemisboxUtilities.isNullOrEmpty(keyWord)) {
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		return session
+				.createCriteria(Equation.class)
+				.add(Restrictions.like("equation", keyWord))
+				.setFirstResult(startIndex).setMaxResults(pageSize).list();
+	}
+
+	public Long getCountByKeyWord(String keyWord) throws ChemisboxException {
+		if (ChemisboxUtilities.isNullOrEmpty(keyWord)) {
+			return null;
+		}
+		Session session = sessionFactory.getCurrentSession();
+		return (Long) session
+				.createCriteria(Equation.class)
+				.add(Restrictions.like("equation", keyWord))
+				.setProjection(Projections.rowCount()).uniqueResult();
+	}
+
 
 }

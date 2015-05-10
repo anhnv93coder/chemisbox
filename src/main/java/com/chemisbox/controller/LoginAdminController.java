@@ -23,6 +23,9 @@ public class LoginAdminController extends ChemisboxController<LoginAdminBusiness
 	
 	@RequestMapping(value = {"/admin", "/admin/"})
 	public String getIndex(ModelMap map){
+		if(map.containsAttribute("adminObject")){
+			return "redirect: /admin/dashboard";
+		}
 		return "login";
 	}
 		

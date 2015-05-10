@@ -22,11 +22,18 @@ public class ChemistryEquationDAOImpl implements ChemistryEquationDAO {
 		return false;
 	}
 
-	public boolean delete(Long equationId) {
+	public boolean delete(Long equationId, boolean isDeleteEquation) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "delete from ChemistryEquation where equationId= :equationId";
-		int value = session.createQuery(hql).setLong("equationId", equationId)
-				.executeUpdate();
+		int value = 0;
+		if(isDeleteEquation){
+			String hql = "delete from ChemistryEquation where equationId= :equationId";
+			value = session.createQuery(hql).setLong("equationId", equationId)
+					.executeUpdate();
+		} else {
+			String hql = "delete from ChemistryEquation where chemicalId= :equationId";
+			value = session.createQuery(hql).setLong("chemicalId", equationId)
+					.executeUpdate();
+		}
 		if (value > 0) {
 			return true;
 		}

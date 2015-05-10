@@ -16,6 +16,24 @@ public class EquationManagementModel extends ChemisboxModel {
 	private List<Equation> equationList;
 	private long totalPage;
 	private int currentPage;
+	private String currentUrl;
+	private String keyWord;
+
+	public String getCurrentUrl() {
+		return currentUrl;
+	}
+
+	public void setCurrentUrl(String currentUrl) {
+		this.currentUrl = currentUrl;
+	}
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
 
 	public List<Equation> getEquationList() {
 		return equationList;

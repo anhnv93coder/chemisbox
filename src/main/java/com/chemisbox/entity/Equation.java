@@ -15,15 +15,15 @@ import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 
 @NamedNativeQueries({
-		@NamedNativeQuery(name = "callGetEquation", query = "CALL getEquation(:chemical)", resultClass = Equation.class),
+		@NamedNativeQuery(name = "callGetEquation", query = "CALL getEquation(:chemical, :startIndex, :pageSize)", resultClass = Equation.class),
 
-		@NamedNativeQuery(name = "callGetEquationByChemical", query = "CALL getEquationByChemical(:chemical, :typeOf)", resultClass = Equation.class),
+		@NamedNativeQuery(name = "callGetEquationByChemical", query = "CALL getEquationByChemical(:chemical, :typeOf, :startIndex, :pageSize)", resultClass = Equation.class),
 
 		@NamedNativeQuery(name = "callGetEquationsByLeftRight", query = "CALL getEquationByLeftAndRightChemical(:leftChemical, :rightChemical)", resultClass = Equation.class),
 
-		@NamedNativeQuery(name = "callGetEquationBy2Chemical", query = "CALL getEquationBy2Chemical(:chemical1, :chemical2, :typeOf)", resultClass = Equation.class),
+		@NamedNativeQuery(name = "callGetEquationBy2Chemical", query = "CALL getEquationBy2Chemical(:chemical1, :chemical2, :typeOf, :startIndex, :pageSize)", resultClass = Equation.class),
 
-		@NamedNativeQuery(name = "callGetEquationBy3Chemical", query = "CALL getEquationBy3Chemical(:chemical1, :chemical2, :chemical3, :typeOf)", resultClass = Equation.class)
+		@NamedNativeQuery(name = "callGetEquationBy3Chemical", query = "CALL getEquationBy3Chemical(:chemical1, :chemical2, :chemical3, :typeOf, :startIndex, :pageSize)", resultClass = Equation.class)
 
 })
 @Embeddable

@@ -2,13 +2,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page import="com.chemisbox.constant.ChemisboxConstant" %>
 <html>
 <head>
 <jsp:include page="base/head.jsp"></jsp:include>
 <c:set var="baseURL" value="${pageContext.servletContext.contextPath}" />
 <script type="text/javascript">
 	var baseURL = '${baseURL}';
+	var currentPage = 0;
+	var oldKeyWord = '${searchModel.keyWord}';
+	var eIndex = 1;
+	var maxSize = <%= ChemisboxConstant.EQUATION_RECORD_NUMBER_IN_RESULT %>;
 </script>
 </head>
 
@@ -158,8 +163,13 @@
 						<div class="panel-heading">
 							<i class="fa fa-list-alt fa-2x"></i> <span style="font-size: 30px;">Phản ứng</span>
 						</div>
-						<div class="panel-body" id="equation-list">
-							
+						<div class="panel-body">
+							<div id="equation-list"></div>
+							<div class='col-md-4 col-md-offset-4' id="divViewMore">
+								<button id='btnViewMore' type='button' style='margin: auto 25%;' class='btn btn-info'>
+									<i class='fa fa-cog fa-spin'></i>&nbsp;Xem thêm
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -185,13 +195,6 @@
 
 	<!-- section footer -->
 	<jsp:include page="base/footer.jsp"></jsp:include>
-	<%-- var ion = {ionId: '${myData.ionEquation.ionId}', ionEquation : '${myData.ionEquation.ionEquation}', shortcutIonEquation : '${myData.ionEquation.shortcutIonEquation}'};
-		var oxi = {oxiReduceId : '${myData.oxiReduceEquation.oxiReduceId}', molReduce : '${myData.oxiReduceEquation.molReduce}'
-				,reduceEquation : '${myData.oxiReduceEquation.reduceEquation}', molOxi : '${myData.oxiReduceEquation.molOxi}' 
-				,oxiEquation : '${myData.oxiReduceEquation.oxiEquation}', summary : '${myData.oxiReduceEquation.summary}'}; 
-		
-		var result = {condition : '${myData.condition}', description : '${myData.description}', equation : '${myData.equation}'
-				,equationId : '${myData.equationId}', ionEquation : ion, oxiReduceEquation : oxi, videoLink : '${myData.videoLink}'};*/ --%>
 	<script type="text/javascript">
 	var listResult = [];
 	<c:forEach var="myData" items="${searchModel.equationList}" >
@@ -230,6 +233,5 @@
 	
 	
 </script>
-	<!-- section footer -->
 </body>
 </html>

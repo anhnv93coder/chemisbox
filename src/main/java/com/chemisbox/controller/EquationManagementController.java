@@ -48,6 +48,7 @@ public class EquationManagementController
 		} catch (Exception e) {
 			this.model.setErrorMessage(e.getMessage());
 		}
+		this.model.setCurrentUrl("/admin/equation/");
 		map.put("equationMap", this.model);
 		map.put("equationObj", new Chemical());
 		map.put(ChemisboxConstant.MENU_CONSTANT,
@@ -84,6 +85,7 @@ public class EquationManagementController
 						.getErrorMessage())) {
 					this.model.setErrorMessage(outParam.getErrorMessage());
 				} else {
+					this.model.setCurrentUrl("/admin/equation/");
 					this.model.setEquationList(outParam.getEquationList());
 					this.model.setTotalPage(outParam.getTotalPages());
 				}
@@ -98,6 +100,56 @@ public class EquationManagementController
 		return "adminIndex";
 	}
 
+	@RequestMapping(value = "/admin/equation/search/{keyWord}/{index}", method = RequestMethod.GET)
+	public String searchEquation(@PathVariable("keyWord") String keyWord, @PathVariable("index") String index, ModelMap map) {
+		if(!map.containsAttribute("adminObject")){
+			return "login";
+		}
+		map.put(ChemisboxConstant.MENU_CONSTANT, ChemisboxConstant.EQUATION_MENU);
+		this.model = new EquationManagementModel();
+		EquationManagementInputParam inParam = new EquationManagementInputParam();
+		try {
+			Integer startIndex = ChemisboxUtilities.getIntegerInString(index);
+			if (startIndex == null) {
+				startIndex = 0;
+			}
+
+			if (startIndex < 0) {
+				this.model
+						.setErrorMessage("Số trang phải là số lớn hơn 0.");
+			} else {
+				if(ChemisboxUtilities.isNullOrEmpty(keyWord)){
+					this.model
+					.setErrorMessage("Từ khóa đang để trống.");
+					map.put("equationMap", this.model);		
+					return "adminIndex";
+				}
+				inParam.setKeyWord(keyWord.trim());
+				inParam.setStartIndex((startIndex - 1)
+						* ChemisboxConstant.TOTAL_EQUATION_RECORDS_IN_A_PAGE);
+				this.model.setCurrentPage(startIndex);
+
+				inParam.setPageSize(ChemisboxConstant.TOTAL_EQUATION_RECORDS_IN_A_PAGE);
+				inParam.setBusinessType(ChemisboxConstant.BUSINESS_FOR_SEARCH);
+				EquationManagementOutputParam outParam = this.business
+						.execute(inParam);
+				if (!ChemisboxUtilities.isNullOrEmpty(outParam
+						.getErrorMessage())) {
+					this.model.setErrorMessage(outParam.getErrorMessage());
+				} else {
+					this.model.setEquationList(outParam.getEquationList());
+					this.model.setTotalPage(outParam.getTotalPages());
+					this.model.setCurrentUrl("/admin/equation/search/");
+					this.model.setKeyWord(keyWord.trim());
+				}
+			}
+		} catch (Exception e) {
+			this.model.setErrorMessage(e.getMessage());
+		}
+		map.put("equationMap", this.model);		
+		return "adminIndex";
+	}
+	
 	@RequestMapping(value = "/admin/equation/loadDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody EquationManagementModel loadDataForUpdate(
 			@RequestBody EquationManagementModel model, ModelMap map)

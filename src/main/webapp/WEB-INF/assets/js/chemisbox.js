@@ -6,17 +6,26 @@ var RESULT_CHARACTER = "&nbsp;&nbsp;&nbsp;<a><i class='fa fa-long-arrow-right'><
 
 $(function() {
 	
+	$("#btnViewMore").click(function() {
+		currentPage++;
+		getEquation();
+	});
+	
 	$('.feedback').tooltip();
 	
 	$("#keyWord").keyup(function(e) {
 		var code = e.keyCode || e.which;
 		if(code == 13){
+			eIndex = 1;
+			currentPage = 0;
 			getEquation();
 		}
 	});
 	
 	$("#btnSearch").click(function(e) {
 		e.preventDefault();
+		eIndex = 1;
+		currentPage = 0;
 		getEquation();
 	});
 	
@@ -328,7 +337,6 @@ function mergeIonEquation(data) {
 }
 
 function fillResult(data){
-	var i = 0;
 	$("#result-block").css("display", "block");
 	$("#chemicalAndElementBlock").css("display", "block");
 	//
@@ -342,21 +350,21 @@ function fillResult(data){
 	}
 	
 	//
-	if(data.equationList != null && data.equationList.length > 0){
-		$("#equation-list").append("<p class='bg-danger'>&nbsp;<i class='fa fa-search'></i>&nbsp;&nbsp;Bạn đang tìm phản ứng liên quan đến: " + data.keyWord + "</p>");
+	if(data.equationList != null && data.equationList.length > 0) {
+		if(data.keyWord.localeCompare(oldKeyWord) != 0 && currentPage == 0){
+			$("#equation-list").append("<p class='bg-danger'>&nbsp;<i class='fa fa-search'></i>&nbsp;&nbsp;Bạn đang tìm phản ứng liên quan đến: " + data.keyWord + "</p>");
+		}
+		
+		if(data.equationList.length < maxSize) {
+			$("#divViewMore").css("display", "none");
+		} else {
+			$("#divViewMore").css("display", "block");
+		}
+		
 		$.each(data.equationList, function(key, value) {
 			var equation = JSON.parse(value.equation);
 			$.each(equation, function(index,chemicals) {
-//				var oxiEquation = "";
-//				if(!stringIsNullOrEmpty(value.oxiReduceEquation.oxiReduceId)){
-//					 oxiEquation = mergeOxiReduceEquation(value.oxiReduceEquation);
-//				}
-				
-//				var ionEquation = "";
-//				if(value.ionEquation != null && !stringIsNullOrEmpty(value.ionEquation.ionId)){
-//					ionEquation = mergeIonEquation(value.ionEquation);
-//				}
-				
+			
 				var oxiEquation = "";
 				if(!stringIsNullOrEmpty(value.reduceEquation) 
 						&& !stringIsNullOrEmpty(value.oxiEquation) 
@@ -377,38 +385,54 @@ function fillResult(data){
 				}
 				
 				$("#equation-list").append(
-					"<blockquote id='#equation-block-list'><p class='equation'><span class='badge'>" + (++i) + "</span>&nbsp;"
+					"<blockquote id='#equation-block-list'><p class='equation'><span class='badge'>" + (eIndex++) + "</span>&nbsp;"
 					+ mergeChemicalToEquation(chemicals)
 					+ "<a href='#' class='feedback pull-right' data-toggle='modal' data-target='#exampleModal' data-toggle='tooltip' data-placement='right' title='Phản hồi'>" 
 					+ "<i class='fa fa-comment'></i></a></p><footer style='padding-bottom:15px;'>"+ value.condition+ "</footer>"  + oxiEquation + ionEquation + videoBlock +"</blockquote><hr/>");
 			});
 		});
-	}else{
-		$("#equation-list").html(
-				"<div class='alert alert-warning' id='error-msg' role='alert'><i class='fa fa-frown-o'></i> <strong>Xin lỗi!</strong> Không tìm thấy phản ứng nào của <strong>"
-				+ data.keyWord + "</strong></div>");
+	} else {
+		if(currentPage == 0){
+			$("#equation-list").html(
+					"<div class='alert alert-warning' id='error-msg' role='alert'><i class='fa fa-frown-o'></i> <strong>Xin lỗi!</strong> Không tìm thấy phản ứng nào của <strong>"
+					+ data.keyWord + "</strong></div>");
+		} else {
+			$("#divViewMore").css("display", "none");
+		}
 	}
-	scrollToElement("#result-block", 800);
+	if(currentPage == 0){
+		scrollToElement("#result-block", 400);
+	}
 }
+
+
 
 function getEquation() {
 	var keyWord = $.trim($("#keyWord").val());
+	 
 	$("#chemicalImg").removeAttr("src");
 	$("#chemicalImg").css("display", "none");
-	$("#equation-list").empty();
+	if(currentPage == 0 || keyWord.localeCompare(oldKeyWord) != 0){
+		$("#equation-list").empty();
+		oldKeyWord = keyWord;
+	}
 	$("#chemical-info").empty();
 	$("#chemicalName").empty();
+	
+	var model = {currentPage : currentPage, keyWord : keyWord};
+	
 	$.ajax({
-		url : '/ChemisBox/search/' + keyWord,
+//		url : '/ChemisBox/search/' + keyWord,
+		url : '/ChemisBox/search/',
 		dataType : "json",
 		contentType : "application/json",
-		type : 'GET',
+		data : JSON.stringify(model),
+		type : 'POST',
 		success : function(data) {
 			if (data != null) {
-				
 				if(data.equationList == null && data.element == null && data.chemical == null){
 					$("#result-block").css("display", "none");
-					alert("Khong tim thay");
+					alert("Không tìm thấy kết quả.");
 					return;
 				}				
 				fillResult(data);				

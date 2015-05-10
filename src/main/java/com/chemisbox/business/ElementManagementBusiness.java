@@ -24,12 +24,16 @@ public class ElementManagementBusiness
 	@Autowired
 	private ElementDAO elementDao;
 
+
 	@Override
 	public ElementManagementOutputParam execute(
 			ElementManagementInputParam inParam) throws ChemisboxException {
 		this.out = new ElementManagementOutputParam();
-		
+
 		Element elementObj = null;
+		List<Element> elementList = null;
+		long totalRecords = 0;
+		long totalPage = 0;
 		try {
 			switch (inParam.getBusinessType()) {
 			case ChemisboxConstant.BUSINESS_FOR_ADD:
@@ -38,11 +42,11 @@ public class ElementManagementBusiness
 					this.out.setErrorMessage("Nguyên tố đã tồn tại.");
 					return this.out;
 				}
-				
+
 				elementDao.add(inParam.getElement());
-				
+
 				break;
-				
+
 			case ChemisboxConstant.BUSINESS_FOR_LOAD_DETAILS:
 				elementObj = elementDao.get(inParam.getNotation());
 				if (elementObj == null) {
@@ -53,7 +57,7 @@ public class ElementManagementBusiness
 				break;
 
 			case ChemisboxConstant.BUSINESS_FOR_LIST:
-				List<Element> elementList = elementDao.list(
+				elementList = elementDao.list(
 						inParam.getStartIndex(), inParam.getPageSize());
 
 				if (ChemisboxUtilities.isNullOrEmpty(elementList)) {
@@ -61,9 +65,39 @@ public class ElementManagementBusiness
 					return this.out;
 				}
 
-				Long totalRecords = elementDao.getCount();
+				totalRecords = elementDao.getCount();
 
-				long totalPage = 0;
+				totalPage = 0;
+				if (totalRecords
+						% ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE == 0) {
+					totalPage = totalRecords
+							/ ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE;
+				} else {
+					totalPage = totalRecords
+							/ ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE
+							+ 1;
+				}
+				this.out.setTotalPages(totalPage);
+				this.out.setElementList(elementList);
+				break;
+				
+			case ChemisboxConstant.BUSINESS_FOR_SEARCH:
+				String keyWord = inParam.getKeyWord();
+				
+				StringBuffer buffer = new StringBuffer();
+				buffer.append("%");
+				buffer.append(keyWord);
+				buffer.append("%");
+				
+				elementList = elementDao.searchByKeyWord(buffer.toString(), inParam.getStartIndex(), ChemisboxConstant.TOTAL_ELEMENT_RECORDS_IN_A_PAGE);
+				if (ChemisboxUtilities.isNullOrEmpty(elementList)) {
+					this.out.setErrorMessage("Không tìm thấy.");
+					return this.out;
+				}
+
+				totalRecords = elementDao.getCountByKeyWord(buffer.toString());
+
+				totalPage = 0;
 				if (totalRecords
 						% ChemisboxConstant.TOTAL_CHEMICAL_RECORDS_IN_A_PAGE == 0) {
 					totalPage = totalRecords
@@ -79,9 +113,19 @@ public class ElementManagementBusiness
 
 			case ChemisboxConstant.BUSINESS_FOR_UPDATE:
 				elementObj = inParam.getElement();
-				elementObj.setEditedDate(new Date());						
+				elementObj.setEditedDate(new Date());
 				elementDao.update(elementObj);
-				
+				break;
+
+			case ChemisboxConstant.BUSINESS_FOR_DELETE:
+				String notation = inParam.getNotation();
+				elementObj = elementDao.get(notation);
+				if (elementObj == null) {
+					this.out.setErrorMessage(String.format(
+							"Nguyên tố %s không tồn tại.", notation));
+				}
+
+				elementDao.delete(elementObj);
 				break;
 
 			default:

@@ -15,19 +15,19 @@
 			<div class="col-lg-10 col-lg-offset-1" style="display: block;" id="chemicalTable">
 				<div class="row clearfix">
 					<div class="col-md-6">
-						<form class="form-inline">
+						<div class="form-inline">
 						  <div class="form-group has-success has-feedback">
-						    <input type="text" class="form-control" id="inputSuccess4" aria-describedby="inputSuccess4Status" placeholder="Nhập từ khóa"/>
+						    <input type="text" class="form-control" id="chemicalKeyWord" aria-describedby="inputSuccess4Status" placeholder="Nhập từ khóa" value="${chemicalMap.keyWord}"/>
 						    <span class="fa fa-search fa-lg form-control-feedback" aria-hidden="true"></span>
 						    <span id="inputSuccess4Status" class="sr-only">(success)</span>
 						  </div>
-						</form>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<button class="btn btn-default pull-right" style="margin-bottom: 10px;" data-toggle="modal" data-target="#addChemicalModal"><span class="fa fa-plus"></span>&nbsp;Thêm mới</button>
 					</div>
 				</div>
-				<c:if test="${!empty chemicalMap.chemicalList}">
+				<c:if test="${not empty chemicalMap.chemicalList}">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 					    <h3 class="panel-title">Danh sách chất hóa học</h3>
@@ -62,7 +62,7 @@
 								<li>
 									<c:choose>
 										<c:when test="${chemicalMap.currentPage > 1}">
-											<a href="${baseURL}/admin/chemical/${chemicalMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+											<a href="${baseURL}${chemicalMap.currentUrl}${chemicalMap.keyWord}/${chemicalMap.currentPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
 										</c:when>
 										<c:otherwise>
 											<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
@@ -72,17 +72,17 @@
 								<c:forEach var="index" begin="1" end="${chemicalMap.totalPage}">
 									<c:choose>
 										<c:when test="${index == chemicalMap.currentPage}">
-											<li class="active"><a href="${baseURL}/admin/chemical/${index}"><c:out value="${index}"/></a></li>
+											<li class="active"><a href="${baseURL}${chemicalMap.currentUrl}${chemicalMap.keyWord}/${index}"><c:out value="${index}"/></a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a href="${baseURL}/admin/chemical/${index}"><c:out value="${index}"/></a></li>
+											<li><a href="${baseURL}${chemicalMap.currentUrl}${chemicalMap.keyWord}/${index}"><c:out value="${index}"/></a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								<li>
 									<c:choose>
 										<c:when test="${chemicalMap.currentPage < chemicalMap.totalPage}">
-											<a href="${baseURL}/admin/chemical/${chemicalMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
+											<a href="${baseURL}${chemicalMap.currentUrl}${chemicalMap.keyWord}/${chemicalMap.currentPage + 1}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
 										</c:when>
 										<c:otherwise>
 											<a aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
@@ -94,7 +94,9 @@
 						</div>
 					</div>
 				</c:if>
-				
+				<c:if test="${empty chemicalMap.chemicalList}">
+					<h3>Không có dữ liệu.</h3>
+				</c:if>
 			</div>
 			
 			
@@ -107,6 +109,9 @@
 			      </div>
 			      <form class="form-horizontal">
 			      <div class="modal-body">						
+		    		<div class="alert alert-warning alert-dismissible" role="alert" id="addChemicalMessage" style="display:none">
+						<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="addChemicalErrorMessage"></span>
+					</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-4 control-label">Tên chất</label>
 								<div class="col-sm-8">
@@ -126,13 +131,6 @@
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="formula"
 										placeholder="Công thức hóa học"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputPassword3" class="col-sm-4 control-label">Khối lượng</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" id="quantity"
-										placeholder="Khối lượng"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -213,6 +211,9 @@
 			      </div>
 			      <form class="form-horizontal" >
 			      	<div class="modal-body">
+			      		<div class="alert alert-warning alert-dismissible" role="alert" id="updateChemicalMessage" style="display:none">
+							<i class="fa fa-frown-o fa-2x"></i>&nbsp;<span id="updateChemicalErrorMessage"></span>
+						</div>
 						<input type="hidden" class="form-control" id="chemicalId"/>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-4 control-label">Tên chất</label>
@@ -233,13 +234,6 @@
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="formulaUpdate"
 									placeholder="Công thức hóa học"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputPassword3" class="col-sm-4 control-label">Khối lượng</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="quantityUpdate"
-									placeholder="Khối lượng"/>
 							</div>
 						</div>
 						<div class="form-group">

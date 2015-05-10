@@ -16,6 +16,24 @@ public class ChemicalManagementModel extends ChemisboxModel {
 	private long totalPage;
 	private Long chemicalId;
 	private int currentPage;
+	private String keyWord;
+	private String currentUrl;
+
+	public String getCurrentUrl() {
+		return currentUrl;
+	}
+
+	public void setCurrentUrl(String currentUrl) {
+		this.currentUrl = currentUrl;
+	}
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
 
 	public int getCurrentPage() {
 		return currentPage;

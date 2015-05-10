@@ -7,13 +7,15 @@ import com.chemisbox.entity.Element;
 import com.chemisbox.entity.Equation;
 
 @SuppressWarnings("serial")
-public class SearchEquationModel extends ChemisboxModel{
+public class SearchEquationModel extends ChemisboxModel {
 
 	private Element element;
 	private Chemical chemical;
 	private List<Equation> equationList;
 	private List<Integer> indexList;
 	private String keyWord;
+	private long totalPage;
+	private int currentPage;
 
 	public SearchEquationModel() {
 
@@ -57,6 +59,22 @@ public class SearchEquationModel extends ChemisboxModel{
 
 	public void setChemical(Chemical chemical) {
 		this.chemical = chemical;
+	}
+
+	public long getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(long totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
 }
